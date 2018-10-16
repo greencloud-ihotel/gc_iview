@@ -1,0 +1,6 @@
+- **入门**
+  - [安装](zh-cn/install)
+  - [快速上手](zh-cn/quickstart)
+  - [全局配置](zh-cn/config)
+- **组件**
+- - [AutoTable](zh-cn/AutoTable)
