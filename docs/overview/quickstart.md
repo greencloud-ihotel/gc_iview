@@ -21,5 +21,3 @@
   4. [render](https://cn.vuejs.org/v2/api/#render)
 
   5. [jxs](https://cn.vuejs.org/v2/guide/render-function.html#ad)
-
-## 快速上手

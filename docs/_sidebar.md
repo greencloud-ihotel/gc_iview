@@ -1,7 +1,7 @@
 - **概览**
-  - [安装](overview/install)
-  - [快速上手](overview/quickstart)
-  - [全局配置](overview/config)
-  - [更新日志](overview/log)
+  - [安装](overview/install.md)
+  - [前置知识](overview/quickstart.md)
+  - [开始使用](overview/use.md)
+  - [更新日志](overview/log.md)
 - **组件**
-- - [AutoTable](components/AutoTable)
+- - [AutoTable](components/AutoTable.md)
