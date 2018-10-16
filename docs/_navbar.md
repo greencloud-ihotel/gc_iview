@@ -1,7 +1,7 @@
 - **入门**
 
-  - [安装](zh-cn/install.md)
-  - [快速上手](zh-cn/quickstart.md)
-  - [全局配置](zh-cn/config.md)
+  - [安装](overview/install.md)
+  - [快速上手](overview/quickstart.md)
+  - [全局配置](overview/config.md)
 
-- **[更新日志](zh-cn/log.md)**
+- **[更新日志](overview/log.md)**

@@ -1,7 +1,7 @@
 - **概览**
-  - [安装](zh-cn/install)
-  - [快速上手](zh-cn/quickstart)
-  - [全局配置](zh-cn/config)
-  - [更新日志](zh-cn/log)
+  - [安装](overview/install)
+  - [快速上手](overview/quickstart)
+  - [全局配置](overview/config)
+  - [更新日志](overview/log)
 - **组件**
-- - [AutoTable](zh-cn/AutoTable)
+- - [AutoTable](components/AutoTable)
