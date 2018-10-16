@@ -9,4 +9,4 @@
 - green cloud ui library
 
 [GitHub](https://github.com/huqiliang/gc_iview.git)
-[开始使用](#zh-cn/)
+[开始使用](/zh-cn/install)
