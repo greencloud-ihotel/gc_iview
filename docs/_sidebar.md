@@ -4,4 +4,8 @@
   - [开始使用](overview/use.md)
   - [更新日志](overview/log.md)
 - **组件**
-- - [AutoTable](components/AutoTable.md)
+  - [AutoTable](components/AutoTable.md)
+  - [EditTable](components/EditTable.md)
+  - [CurdLine](components/CurdLine.md)
+  - [FilterSearch](components/FilterSearch.md)
+  - [TFSwitch](components/TFSwitch.md)
