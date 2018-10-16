@@ -1,13 +1,13 @@
 <template>
-    <Card class="box">
-        <!-- 头部插槽内容 -->
-        <slot name="header"></slot>
-        <!-- 块级元素 不需要Row/div嵌套 -->
-        <Table :loading="tableIsLoading" :columns="tableColumns" :data="tableData" v-bind="$attrs" v-on="$listeners" style="margin-top: 15px"></Table>
-        <div class="page">
-            <Page v-on="$listeners" class="pagebar" :current="tableCurrentPage" show-sizer show-elevator :page-size="tablePageSize" :total="tableTotalRows" @on-change="onPageChange"></Page>
-        </div>
-    </Card>
+  <Card class="box">
+    <!-- 头部插槽内容 -->
+    <slot name="header"></slot>
+    <!-- 块级元素 不需要Row/div嵌套 -->
+    <Table :loading="tableIsLoading" :columns="tableColumns" :data="tableData" v-bind="$attrs" v-on="$listeners" style="margin-top: 15px"></Table>
+    <div class="page">
+      <Page v-on="$listeners" class="pagebar" :current="tableCurrentPage" show-sizer show-elevator :page-size="tablePageSize" :total="tableTotalRows" @on-change="onPageChange"></Page>
+    </div>
+  </Card>
 </template>
 
 <script>
