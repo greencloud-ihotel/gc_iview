@@ -5,7 +5,7 @@
 在 vue-cli3 下推荐使用 yarn 来安装。
 
 ```bash
-$ yarn add gc_iview --save
+yarn add gc_iview --save
 ```
 
 ## NPM 安装
@@ -13,7 +13,7 @@ $ yarn add gc_iview --save
 使用 npm 安装，享受生态圈和工具带来的便利，更好地和 webpack 配合使用，推荐使用 ES2015。
 
 ```bash
-$ npm install gc_iview --save
+npm install gc_iview --save
 ```
 
 ## CDN 引入
