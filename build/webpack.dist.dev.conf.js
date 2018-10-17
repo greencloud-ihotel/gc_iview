@@ -1,41 +1,47 @@
-const path = require('path')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const webpackBaseConfig = require('./webpack.base.conf.js')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const path = require("path");
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const webpackBaseConfig = require("./webpack.base.conf.js");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = "production";
 
 module.exports = merge(webpackBaseConfig, {
-  devtool: 'source-map',
+  devtool: "source-map",
 
   entry: {
-    main: './src/index.js'
+    main: "./src/index.js"
   },
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
-    filename: 'build_pc.js',
-    library: 'toolkit',
-    libraryTarget: 'umd',
+    path: path.resolve(__dirname, "../dist/dev"),
+    publicPath: "/dist",
+    filename: "index_dev.js",
+    library: "gc_iview",
+    libraryTarget: "umd",
     umdNamedDefine: true
   },
   externals: {
     vue: {
-      root: 'Vue',
-      commonjs: 'vue',
-      commonjs2: 'vue',
-      amd: 'vue'
+      root: "Vue",
+      commonjs: "vue",
+      commonjs2: "vue",
+      amd: "vue"
+    },
+    iview: {
+      root: "iview",
+      commonjs: "iview",
+      commonjs2: "iview",
+      amd: "iview"
     }
   },
   plugins: [
     // @todo
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: '"production"'
       }
     }),
     new BundleAnalyzerPlugin()
   ]
-})
+});
