@@ -1,7 +1,4 @@
 import iView from "iview";
-console.log("====================================");
-console.log(iView);
-console.log("====================================");
 import "iview/dist/styles/iview.css";
 import axios from "axios";
 import components from "./components";

@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const merge = require("webpack-merge");
 const webpackBaseConfig = require("./webpack.base.conf.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const apiMocker = require("webpack-api-mocker");
 
 module.exports = merge(webpackBaseConfig, {
   devtool: "eval-source-map",
@@ -29,6 +30,16 @@ module.exports = merge(webpackBaseConfig, {
     alias: {
       gc_iview: "../../src/index",
       vue: "vue/dist/vue.esm.js"
+    }
+  },
+  devServer: {
+    before(app) {
+      apiMocker(app, path.resolve("./mocker/index.js"), {
+        proxy: {
+          "/repos/*": "https://api.github.com/"
+        },
+        changeHost: true
+      });
     }
   },
   plugins: [
