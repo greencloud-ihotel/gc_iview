@@ -8,7 +8,11 @@
 /*vue*/
 <template>
   <div>
-    <AutoTable v-bind="autoTableConfig"></AutoTable>
+    <div>
+      <div>dddd</div>
+      <i-button>ddd</i-button>
+      <auto-table v-bind="autoTableConfig"></auto-table>
+    </div>
   </div>
 </template>
 
