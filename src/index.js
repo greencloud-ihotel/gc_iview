@@ -3,10 +3,10 @@ import "iview/dist/styles/iview.css";
 import axios from "axios";
 import components from "./components";
 
-const useLib = (Vue, lib) => {
+const useLib = Vue => {
   Vue.prototype.$http = axios;
   Vue.prototype.$complie = Vue.complie;
-  Vue.use(iView);
+  // Vue.use(iView);
 };
 const install = (Vue, opts = {}) => {
   if (install.installed) return;

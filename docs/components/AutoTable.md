@@ -10,7 +10,7 @@
   <div>
     <div>
       <div>dddd</div>
-      <i-button>ddd</i-button>
+      <i-button type="primary">ddd</i-button>
       <auto-table v-bind="autoTableConfig"></auto-table>
     </div>
   </div>
@@ -39,7 +39,7 @@ export default {
 
 ## API
 
-**AutoTable props**
+### props
 
 | 属性        | 说明                              | 是否必传 | 是否iview参数                                                |
 | ----------- | --------------------------------- | -------- | ------------------------------------------------------------ |
