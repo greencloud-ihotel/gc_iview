@@ -3,9 +3,24 @@
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
-    <Table :loading="tableIsLoading" :columns="tableColumns" :data="tableData" v-bind="$attrs" v-on="$listeners" style="margin-top: 15px"></Table>
-    <div class="page">
-      <Page v-on="$listeners" class="pagebar" :current="tableCurrentPage" show-sizer show-elevator :page-size="tablePageSize" :total="tableTotalRows" @on-change="onPageChange"></Page>
+    <Table :loading="tableIsLoading"
+           :columns="tableColumns"
+           :data="tableData"
+           v-bind="$attrs"
+           v-on="$listeners"></Table>
+    <div class="page"
+         v-if="tableData && tableData.length>0"
+         v-show="!hidePage">
+      <Page v-on="$listeners"
+            class="pagebar"
+            @on-page-size-change="pageSizeChange"
+            :current="tableCurrentPage"
+            :show-sizer="!showSize"
+            show-elevator
+            :page-size="tablePageSize"
+            :total="tableTotalRows"
+            @on-change="onPageChange"
+            :transfer="transfer"></Page>
     </div>
   </Card>
 </template>
@@ -16,12 +31,15 @@ export default {
   name: "AutoTable",
   inheritAttrs: false,
   props: [
+    "hidePage",
     "url", //接口地址
     "path", // 根据data.retVal.path去加载data数据
     "initData", //自定义传入数据
     "columns", // 定义列
     "pageSize", // 定义每页条数
-    "refuseFetch" //拒绝自动获取
+    "refuseFetch", //拒绝自动获取
+    "transfer", //分页页数下拉框放置位置
+    "showSize"
   ],
   data() {
     return {
@@ -40,6 +58,7 @@ export default {
     // 判断是否存在action列,如果有则根据buttons: ['View', 'Edit', 'Delete'] 来生存操作按钮
     if (this.tableColumns) {
       this.tableColumns.forEach(item => {
+        _.set(item, "tooltip", true);
         if (item.key && !_.has(item, "render") && item.key == "action") {
           let arr = [];
           _.map(item.buttons, val => {
@@ -73,6 +92,12 @@ export default {
     }
   },
   methods: {
+    getTableData() {
+      return this.tableData;
+    },
+    getTableTotalRows() {
+      return this.tableTotalRows;
+    },
     getParams() {
       var params = {
         firstResult: (this.tableCurrentPage - 1) * this.tablePageSize,
@@ -96,6 +121,7 @@ export default {
             this.tableData = _.get(response.data.retVal, this.path);
           }
           this.tableTotalRows = response.data.retVal.totalRows;
+          this.$emit("fetch-table-data-success");
         })
         .catch(error => {
           // 接口请求失败
@@ -111,9 +137,17 @@ export default {
     refresh(data) {
       this.fetchData(data);
     },
+    clearTable() {
+      this.tableData = [];
+    },
     onPageChange(newPage) {
       this.tableCurrentPage = newPage;
       this.fetchData(this.currentParams);
+    },
+    pageSizeChange(value) {
+      this.tablePageSize = value;
+      this.refresh();
+      this.$emit("sendPageSize", value);
     }
   }
 };
@@ -125,13 +159,17 @@ export default {
   cursor: pointer;
   color: #4a90e2;
 }
-.box {
-  text-align: center;
-}
 .pagebar {
   padding: 10px;
 }
 .page {
   text-align: right;
+}
+.ivu-card-bordered {
+  border: none;
+  &:hover {
+    box-shadow: none;
+    border-color: #eee;
+  }
 }
 </style>
