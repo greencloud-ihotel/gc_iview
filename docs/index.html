@@ -62,9 +62,16 @@
           paths: [], // or 'auto'
           placeholder: "搜索"
         },
+        alias: {
+          "/components/_sidebar.md": "/_sidebar.md",
+          "/components/_navbar.md": "/_navbar.md",
+          "/overview/_sidebar.md": "/_sidebar.md",
+          "/overview/_navbar.md": "/_navbar.md"
+        },
         coverpage: true,
         loadNavbar: true,
         loadSidebar: true,
+        subMaxLevel: 2,
         name: "gc_iview",
         repo: "https://github.com/huqiliang/gc_iview",
         plugins: [DemoBoxVue.create(jsResources, cssResources, bootCode)]
