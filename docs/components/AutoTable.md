@@ -4,15 +4,17 @@
 
 主要用于展示大量结构化数据。扩展自 [iview Table](https://www.iviewui.com/components/table) 可直接使用 Table 的所有 props 和 mehods。
 
+1. 基础用法:自动表格的基本使用方法。
+
 ```javascript
 /*vue*/
+<desc>
+  <p>基础用法:</p>
+  <p>自动表格的基本使用方法。</p>
+</desc>
 <template>
   <div>
-    <div>
-      <div>dddd</div>
-      <i-button type="primary">ddd</i-button>
-      <auto-table v-bind="autoTableConfig"></auto-table>
-    </div>
+    <auto-table v-bind="autoTableConfig"></auto-table>
   </div>
 </template>
 
@@ -22,10 +24,10 @@ export default {
     return {
       autoTableConfig: {
         columns: [
-          { title: "username", key: "username" },
+          { title: "标题", key: "username" },
           { title: "id", key: "id" }
         ],
-        url: "/api/user/list",
+        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
         path: "datas"
       }
     };
