@@ -24,8 +24,9 @@ export default {
     return {
       autoTableConfig: {
         columns: [
-          { title: "标题", key: "username" },
-          { title: "id", key: "id" }
+          { title: "标识", key: "id" },
+          { title: "姓名", key: "username" },
+          { title: "性别", key: "sex" },
         ],
         url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
         path: "datas"
