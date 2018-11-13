@@ -8,4 +8,6 @@
   - [EditTable](components/EditTable.md)
   - [CurdLine](components/CurdLine.md)
   - [FilterSearch](components/FilterSearch.md)
+  - [SwitchCom](components/SwitchCom.md)
+  - [DatePickers](components/DatePickers.md)
   - [TFSwitch](components/TFSwitch.md)

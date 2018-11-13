@@ -49,7 +49,29 @@ export default {
                 return h("Select",{
                    props: {}
                 })
-
+                // 在项目中使用jsx 的方式，文档中只做对应的展示
+                // return (
+                //   <i-select
+                //     filterable
+                //     placeholder={placeholder}
+                //     transfer={true}
+                //     // loading="grops.loading}
+                //     value={this.searchBar.val.category}
+                //     //onOn-open-change={this.openIf}
+                //     onInput={value => {
+                //       this.searchBar.val.category = value;
+                //     }}
+                //     clearable
+                //   >
+                //     {this.searchBar.default.listProduct.map(val => {
+                //       return (
+                //         <i-option value={val.code} key={val.code}>
+                //           {val.descript}
+                //         </i-option>
+                //       );
+                //     })}
+                //   </i-select>
+                // );
               }
             },
           ],
