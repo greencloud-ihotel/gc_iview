@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { Select } from "iview";
 export default {
   data() {
     return {
@@ -45,29 +44,12 @@ export default {
             },
             {
               label: "类型",
-              render: () => {
+              render: h => {
                 const placeholder = "类型";
-                return (
-                  <Select
-                    filterable
-                    placeholder={placeholder}
-                    // loading="grops.loading}
-                    value={this.searchBar.val.category}
-                    //onOn-open-change={this.openIf}
-                    onInput={value => {
-                      this.searchBar.val.category = value;
-                    }}
-                    clearable
-                  >
-                    {this.searchData.default.listProduct.map(val => {
-                      return (
-                        <i-option value={val.code} key={val.code}>
-                          {val.descript}
-                        </i-option>
-                      );
-                    })}
-                  </Select>
-                );
+                return h("Select",{
+                   props: {}
+                })
+
               }
             },
           ],
