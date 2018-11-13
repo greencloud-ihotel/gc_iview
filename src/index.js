@@ -12,6 +12,7 @@ const install = (Vue, opts = {}) => {
   if (install.installed) return;
   // 安装所有组件
   components.map(component => Vue.component(component.name, component));
+
   useLib(Vue);
 };
 // 自动安装
@@ -26,7 +27,7 @@ if (typeof window !== "undefined" && window.Vue) {
   });
 }
 console.log("export");
-
+console.log(install);
 export default {
   version: "1.0.0",
   install
