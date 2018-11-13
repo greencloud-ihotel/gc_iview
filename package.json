@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --content-base test/ --open --inline --hot --compress --history-api-fallback --port 9999 --config build/webpack.dev.conf.js",
     "build:dev": "webpack --config build/webpack.dist.dev.conf.js",
+    "build:doc": "webpack --config build/webpack.dist.doc.conf.js",
     "build:prod": "webpack --config build/webpack.dist.prod.conf.js",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
