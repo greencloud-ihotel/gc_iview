@@ -1,8 +1,9 @@
 // import 'babel-polyfill'
 import Vue from "vue";
+import iview from "iview";
 import gc_iview from "../src/index";
 import App from "./app.vue";
-
+Vue.use(iview);
 // 使用gc_iview
 Vue.use(gc_iview);
 
