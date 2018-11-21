@@ -23,9 +23,30 @@ export default {
           { title: "标识", key: "id" },
           { title: "姓名", key: "username" },
           { title: "性别", key: "sex" },
+        //   {
+        //   title: "启用",
+        //   key: "isHalt",
+        //   align: "center",
+        //   render: (h, params) => {
+        //     return h(SwitchCom, {
+        //       props: {
+        //         updateUrl: "/product-room/bks/channelInfo/updateOtaChannel",
+        //         row: params.row
+        //       }
+        //     });
+        //   }
+        // },
+          {
+          title: "操作",
+          key: "action",
+          width: 160,
+          align: "center",
+          buttons: ["修改"]
+        }
         ],
         url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
-        path: "datas"
+        path: "datas",
+
       }
     };
   }
@@ -36,9 +57,146 @@ export default {
 </style>
 ```
 
-2. 包含操作用法:自动表格包含操作的用法。
+2. 和 filterSearch 相结合的用法:AutoTable 和 filterSearch 相结合。
+
+```javascript
+/*vue*/
+<template>
+  <div>
+    <auto-table v-bind="autoTableConfig">
+      <Row slot="header"
+           :gutter="10">
+        <filter-search :columns="searchColumns"
+                      v-model="searchData"></filter-search>
+      </Row>
+    </auto-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      autoTableConfig: {
+        columns: [
+          { title: "标识", key: "id" },
+          { title: "姓名", key: "username" },
+          { title: "性别", key: "sex" },
+          {
+          title: "操作",
+          key: "action",
+          width: 160,
+          align: "center",
+          buttons: ["修改"]
+        }
+        ],
+        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
+        path: "datas",
+      },
+       searchData:{
+          conditionText:'',
+          searchBarStas:'',
+          category:'',
+          default:{
+              listProduct:[
+                   {
+                        code: 'New York',
+                        descript: 'New York'
+                    },
+              ]
+          }
+      },
+      searchColumns: [
+          {
+          datas: [
+              {
+              label: "请输入代码或者描述",
+              key: "conditionText"
+            },
+            {
+              label: "类型",
+              render: h => {
+                const placeholder = "类型";
+                return h("Select",{
+                   props: {}
+                })
+                // 在项目中使用jsx 的方式，文档中只做对应的展示
+                // return (
+                //   <i-select
+                //     filterable
+                //     placeholder={placeholder}
+                //     transfer={true}
+                //     // loading="grops.loading}
+                //     value={this.searchBar.val.category}
+                //     //onOn-open-change={this.openIf}
+                //     onInput={value => {
+                //       this.searchBar.val.category = value;
+                //     }}
+                //     clearable
+                //   >
+                //     {this.searchBar.default.listProduct.map(val => {
+                //       return (
+                //         <i-option value={val.code} key={val.code}>
+                //           {val.descript}
+                //         </i-option>
+                //       );
+                //     })}
+                //   </i-select>
+                // );
+              }
+            },
+          ],
+          type: "inputs"
+          },
+          {
+          datas: [
+            { label: "全选", key: "", value: "" },
+            { label: "待上线", key: "R", value: "R" },
+            { label: "有效", key: "I", value: "I" },
+            { label: "无效", key: "X", value: "X" }
+          ],
+          key: "searchBarStas", //传入节点值 不传扩展到根对象
+          type: "checkboxs"
+        },
+        {
+          datas: [
+            {
+              label: "查询",
+              action: () => {
+                //this.postTableData(1);
+              }
+            },
+            {
+              label: "重置",
+              action: "reset"
+            },
+            {
+              label: "新增",
+              action: () => {
+                //this.addAction();
+              }
+            }
+          ],
+          type: "buttons"
+        }
+      ],
+
+    };
+  }
+};
+</script>
+
+<style>
+</style>
+```
 
 ## API
+
+### solt
+
+| 属性   | 说明             |                                  |     |
+| ------ | ---------------- | -------------------------------- | --- |
+| header | 自动表格头部插槽 | 头部插槽，一般用于表格的筛选条件 |     |
 
 ### props
 

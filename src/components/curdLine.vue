@@ -2,6 +2,7 @@
 import { Form, FormItem, Input, Icon } from "iview";
 import _ from "lodash";
 export default {
+  name: "CurdLine",
   data() {
     return {
       user: ""
