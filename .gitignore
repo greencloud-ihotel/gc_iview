@@ -1,6 +1,5 @@
 node_modules
 dist/dev
-docs/assets/dist
 # local env files
 .env.local
 .env.*.local
