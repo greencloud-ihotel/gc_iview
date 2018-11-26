@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "SwitchCom",
+  name: "TFSwitch",
   data() {
     return {
       switchValue: true
