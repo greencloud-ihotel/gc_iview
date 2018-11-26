@@ -4,7 +4,10 @@
 
 主要用于列表页面搜索的刷选条件。
 
-1. 基础用法:自动表格的基本使用方法。里面包含了 input，select，checkbox，buttons 的内容。
+## 示例
+
+1. 1.基础用法:自动表格的基本使用方法。里面包含了 input，select，checkbox，buttons 的内容。
+----
 
 ```javascript
 /*vue*/
@@ -49,29 +52,6 @@ export default {
                 return h("Select",{
                    props: {}
                 })
-                // 在项目中使用jsx 的方式，文档中只做对应的展示
-                // return (
-                //   <i-select
-                //     filterable
-                //     placeholder={placeholder}
-                //     transfer={true}
-                //     // loading="grops.loading}
-                //     value={this.searchBar.val.category}
-                //     //onOn-open-change={this.openIf}
-                //     onInput={value => {
-                //       this.searchBar.val.category = value;
-                //     }}
-                //     clearable
-                //   >
-                //     {this.searchBar.default.listProduct.map(val => {
-                //       return (
-                //         <i-option value={val.code} key={val.code}>
-                //           {val.descript}
-                //         </i-option>
-                //       );
-                //     })}
-                //   </i-select>
-                // );
               }
             },
           ],
@@ -122,14 +102,20 @@ export default {
 
 ### props
 
-| 属性        | 说明                                                                                                                            | 是否必传 | 是否 iview 参数 |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
-| columns     | 表格列的配置描述, columns 数据格式经过改造。数据格式见下面的例子，type 可以是 input（包含 jsx 书写的 select），checkbox，button | 是       | 否              |
-| rowNumProp  | 一行显示内容个数，默认为 3 ，一行超过 3 个出现对应的隐藏按钮                                                                    | 否       |
-| value       | 绑定值，这边 columns 的 keys 要和 value 里面的内容对应起来                                                                      | 否       |
-| hideBtnHide | 是否隐藏隐藏按钮                                                                                                                | 否       |
+| 属性        | 说明                                                         | 是否必传 | 是否 iview 参数 |
+| ----------- | ------------------------------------------------------------ | -------- | --------------- |
+| columns     | 表格列的配置描述,详下下表 columns                            | 是       | 否              |
+| rowNum      | 一行显示内容个数，默认为 3 ，一行超过 3 个出现对应的隐藏按钮 | 否       |
+| value       | 双向绑定到组件和外部的值                                     | 否       |
+| hideBtnHide | 是否隐藏掉显示隐藏按钮                                       | 否       |
 
-### columns 数据核实变化
+### columns表
+
+| 属性 | 说明                                                            | 是否必传 | 默认值 |
+| ---- | --------------------------------------------------------------- | -------- | ------ |
+| type | 这行的类型,inputs为普通输入框,checkboxs为筛选框,buttons为按钮组 | 否       | inputs |
+
+### columns 数据示例
 
 ```javascript
 [
@@ -137,10 +123,28 @@ export default {
     datas: [
       {
         label: "请输入代码或者描述",
-        key: "conditionText"
+        key: "conditionText"      //绑定到value的key
       }
     ],
     type: "inputs"
+  },
+  {
+    datas: [
+      {
+        label: "苹果",
+        key: "apple"
+      }
+    ],
+    type: "checkbox"
+  },
+  {
+    datas: [
+      {
+        label: "查询",
+        action:this.search
+      }
+    ],
+    type: "buttons"
   }
 ];
 ```

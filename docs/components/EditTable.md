@@ -5,7 +5,10 @@
 主要用于展示可编辑表格数据。
 扩展自 [iview Table](https://www.iviewui.com/components/table) 可直接使用 Table 的所有 props 和 mehods。
 
+## 示例
+
 1. 基础用法:自动表格的基本使用方法。
+---
 
 ```javascript
 /*vue*/
