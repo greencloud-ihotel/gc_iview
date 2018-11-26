@@ -4,6 +4,9 @@
 switch 组件封装,主要针对于后端返回 T 或 F ,而不是 true 或 false 的情况 ,可直接用于更新。
 扩展自 [iview switch](https://www.iviewui.com/components/switch) 可直接使用 switch 的所有 props 和 mehods。
 
+
+## 示例
+
 1.  1.基础用法:状态开关的基础用法。
 ---
 
@@ -38,6 +41,7 @@ export default {
 ---
 2. 2.和 AutoTable 相结合的用法:状态开关在 AutoTable 中的使用情况请在 AutoTable 中查看。
 
+## API
 ### props
 
 | 属性      | 说明                                                          | 是否必传 | 是否 iview 参数 |
