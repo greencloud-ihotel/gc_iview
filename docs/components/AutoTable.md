@@ -4,7 +4,10 @@
 
 主要用于展示大量结构化数据。扩展自 [iview Table](https://www.iviewui.com/components/table) 可直接使用 Table 的所有 props 和 mehods。
 
-1. 基础用法:自动表格的基本使用方法。
+## 示例
+
+1. 1.基础用法:自动表格的基本使用方法。
+----
 
 ```javascript
 /*vue*/
@@ -23,26 +26,13 @@ export default {
           { title: "标识", key: "id" },
           { title: "姓名", key: "username" },
           { title: "性别", key: "sex" },
-        //   {
-        //   title: "启用",
-        //   key: "isHalt",
-        //   align: "center",
-        //   render: (h, params) => {
-        //     return h(SwitchCom, {
-        //       props: {
-        //         updateUrl: "/product-room/bks/channelInfo/updateOtaChannel",
-        //         row: params.row
-        //       }
-        //     });
-        //   }
-        // },
           {
-          title: "操作",
-          key: "action",
-          width: 160,
-          align: "center",
-          buttons: ["修改"]
-        }
+            title: "操作",
+            key: "action",
+            width: 160,
+            align: "center",
+            buttons: ["修改"]
+          }
         ],
         url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
         path: "datas",
@@ -57,7 +47,9 @@ export default {
 </style>
 ```
 
-2. 和 filterSearch 相结合的用法:AutoTable 和 filterSearch 相结合。
+----
+2. 2.和 filterSearch 相结合的用法:AutoTable 和 filterSearch 相结合。
+----
 
 ```javascript
 /*vue*/
@@ -117,32 +109,9 @@ export default {
               label: "类型",
               render: h => {
                 const placeholder = "类型";
-                return h("Select",{
+                return h("i-select",{
                    props: {}
                 })
-                // 在项目中使用jsx 的方式，文档中只做对应的展示
-                // return (
-                //   <i-select
-                //     filterable
-                //     placeholder={placeholder}
-                //     transfer={true}
-                //     // loading="grops.loading}
-                //     value={this.searchBar.val.category}
-                //     //onOn-open-change={this.openIf}
-                //     onInput={value => {
-                //       this.searchBar.val.category = value;
-                //     }}
-                //     clearable
-                //   >
-                //     {this.searchBar.default.listProduct.map(val => {
-                //       return (
-                //         <i-option value={val.code} key={val.code}>
-                //           {val.descript}
-                //         </i-option>
-                //       );
-                //     })}
-                //   </i-select>
-                // );
               }
             },
           ],
