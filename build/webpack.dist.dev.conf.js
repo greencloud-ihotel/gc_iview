@@ -21,27 +21,37 @@ module.exports = merge(webpackBaseConfig, {
     libraryTarget: "umd",
     umdNamedDefine: true
   },
-  externals: {
-    vue: {
-      root: "Vue",
-      commonjs: "vue",
-      commonjs2: "vue",
-      amd: "vue"
+  externals: [
+    {
+      iview: "iview",
+      lodash: {
+        root: "_",
+        commonjs: "lodash",
+        commonjs2: "lodash",
+        amd: "lodash"
+      },
+      moment: {
+        root: "moment",
+        commonjs: "moment",
+        commonjs2: "moment",
+        amd: "moment"
+      },
+      "animate.css": {
+        root: "animate.css",
+        commonjs: "animate.css",
+        commonjs2: "animate.css",
+        amd: "animate.css"
+      }
     },
-    iview: {
-      root: "iview",
-      commonjs: "iview",
-      commonjs2: "iview",
-      amd: "iview"
-    }
-  },
+    /^iview.*/
+  ],
   plugins: [
     // @todo
+    new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: '"production"'
       }
-    }),
-    new BundleAnalyzerPlugin()
+    })
   ]
 });
