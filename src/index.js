@@ -11,24 +11,18 @@ const useLib = Vue => {
 const install = (Vue, opts = {}) => {
   if (install.installed) return;
   // 安装所有组件
-  components.map(component => Vue.component(component.name, component));
-
   useLib(Vue);
+  components.map(component => Vue.component(component.name, component));
 };
 // 自动安装
 if (typeof window !== "undefined" && window.Vue) {
   console.log("window install");
   install(window.Vue);
   useLib(window.Vue);
-  /*  eslint-disable no-new */
-  // 渲染到#app
-  new window.Vue({
-    el: "#app"
-  });
 }
-console.log("export");
-console.log(install);
-export default {
+const GC_IVIEW = {
   version: "1.0.0",
   install
 };
+console.log(GC_IVIEW);
+export default GC_IVIEW;

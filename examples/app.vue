@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AutoTable v-bind="autoTableConfig"></AutoTable>
+    <AutoTable></AutoTable>
   </div>
 </template>
 

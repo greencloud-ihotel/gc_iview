@@ -81,7 +81,7 @@ export default {
         }
       });
     }
-    if (!this.refuseFetch) {
+    if (!this.refuseFetch && !!this.url) {
       this.fetchData();
     }
   },
