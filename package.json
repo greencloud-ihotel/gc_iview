@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.min.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
     "dev": "webpack-dev-server --content-base test/ --open --inline --hot --compress --history-api-fallback --port 9999 --config build/webpack.dev.conf.js",
     "build:dev": "webpack --config build/webpack.dist.dev.conf.js",
@@ -60,7 +61,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "chalk": "^2.0.1",
     "compression-webpack-plugin": "^1.1.11",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.0",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",

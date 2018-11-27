@@ -4,7 +4,7 @@ const merge = require("webpack-merge");
 const webpackBaseConfig = require("./webpack.base.conf.js");
 const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 process.env.NODE_ENV = "production";
 
 module.exports = merge(webpackBaseConfig, {
@@ -59,6 +59,12 @@ module.exports = merge(webpackBaseConfig, {
       test: /\.(js|css)$/,
       threshold: 10240,
       minRatio: 0.8
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, "./../types"),
+        to: path.resolve(__dirname, "./../dist/types")
+      }
+    ])
   ]
 });
