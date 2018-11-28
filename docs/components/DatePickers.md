@@ -11,7 +11,7 @@ DatePickers 日期范围的封装。
 /*vue*/
 <desc>
   <p>基础用法:</p>
-  <p>自动表格的基本使用方法。</p>
+  <p>日期选择器的基本使用方法。</p>
 </desc>
 <template>
   <div>

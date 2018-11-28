@@ -6,22 +6,24 @@
 
 ## 示例
 
-1. 1.基础用法:自动表格的基本使用方法。里面包含了 input，select，checkbox，buttons 的内容。
-----
+1. 1.基础用法:筛选框的基本使用方法。
+
+---
 
 ```javascript
 /*vue*/
 <desc>
   <p>基础用法:</p>
-  <p>自动表格的基本使用方法。</p>
+  <p>筛选框的基本使用方法。</p>
 </desc>
 <template>
   <div>
+    <div class="top">{{searchData}}</div>
     <filter-search :columns="searchColumns"  v-model='searchData' hideBtnHide="true"></filter-search>
   </div>
 </template>
 
-<script>
+<script lang="jsx">
 export default {
   data() {
     return {
@@ -39,7 +41,7 @@ export default {
           }
       },
       searchColumns: [
-          {
+        {
           datas: [
               {
               label: "请输入代码或者描述",
@@ -47,17 +49,12 @@ export default {
             },
             {
               label: "类型",
-              render: h => {
-                const placeholder = "类型";
-                return h("Select",{
-                   props: {}
-                })
-              }
+              key:"searchBarStas",
             },
           ],
           type: "inputs"
-          },
-          {
+        },
+        {
           datas: [
             { label: "全选", key: "", value: "" },
             { label: "待上线", key: "R", value: "R" },
@@ -95,27 +92,36 @@ export default {
 </script>
 
 <style>
+.top{
+  padding-bottom:30px
+}
 </style>
 ```
+
+---
+
+2. 2.使用 render
+
+---
 
 ## API
 
 ### props
 
-| 属性        | 说明                                                         | 是否必传 | 是否 iview 参数 |
-| ----------- | ------------------------------------------------------------ | -------- | --------------- |
-| columns     | 表格列的配置描述,详下下表 columns                            | 是       | 否              |
-| rowNum      | 一行显示内容个数，默认为 3 ，一行超过 3 个出现对应的隐藏按钮 | 否       |
-| value       | 双向绑定到组件和外部的值                                     | 否       |
-| hideBtnHide | 是否隐藏掉显示隐藏按钮                                       | 否       |
+| 属性        | 说明                                                                       | 是否必传 | 是否 iview 参数 |
+| ----------- | -------------------------------------------------------------------------- | -------- | --------------- |
+| columns     | 表格列的配置描述,详见上表 columns                                          | 是       | 否              |
+| rowNum      | 一行显示内容个数，默认为 3,拉开后默认为 5 ,一行超过 3 个出现对应的隐藏按钮 | 否       |
+| value       | 双向绑定到组件和外部的值                                                   | 否       |
+| hideBtnHide | 是否隐藏掉显示隐藏按钮                                                     | 否       |
 
-### columns表
+### columns 表
 
-| 属性 | 说明                                                            | 是否必传 | 默认值 |
-| ---- | --------------------------------------------------------------- | -------- | ------ |
-| type | 这行的类型,inputs为普通输入框,checkboxs为筛选框,buttons为按钮组 | 否       | inputs |
+| 属性 | 说明                                                               | 是否必传 | 默认值 |
+| ---- | ------------------------------------------------------------------ | -------- | ------ |
+| type | 这行的类型,inputs 为普通输入框,checkboxs 为筛选框,buttons 为按钮组 | 否       | inputs |
 
-### columns 数据示例
+### columns 表示例
 
 ```javascript
 [
@@ -123,10 +129,10 @@ export default {
     datas: [
       {
         label: "请输入代码或者描述",
-        key: "conditionText"      //绑定到value的key
+        key: "conditionText" //绑定到value的key
       }
     ],
-    type: "inputs"
+    type: "inputs" //input类型的集合
   },
   {
     datas: [
@@ -135,16 +141,20 @@ export default {
         key: "apple"
       }
     ],
-    type: "checkbox"
+    type: "checkbox" //下面筛选框类型的集合
   },
   {
     datas: [
       {
         label: "查询",
-        action:this.search
+        action: this.search //使用自己的方法
+      },
+      {
+        label: "重置",
+        action: "reset" //重置整个查询框
       }
     ],
-    type: "buttons"
+    type: "buttons" //按钮类型的集合
   }
 ];
 ```
