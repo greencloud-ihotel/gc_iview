@@ -8,6 +8,7 @@
 ## 示例
 
 1. 基础用法:自动表格的基本使用方法。
+
 ---
 
 ```javascript
@@ -18,7 +19,7 @@
 </desc>
 <template>
   <div>
-    <auto-table v-bind="autoTableConfig"></auto-table>
+    <edit-table v-bind="autoTableConfig"></edit-table>
   </div>
 </template>
 
