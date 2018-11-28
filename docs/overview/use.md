@@ -30,7 +30,7 @@ new Vue({
 });
 ```
 
-2.在组件中直接使用 gc_ivew 中的组件
+2.在组件中直接使用 gc_ivew 中的组件,注意:可以直接使用大写方式调用
 
 ```javascript
 <template>
