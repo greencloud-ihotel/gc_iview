@@ -2,7 +2,7 @@ import "babel-polyfill";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import iview from "iview";
-import gc_iview from "../dist/index.min.js";
+import gc_iview from "../src/index";
 import App from "./app.vue";
 Vue.use(VueRouter);
 Vue.use(iview);

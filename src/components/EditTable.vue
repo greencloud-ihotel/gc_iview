@@ -2,6 +2,7 @@
 import _ from "lodash";
 import { InputNumber } from "iview";
 export default {
+  name: "EditTable",
   props: [
     "columns",
     "data",

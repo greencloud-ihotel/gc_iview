@@ -71,7 +71,7 @@
 import { getListGroups, getListHotels } from "../server/modules/product";
 import axios from "axios";
 export default {
-  name: "groupHotelLink",
+  name: "GroupHotelLink",
   props: {
     hotelsFetch: Object,
     value: Object,
