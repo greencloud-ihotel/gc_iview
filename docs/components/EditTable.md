@@ -19,7 +19,7 @@
 </desc>
 <template>
   <div>
-    <edit-table v-bind="autoTableConfig"></edit-table>
+    <edit-table v-bind="config"></edit-table>
   </div>
 </template>
 
@@ -27,14 +27,12 @@
 export default {
   data() {
     return {
-      autoTableConfig: {
+      config: {
         columns: [
           { title: "标识", key: "id" },
           { title: "姓名", key: "username" },
           { title: "性别", key: "sex" },
         ],
-        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
-        path: "datas"
       }
     };
   }

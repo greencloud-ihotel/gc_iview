@@ -20,20 +20,18 @@ module.exports = merge(webpackBaseConfig, {
     libraryTarget: "umd",
     umdNamedDefine: true
   },
-  externals: {
-    vue: {
-      root: "Vue",
-      commonjs: "vue",
-      commonjs2: "vue",
-      amd: "vue"
+  externals: [
+    {
+      vue: {
+        root: "Vue",
+        commonjs: "vue",
+        commonjs2: "vue",
+        amd: "vue"
+      },
+      iview: "iview"
     },
-    iview: {
-      root: "iview",
-      commonjs: "iview",
-      commonjs2: "iview",
-      amd: "iview"
-    }
-  },
+    /^iview.*/
+  ],
   plugins: [
     // @todo
     new webpack.DefinePlugin({

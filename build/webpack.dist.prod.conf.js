@@ -22,6 +22,12 @@ module.exports = merge(webpackBaseConfig, {
   },
   externals: [
     {
+      vue: {
+        root: "Vue",
+        commonjs: "vue",
+        commonjs2: "vue",
+        amd: "vue"
+      },
       iview: "iview",
       lodash: {
         root: "_",
