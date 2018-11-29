@@ -1,5 +1,9 @@
 <template>
-  <AutoTable></AutoTable>
+  <div>
+    <span>autoTableConfig:{{autoTableConfig}}</span>
+    <AutoTable v-bind="autoTableConfig"></AutoTable>
+  </div>
+
 </template>
 
 <script>
@@ -8,8 +12,8 @@ export default {
     return {
       autoTableConfig: {
         columns: [
-          { title: "username", key: "username" },
-          { title: "id", key: "id" }
+          { title: "id", key: "id" },
+          { title: "username", key: "username" }
         ],
         url: "/api/user/list",
         path: "datas"
