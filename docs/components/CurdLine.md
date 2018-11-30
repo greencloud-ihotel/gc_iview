@@ -2,15 +2,19 @@
 
 ## 概述
 
+类似表格一样的一行一条元素,具有新增、删除、修改功能
+
+## 示例
+
 新增行用于新增一行的数据内容。
 
-1. 基础用法:新增行的基本使用方法。
+1.基础用法:新增行的基本使用方法。
 
 ```javascript
 /*vue*/
 <template>
   <div>
-  {{curdLineData}}
+    <div class="data">{{curdLineData}}</div>
     <curd-line :columns="curdLineColumn"
                 v-model="curdLineData"></curd-line>
   </div>
@@ -32,14 +36,6 @@ export default {
         {
           label: "描述1",
           key: "countCode"
-          //render: (h, params) => {
-            //return (
-            //   <i-select value={params.countCode}>
-            //     <i-option value="a">1</i-option>
-            //     <i-option value="a2">33</i-option>
-            //   </i-select>
-            //);
-          // }
         },
         {
           label: "描述2",
@@ -56,8 +52,8 @@ export default {
         {
           label: "描述5",
           key: "test",
-          render: () => {
-            //return <span>dd</span>;
+          render: h => {
+            return h("span",null,"ddd");
           }
         }
       ],
@@ -70,9 +66,11 @@ export default {
 </style>
 ```
 
+## API
+
 ### props
 
-| 属性    | 说明                                                                                  | 是否必传 | 是否 iview 参数 |
-| ------- | ------------------------------------------------------------------------------------- | -------- | --------------- |
-| columns | columns 一行包含的内容元素 ,参考 iview 中 columns 元素的写法                          | 是       | 否              |
-| value   | curdLineData 对应的数据，可以参考 table 的 data，这边键值和 columns 中的 key 值想对应 | 是       | 否              |
+| 属性    | 说明                                                | 是否必传 | 是否 iview 参数 |
+| ------- | --------------------------------------------------- | -------- | --------------- |
+| columns | 一行的定义,key为同步到外部的key,label为描述         | 是       | 否              |
+| value   | v-model传入的数据，键值和 columns 中的 key 值想对应 | 是       | 否              |
