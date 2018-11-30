@@ -22,7 +22,7 @@
 </desc>
 <template>
   <div>
-    {{list}}
+    <div class="data">{{list}}</div>
     <edit-table v-bind="config" :data.sync="list"></edit-table>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
 </desc>
 <template>
   <div>
-    {{list}}
+     <div class="data">{{list}}</div>
     <edit-table v-bind="config" :data.sync="list"></edit-table>
   </div>
 </template>
@@ -139,7 +139,7 @@ export default {
 </desc>
 <template>
   <div>
-    {{list}}
+     <div class="data">{{list}}</div>
     <edit-table v-bind="config" :data.sync="list"></edit-table>
   </div>
 </template>
@@ -218,7 +218,7 @@ export default {
 </desc>
 <template>
   <div>
-    {{list}}
+     <div class="data">{{list}}</div>
     <edit-table v-bind="config" :data.sync="list"></edit-table>
   </div>
 </template>
