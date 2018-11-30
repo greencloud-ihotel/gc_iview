@@ -25,4 +25,6 @@ npm install gc_iview --save
 <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
 <!-- import iView -->
 <script src="//unpkg.com/iview/dist/iview.min.js"></script>
+<!-- import gc_iview -->
+<script src="https://unpkg.com/gc_iview"></script>
 ```
