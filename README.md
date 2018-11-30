@@ -1,5 +1,6 @@
 # 目录结构
 
+```tree
 gc_iview/
 ├── build
 ├── dist //构建目录
@@ -9,6 +10,7 @@ gc_iview/
 ├── node_modules
 ├── src //源码
 └── types
+```
 
 ## **_使用方式_**
 
