@@ -5,7 +5,9 @@
 DatePickers 日期范围的封装。
 扩展自 [iview switch](https://www.iviewui.com/components/switch) 可直接使用 switch 的所有 props 和 mehods。
 
-1. 基础用法:日期选择器的基本使用方法。
+## 示例
+
+1.基础用法:日期选择器的基本使用方法。
 
 ```javascript
 /*vue*/
@@ -15,12 +17,11 @@ DatePickers 日期范围的封装。
 </desc>
 <template>
   <div>
+    <div class="data">{{dates}}</div>
     <p>没有Label的情况</p>
-    <date-pickers v-model="dateData" ></date-pickers>
-    <p>单个Label的情况</p>
-    <date-pickers v-model="dateData" :options="options" ></date-pickers>
-    <p>两个Label的情况</p>
-    <date-pickers v-model="dateData" :options="endOptions" ></date-pickers>
+    <date-pickers v-model="dates" ></date-pickers>
+    <p> 有Label的情况</p>
+    <date-pickers v-model="dates" :options="options" ></date-pickers>
   </div>
 </template>
 <script>
@@ -28,14 +29,8 @@ DatePickers 日期范围的封装。
 export default {
   data() {
     return {
-      dateData: {
-        //startDate: , 默认为当天
-        //endDate: ,   默认为当天的后一天
-      },
+      dates:{},
       options:{
-        startLabel:"开始时间:"
-      },
-      endOptions:{
         startLabel:"开始时间:",
         endLabel:"开始时间:"
       }

@@ -107,7 +107,9 @@ export default {
               />
             </FormItem>
             {options && options.endLabel ? (
-              <span class="ml10">{options.endLabel}</span>
+              <span class="ml10" style="marginRight:0">
+                {options.endLabel}
+              </span>
             ) : null}
             <FormItem
               class="ml10"
@@ -145,6 +147,8 @@ export default {
   width: 100%;
   .ml10 {
     margin-left: 10px;
+    margin-right: 10px;
+    line-height: 33px;
   }
   .datePickers {
     display: flex;
