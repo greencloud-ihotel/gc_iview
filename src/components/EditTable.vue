@@ -172,7 +172,7 @@ export default {
           }
           return val.key == "action" ? (
             <div class="buttons">
-              {this.buttons && !_.includes(this.buttons, "edit") ? null : (
+              {val.buttons && !_.includes(val.buttons, "edit") ? null : (
                 <span
                   class="button"
                   style={{ marginRight: "10px" }}
@@ -198,7 +198,7 @@ export default {
                   {params.row.isEdit ? "确定" : "编辑"}
                 </span>
               )}
-              {(this.buttons && !_.includes(this.buttons, "delete")) ||
+              {(val.buttons && !_.includes(val.buttons, "delete")) ||
               params.row._num == this.addRowNumber ? null : (
                 <span
                   class="button"
