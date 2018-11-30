@@ -1,9 +1,8 @@
-# TFSwitch
+# DatePickers
 
 ## 概述
 
-DatePickers 日期范围的封装。
-扩展自 [iview switch](https://www.iviewui.com/components/switch) 可直接使用 switch 的所有 props 和 mehods。
+DatePickers可以设置开始时间和结束时间
 
 ## 示例
 
