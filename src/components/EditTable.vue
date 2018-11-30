@@ -3,15 +3,7 @@ import _ from "lodash";
 import { InputNumber } from "iview";
 export default {
   name: "EditTable",
-  props: [
-    "columns",
-    "data",
-    "type",
-    "isEdit",
-    "buttons",
-    "autoSave",
-    "precision"
-  ],
+  props: ["columns", "data", "type", "isEdit", "buttons", "autoSave"],
   data() {
     return {
       tableData: !_.isEmpty(this.data) ? _.cloneDeep(this.data) : [],
@@ -64,6 +56,7 @@ export default {
         case "select":
           render = (
             <i-select
+              {...{ props: val.props }}
               value={params.row[key]}
               clearable
               onInput={value => {
@@ -86,7 +79,7 @@ export default {
             <InputNumber
               min={0}
               max={999999999}
-              precision={this.precision}
+              {...{ props: val.props }}
               value={params.row[key]}
               onInput={value => {
                 input(value, params);
@@ -108,6 +101,7 @@ export default {
         default:
           render = (
             <i-input
+              {...{ props: val.props }}
               value={params.row[key]}
               onInput={value => {
                 input(value, params);

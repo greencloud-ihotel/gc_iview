@@ -9,48 +9,41 @@
 <script>
 export default {
   data() {
-    // :columns="columnsTest"
-    //            :isEdit="true"
-    //            buttons="edit,delete"
-    //            :data.sync="listTest"
-    //            @check="check"
-    //            type="new"></EditTable>
     return {
       list: [
         { name: "杭州", description: "湖州", modifyUser: 100 },
-        { name: "杭州", description: "New York" }
+        { name: "杭州", description: "New York" },
+        { name: "杭州3", description: "New York", num: 1 }
       ],
       editTableConfig: {
         isEdit: false,
-        // autoSave: true,
-        // buttons: "edit,delete",
+        autoSave: true,
         columns: [
           {
             title: "年龄",
             keys: ["code", "description"],
             type: "select",
-            cellClassName: {
-              age: "demo-table-info-cell-age",
-              address: "demo-table-info-cell-address"
-            },
             options: [
               {
-                description: "湖州",
-                code: "abc",
-                label: "杭州2"
+                code: "hz",
+                label: "杭州"
               },
               {
-                description: "New York3",
-                code: "abc",
-                label: "New Yo11111k3"
+                code: "huz",
+                label: "湖州"
               }
             ]
           },
           { title: "年龄2", type: "input", key: "name" },
           {
+            title: "年龄3",
+            type: "number",
+            key: "num",
+            props: { precision: 2 }
+          },
+          {
             title: "操作",
-            key: "action",
-            buttons: ["查看", "Edit", "Delete"]
+            key: "action"
           }
         ]
       }
