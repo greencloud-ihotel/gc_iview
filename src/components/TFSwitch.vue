@@ -18,7 +18,7 @@ export default {
   },
   props: {
     row: Object,
-    updateUrl: String
+    url: String
   },
   created() {
     this.switchValue = !!this.row && this.row["isHalt"] == "F";
@@ -27,7 +27,7 @@ export default {
     async change(value) {
       this.row.isHalt = value ? "F" : "T";
       this.row.updateIsHaltOnly = "T";
-      this.$http.put(this.updateUrl, this.row).then(resData => {
+      this.$http.put(this.url, this.row).then(resData => {
         if (resData.data.result !== 0) {
           this.switchValue = !this.switchValue;
           this.row.isHalt = this.row.isHalt == "T" ? "T" : "F";

@@ -7,7 +7,7 @@ switch 组件封装,主要针对于后端返回 T 或 F ,而不是 true 或 fals
 
 ## 示例
 
-1.  1.基础用法:状态开关的基础用法。
+1.基础用法:状态开关的基础用法。
 
 ---
 
@@ -42,13 +42,59 @@ export default {
 
 ---
 
-2. 2.和 AutoTable 相结合的用法:状态开关在 AutoTable 中的使用情况请在 AutoTable 中查看。
+2.在 AutoTable 中使用。
+
+---
+
+```javascript
+/*vue*/
+<template>
+  <div class="contanier">
+    <auto-table v-bind="autoTableConfig"></auto-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      autoTableConfig: {
+        columns: [
+          { title: "用户id", key: "id" },
+          {
+            title: "姓名",
+            key: "username"
+          },
+          {
+            title: "启用",
+            key: "username",
+            render: (h,params) => {
+              return h("TFSwitch", {
+                props: {
+                  row: params.row,
+                  url: "https://yapi.ihotel.cn/mock/60/updateTable"
+                }
+              });
+              // use jsx
+              // return (<TFSwitch row={params.row}></TFSwitch>)
+            }
+          }
+        ],
+        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
+        path: "datas"
+      }
+    };
+  }
+};
+</script>
+
+```
 
 ## API
 
 ### props
 
-| 属性      | 说明                                                          | 是否必传 | 是否 iview 参数 |
-| --------- | ------------------------------------------------------------- | -------- | --------------- |
-| row       | 行数据，行数据里面要包含 isHalt 参数，F 为 False，T 为 True， | 是       | 否              |
-| updateUrl | 更新 Url，后台更新状态的 url 地址                             | 是       | 否              |
+| 属性 | 说明                                              | 是否必传 | 是否 iview 参数 |
+| ---- | ------------------------------------------------- | -------- | --------------- |
+| row  | 行数据，包含 isHalt 参数，F 为 False，T 为 True， | 是       | 否              |
+| url  | 更新 Url，后台更新状态的 url 地址                 | 是       | 否              |
