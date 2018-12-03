@@ -1,5 +1,9 @@
 # 更新日志
 
+## V1.0.7
+
+    - TFSwitch updateUrl变更为url
+
 ## V1.0.2 ~ V1.0.6
 
     - AutoTale 无url参数不进行数据获取
