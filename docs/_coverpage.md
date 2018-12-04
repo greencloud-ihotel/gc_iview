@@ -1,4 +1,4 @@
-# gc_ivew
+# gc_iview
 
 ![logo](assets/logo.svg)
 
