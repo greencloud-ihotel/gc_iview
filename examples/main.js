@@ -36,6 +36,10 @@ const router = new VueRouter({
     {
       path: "/TFSwitch",
       component: resolve => require(["./routers/TFSwitch.vue"], resolve)
+    },
+    {
+      path: "/SuperSearch",
+      component: resolve => require(["./routers/SuperSearch.vue"], resolve)
     }
   ]
 });

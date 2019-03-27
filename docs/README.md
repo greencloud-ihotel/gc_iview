@@ -9,3 +9,4 @@ TodoList
 - [x] CurdLine
 - [x] GroupHotelLink
 - [x] TFSwitch
+- [x] SuperSearch

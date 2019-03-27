@@ -8,6 +8,7 @@
         <router-link to="/FilterSearch">FilterSearch</router-link>
         <router-link to="/DatePickers">DatePickers</router-link>
         <router-link to="/TFSwitch">TFSwitch</router-link>
+        <router-link to="/SuperSearch">SuperSearch</router-link>
       </nav>
       <router-view></router-view>
     </div>
