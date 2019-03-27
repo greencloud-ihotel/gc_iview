@@ -1,5 +1,9 @@
 # 更新日志
 
+## V1.1.0
+
+    - 新增 SuperSearch
+
 ## V1.0.7
 
     - TFSwitch updateUrl变更为url
