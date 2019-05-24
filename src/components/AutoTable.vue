@@ -1,11 +1,12 @@
 <template>
-  <Card class="box">
+  <Card :class="[{'box':originalStyle }]  ">
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
     <Table :loading="tableIsLoading"
-           :columns="tableColumns"
+           :columns="columns"
            :data="tableData"
+           :height="tableHeight"
            v-bind="$attrs"
            v-on="$listeners"></Table>
     <div class="page"
@@ -19,6 +20,7 @@
             show-elevator
             :page-size="tablePageSize"
             :total="tableTotalRows"
+            show-total
             @on-change="onPageChange"
             :transfer="transfer"></Page>
     </div>
@@ -30,34 +32,82 @@ import _ from "lodash";
 export default {
   name: "AutoTable",
   inheritAttrs: false,
-  props: [
-    "hidePage",
-    "url", //接口地址
-    "path", // 根据data.retVal.path去加载data数据
-    "initData", //自定义传入数据
-    "columns", // 定义列
-    "pageSize", // 定义每页条数
-    "refuseFetch", //拒绝自动获取
-    "transfer", //分页页数下拉框放置位置
-    "showSize"
-  ],
+  props: {
+    hidePage: {
+      type: Boolean,
+      default: false
+    },
+    url: {
+      type: String,
+      default: "",
+      required: true,
+      validator: value => {
+        // 这个值必须匹配下列字符串中的一个
+        return value !== "";
+      }
+    }, //接口地址
+    path: {
+      type: String,
+      default: ""
+    }, // 根据data.retVal.path去加载data数据
+    initData: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }, //自定义传入数据
+    columns: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    }, // 定义列
+    pageSize: {
+      type: Number,
+      default: 30
+    }, // 定义每页条数
+    refuseFetch: {
+      type: Boolean,
+      default: false
+    }, //拒绝自动获取
+    transfer: {
+      type: Boolean,
+      default: false
+    }, //分页页数下拉框放置位置
+    showSize: {
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: Number,
+      default: 420
+    },
+    originalStyle: {
+      type: Boolean,
+      default: true
+    }
+    //是否使用原始样式，默认为false
+  },
   data() {
     return {
       tableIsLoading: false, // 是否正在加载
-      tableColumns: [], // 表头数据
+
       tableData: [], // 表格数据
       tableTotalRows: 0, // 表格总行数
       tableCurrentPage: 1, // 表格当前页
-      tablePageSize: 10, // 表格每页条数
-      currentParams: {} //当前参数
+      tablePageSize: 30, // 表格每页条数
+      currentParams: {}, //当前参数
+      tableHeight: 420
     };
   },
   created() {
-    this.tablePageSize = this.pageSize || 10;
-    this.tableColumns = this.columns || [];
+    this.tablePageSize = this.pageSize;
+
+    this.tableHeight = this.height;
+
     // 判断是否存在action列,如果有则根据buttons: ['View', 'Edit', 'Delete'] 来生存操作按钮
-    if (this.tableColumns) {
-      this.tableColumns.forEach(item => {
+    if (this.columns) {
+      this.columns.forEach(item => {
         _.set(item, "tooltip", true);
         if (item.key && !_.has(item, "render") && item.key == "action") {
           let arr = [];
@@ -81,14 +131,24 @@ export default {
         }
       });
     }
-    if (!this.refuseFetch && !!this.url) {
+    if (!this.refuseFetch) {
       this.fetchData();
     }
   },
   watch: {
-    url() {
-      // 捕获到url属性发生变化 刷新下数据
-      this.refresh();
+    "initData.firstResult": {
+      handler(value) {
+        this.tableCurrentPage = (value || 0) / this.tablePageSize + 1;
+      }
+    },
+    url(value) {
+      if (value) {
+        // 捕获到url属性发生变化 刷新下数据
+        this.refresh();
+      }
+    },
+    height(val) {
+      this.tableHeight = val;
     }
   },
   methods: {
@@ -98,16 +158,18 @@ export default {
     getTableTotalRows() {
       return this.tableTotalRows;
     },
-    getParams() {
+    getParams(isInSide) {
       var params = {
-        firstResult: (this.tableCurrentPage - 1) * this.tablePageSize,
+        firstResult: isInSide
+          ? (this.tableCurrentPage - 1) * this.tablePageSize
+          : 0,
         pageSize: this.tablePageSize
       };
       return params;
     },
-    fetchData(data) {
+    fetchDataInitail(data, isInSide) {
       this.tableIsLoading = true;
-      var baseParams = this.getParams();
+      var baseParams = this.getParams(isInSide);
       let params = _.merge(this.initData, data, baseParams);
       this.currentParams = params;
       this.$http
@@ -120,14 +182,23 @@ export default {
           } else {
             this.tableData = _.get(response.data.retVal, this.path);
           }
-          this.tableTotalRows = response.data.retVal.totalRows;
-          this.$emit("fetch-table-data-success");
+          this.$nextTick(() => {
+            this.tableTotalRows = response.data.retVal.totalRows;
+          });
+          this.$emit("fetch-table-data-success", this.tableData);
+          this.$emit("input", this.tableData);
         })
         .catch(error => {
           // 接口请求失败
           console.log(error);
           this.tableIsLoading = false;
         });
+    },
+    fetchDataInSide(data) {
+      this.fetchDataInitail(data, true);
+    },
+    fetchData(data) {
+      this.fetchDataInitail(data);
     },
     // 刷新当前页函数
     refreshAndBack(data) {
@@ -142,11 +213,15 @@ export default {
     },
     onPageChange(newPage) {
       this.tableCurrentPage = newPage;
-      this.fetchData(this.currentParams);
+      this.fetchDataInSide(this.currentParams);
     },
     pageSizeChange(value) {
       this.tablePageSize = value;
-      this.refresh();
+      this.pageSizeChangeFlag = true;
+      if (this.tableCurrentPage === 1) {
+        //this.refresh();
+        this.fetchData(this.currentParams);
+      }
       this.$emit("sendPageSize", value);
     }
   }
@@ -159,6 +234,9 @@ export default {
   cursor: pointer;
   color: #4a90e2;
 }
+// .box {
+//   text-align: center;
+// }
 .pagebar {
   padding: 10px;
 }
@@ -170,6 +248,27 @@ export default {
   &:hover {
     box-shadow: none;
     border-color: #eee;
+  }
+}
+.box {
+  padding: 0;
+  /deep/.ivu-table-cell {
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
+  }
+  /deep/.ivu-table td {
+    height: 30px;
+  }
+  /deep/.ivu-table th {
+    height: 30px;
+  }
+  .ivu-table .ivu-select {
+    line-height: 24px;
+    height: 24px;
+  }
+  /deep/ .ivu-card-body {
+    padding: 0;
   }
 }
 </style>
