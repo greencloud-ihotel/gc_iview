@@ -1,10 +1,10 @@
 <template>
-  <Card class="box">
+  <Card :class="[{'box':originalStyle }]  ">
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
     <Table :loading="tableIsLoading"
-           :columns="tableColumns"
+           :columns="columns"
            :data="tableData"
            :height="tableHeight"
            v-bind="$attrs"
@@ -32,42 +32,82 @@ import _ from "lodash";
 export default {
   name: "AutoTable",
   inheritAttrs: false,
-  props: [
-    "hidePage",
-    "url", //接口地址
-    "path", // 根据data.retVal.path去加载data数据
-    "initData", //自定义传入数据
-    "columns", // 定义列
-    "pageSize", // 定义每页条数
-    "refuseFetch", //拒绝自动获取
-    "transfer", //分页页数下拉框放置位置
-    "showSize",
-    "height"
-  ],
+  props: {
+    hidePage: {
+      type: Boolean,
+      default: false
+    },
+    url: {
+      type: String,
+      default: "",
+      required: true,
+      validator: value => {
+        // 这个值必须匹配下列字符串中的一个
+        return value !== "";
+      }
+    }, //接口地址
+    path: {
+      type: String,
+      default: ""
+    }, // 根据data.retVal.path去加载data数据
+    initData: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }, //自定义传入数据
+    columns: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    }, // 定义列
+    pageSize: {
+      type: Number,
+      default: 30
+    }, // 定义每页条数
+    refuseFetch: {
+      type: Boolean,
+      default: false
+    }, //拒绝自动获取
+    transfer: {
+      type: Boolean,
+      default: false
+    }, //分页页数下拉框放置位置
+    showSize: {
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: Number,
+      default: 420
+    },
+    originalStyle: {
+      type: Boolean,
+      default: true
+    }
+    //是否使用原始样式，默认为false
+  },
   data() {
     return {
       tableIsLoading: false, // 是否正在加载
-      tableColumns: [], // 表头数据
+
       tableData: [], // 表格数据
       tableTotalRows: 0, // 表格总行数
       tableCurrentPage: 1, // 表格当前页
       tablePageSize: 30, // 表格每页条数
       currentParams: {}, //当前参数
-      tableHeight: ""
+      tableHeight: 420
     };
   },
   created() {
-    this.tablePageSize = this.pageSize || 30;
-    this.tableColumns = this.columns || [];
-    if (this.height == undefined) {
-      this.tableHeight = 420;
-    } else {
-      this.tableHeight = this.height;
-    }
+    this.tablePageSize = this.pageSize;
+
+    this.tableHeight = this.height;
 
     // 判断是否存在action列,如果有则根据buttons: ['View', 'Edit', 'Delete'] 来生存操作按钮
-    if (this.tableColumns) {
-      this.tableColumns.forEach(item => {
+    if (this.columns) {
+      this.columns.forEach(item => {
         _.set(item, "tooltip", true);
         if (item.key && !_.has(item, "render") && item.key == "action") {
           let arr = [];
