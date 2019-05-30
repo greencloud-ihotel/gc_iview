@@ -6,6 +6,7 @@ import CurdLine from "./CurdLine.vue";
 import EditTable from "./EditTable.vue";
 import SuperSearch from "./SuperSearch.vue";
 import CustomTable from "./CustomTable.vue";
+import FilterList from "./FilterList/FilterList.vue";
 export default [
   AutoTable,
   EditTable,
@@ -14,5 +15,6 @@ export default [
   DatePickers,
   CurdLine,
   SuperSearch,
-  CustomTable
+  CustomTable,
+  FilterList
 ];
