@@ -9,7 +9,20 @@ export default {
       user: ""
     };
   },
-  props: ["value", "columns"],
+  props: {
+    value: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    columns: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    }
+  },
   methods: {
     create() {
       let obj = {};

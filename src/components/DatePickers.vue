@@ -27,6 +27,10 @@ export default {
           }
         };
       }
+    },
+    required: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -86,7 +90,7 @@ export default {
             <FormItem
               prop="startDate"
               rules={{
-                required: true,
+                required: this.required,
                 message: "开始时间不能为空",
                 trigger: "blur,change"
               }}
@@ -107,15 +111,13 @@ export default {
               />
             </FormItem>
             {options && options.endLabel ? (
-              <span class="ml10" style="marginRight:0">
-                {options.endLabel}
-              </span>
+              <span class="ml10">{options.endLabel}</span>
             ) : null}
             <FormItem
               class="ml10"
               prop="endDate"
               rules={{
-                required: true,
+                required: this.required,
                 message: "结束时间不能为空",
                 trigger: "blur,change"
               }}
@@ -147,8 +149,6 @@ export default {
   width: 100%;
   .ml10 {
     margin-left: 10px;
-    margin-right: 10px;
-    line-height: 33px;
   }
   .datePickers {
     display: flex;
