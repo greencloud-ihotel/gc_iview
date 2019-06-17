@@ -209,6 +209,7 @@ export default {
 | rowNum      | 一行显示内容个数，默认为 3,拉开后默认为 5 ,一行超过 3 个出现对应的隐藏按钮 | 否       |
 | value       | 双向绑定到组件和外部的值                                                   | 否       |
 | hideBtnHide | 是否隐藏掉显示隐藏按钮                                                     | 否       |
+| preExplain  | 筛选条件的字                                                               | 否       |
 
 ### columns 表
 
