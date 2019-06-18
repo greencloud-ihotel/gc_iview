@@ -3,7 +3,6 @@
     <div class="data top">{{searchData}}</div>
     <filter-search :columns="searchColumns"
                    v-model="searchData"
-                   preExplain="bb:"
                    hidebtnhide="true"></filter-search>
   </div>
 </template>
@@ -47,6 +46,7 @@ export default {
             { label: "无效", key: "X", value: "X" }
           ],
           key: "searchBarStas", //传入节点值 不传扩展到根对象
+          preExplain: "aa",
           type: "checkboxs"
         },
         {

@@ -357,7 +357,11 @@ export default {
             </div>
             {!_.isEmpty(this.checkboxs) ? (
               <div class="bottom">
-                <div class="first">{this.preExplain}</div>
+                <div class="first">
+                  {this.checkboxs.preExplain
+                    ? this.checkboxs.preExplain
+                    : "筛选条件:"}
+                </div>
                 <CheckboxGroup
                   value={
                     this.value[this.checkboxs.key]
