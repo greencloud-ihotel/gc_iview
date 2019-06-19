@@ -1,10 +1,6 @@
-import iView from "iview";
-import "iview/dist/styles/iview.css";
-import axios from "axios";
 import components from "./components";
 
 const useLib = Vue => {
-  Vue.prototype.$http = axios;
   Vue.prototype.$complie = Vue.complie;
   // Vue.use(iView);
 };

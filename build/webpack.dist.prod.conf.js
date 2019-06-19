@@ -29,12 +29,7 @@ module.exports = merge(webpackBaseConfig, {
         amd: "vue"
       },
       iview: "iview",
-      axios: {
-        root: "axios",
-        commonjs: "axios",
-        commonjs2: "axios",
-        amd: "axios"
-      }
+      axios: "axios"
     },
     /^iview.*/
   ],
