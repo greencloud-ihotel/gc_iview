@@ -8,7 +8,7 @@
       <i-Col :span="inline ? 12: 24">
         <FormItem :label="labelTag.hotelGroupCode"
                   prop="hotelGroupCode">
-          <Select :disabled="disabled"
+          <Select :disabled="disableHotelGroup"
                   not-found-text="暂无可选集团"
                   v-model="value.hotelGroupCode"
                   placeholder="请选择集团"
@@ -26,7 +26,7 @@
              v-if="multiple">
         <FormItem :label="labelTag.hotelCode"
                   prop="hotelCodes">
-          <Select :disabled="disabled"
+          <!-- <Select :disabled="disabled"
                   v-model="value.hotelCodes"
                   not-found-text="暂无可选酒店"
                   placeholder="请选择酒店"
@@ -39,17 +39,21 @@
             <Option v-for="(item,index) in hotels"
                     :value="item.value"
                     :key="index">{{item.label}}({{item.value}})</Option>
-          </Select>
+          </Select> -->
+          <HotelFilter v-model="value.hotelCodes"
+                       :codes="value.hotelGroupCode"
+                       :disabled="disableHotel"
+                       @changed="changeHotels"></HotelFilter>
         </FormItem>
       </i-Col>
       <i-Col :span="inline ? 12: 24"
              v-if="!multiple">
         <FormItem :label="labelTag.hotelCode"
                   prop="hotelCode">
-          <Select :disabled="disabled"
+          <Select :disabled="disableHotel"
                   v-model="value.hotelCode"
                   not-found-text="暂无可选酒店"
-                  placeholder="请选择酒店"
+                  :placeholder="hotelsFetch.placeholder ? hotelsFetch.placeholder : '请选择酒店'"
                   :transfer="true"
                   clearable
                   filterable
@@ -68,13 +72,28 @@
 </template>
 <script>
 /* name:集团酒店联动搜索框组件*/
-import { getListGroups, getListHotels } from "../server/modules/product";
+// import { getListGroups, getListHotels } from "../server/modules/product";
 import axios from "axios";
+import HotelFilter from "@/components/hotelFilter.vue";
+import _ from "lodash";
 export default {
   name: "GroupHotelLink",
+  components: {
+    HotelFilter
+  },
   props: {
-    hotelsFetch: Object,
-    value: Object,
+    hotelsFetch: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
+    value: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
     hasLabel: {
       type: Boolean,
       default: false
@@ -92,6 +111,10 @@ export default {
       type: Boolean,
       default: false
     },
+    groupDisabled: {
+      type: Boolean,
+      default: false
+    },
     hasRule: {
       type: Boolean,
       default: false
@@ -99,7 +122,16 @@ export default {
     inline: {
       type: Boolean,
       default: true
-    }
+    },
+    groupFetchUrl: {
+      type: String,
+      default: "/platform/baseapi/listGroups"
+    },
+    hotelFetchUrl: {
+      type: String,
+      default: "/platform/baseapi/listHotels"
+    },
+    manualDisable: Boolean
   },
   data() {
     const validateHotelGroupCode = (rule, value, callback) => {
@@ -167,28 +199,42 @@ export default {
         };
       }
       return labelTag;
+    },
+    disableHotelGroup() {
+      let disabled = this.disabled || this.groupDisabled;
+      return !this.manualDisable
+        ? !this.$store.state.isUnion || disabled
+        : disabled;
+    },
+    disableHotel() {
+      return !this.manualDisable
+        ? this.$store.state.isHotel || this.disabled
+        : this.disabled;
     }
   },
   watch: {
     "value.hotelGroupCode"(val) {
       if (val) {
-        this.getHotel(val);
+        !this.multiple && this.getHotel(val);
       } else {
         this.value.hotelCode = null;
-        this.value.hotelCodes = null;
+        this.value.hotelCodes = [];
         this.hotels = [];
       }
-      // this.$nextTick(() => {
-      //   this.$refs.groupHotelForm.validateField("hotelGroupCode");
-      // });
+      this.$emit("change-group", val);
     }
-    //"value.hotelCode"() {
-    // this.$nextTick(() => {
-    //   this.$refs.groupHotelForm.validateField("hotelCode");
-    // });
-    //}
   },
   methods: {
+    getListGroups(params) {
+      return axios.get(this.groupFetchUrl, {
+        params
+      });
+    },
+    getListHotels(params) {
+      return axios.get(this.hotelFetchUrl, {
+        params
+      });
+    },
     validateHotelGroupCode() {
       this.$refs.groupHotelForm.validateField("hotelGroupCode");
     },
@@ -203,7 +249,11 @@ export default {
     //集团和酒店搜索框值改变事件
     changeHotelGroupCode(data) {
       this.value["hotelGroupCode"] = data;
+      this.$nextTick(() => {
+        this.$set(this.value, "hotelCode", "");
+      });
       this.$emit("input", this.value);
+      this.$emit("change-group", data);
     },
     changeHotelCode(data) {
       if (data instanceof Array) {
@@ -212,11 +262,12 @@ export default {
         this.value["hotelCode"] = data;
       }
       this.$emit("input", this.value);
+      this.$emit("change-hotel", data);
     },
     //获取集团搜索框数据
     async getGroup() {
       this.groups = [];
-      const res = await getListGroups();
+      const res = await this.getListGroups();
       if (res && res.data && res.data.retVal) {
         const list = res.data.retVal;
 
@@ -226,22 +277,37 @@ export default {
             label: item.descript
           });
         });
+
+        if (!this.$store.state.isUnion) {
+          this.$set(
+            this.value,
+            "hotelGroupCode",
+            this.$store.state.userInfo.unitCode
+          );
+          this.$emit("input", this.value);
+        }
+        this.$store.state.isGroup && this.$emit("get-data", this.groups);
       }
+      // this.$emit("get-group", this.groups);
     },
     //获取酒店搜索框数据
     async getHotel(hotelGroupCode) {
-      this.hotels.list = [];
+      this.hotels = [];
       this.hotelName = "";
       let res;
-      if (this.hotelsFetch) {
+      let code = "";
+      let label = "";
+      if (!_.isEmpty(this.hotelsFetch)) {
         res = await axios.get(this.hotelsFetch.url, {
           params: {
             ...this.hotelsFetch.params,
             hotelGroupCode: hotelGroupCode
           }
         });
+        code = this.hotelsFetch.code;
+        label = this.hotelsFetch.label;
       } else {
-        res = await getListHotels({
+        res = await this.getListHotels({
           hotelGroupCode: hotelGroupCode,
           needmoreInfo: ""
         });
@@ -252,33 +318,54 @@ export default {
         const arr = [];
         list.forEach(item => {
           arr.push({
-            value: item.code,
-            label: item.descript
+            value: code ? item[code] : item.code,
+            label: label ? item[label] : item.descript
           });
         });
         this.hotels = arr;
+
+        if (this.$store.state.isHotel) {
+          this.$set(
+            this.value,
+            "hotelCode",
+            this.$store.state.userInfo.hotelCode
+          );
+          this.$emit("input", this.value);
+          this.$emit(
+            "get-data",
+            this.value.hotelGroupCode,
+            this.$store.state.userInfo.hotelCode
+          );
+        }
       }
     },
     showMessage(value) {
-      // console.log("value:" + value);
       if (value == true && !this.value.hotelGroupCode) {
         this.$Message.warning("请先选择集团");
       }
     },
     reset() {
-      // this.value.hotelGroupCode = null;
-      // this.value.hotelCodes = null;
-      // this.value.hotelCode = null;
-      // this.groups = [];
-      // this.hotels = [];
-      //if (this.value.hotelGroupCode || this.value.hotelCode) {
       this.$refs.groupHotelForm.resetFields();
-      //}
+      this.value.hotelGroupCode = null;
+      this.value.hotelCode = null;
+      this.value.hotelCodes = [];
+    },
+    changeHotels() {
+      if (this.hasRule) this.$refs.groupHotelForm.validateField("hotelCodes");
+    }
+  },
+  actived() {
+    this.getGroup();
+    if (this.value.hotelGroupCode) {
+      !this.multiple && this.getHotel(this.value.hotelGroupCode);
     }
   },
 
   mounted() {
     this.getGroup();
+    if (this.value.hotelGroupCode) {
+      !this.multiple && this.getHotel(this.value.hotelGroupCode);
+    }
   }
 };
 </script>

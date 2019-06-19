@@ -72,7 +72,7 @@
 </template>
 <script>
 /* name:集团酒店联动搜索框组件*/
-import { getListGroups, getListHotels } from "../server/modules/product";
+// import { getListGroups, getListHotels } from "../server/modules/product";
 import axios from "axios";
 import HotelFilter from "@/components/hotelFilter.vue";
 import _ from "lodash";
@@ -122,6 +122,14 @@ export default {
     inline: {
       type: Boolean,
       default: true
+    },
+    groupFetchUrl: {
+      type: String,
+      default: "/platform/baseapi/listGroups"
+    },
+    hotelFetchUrl: {
+      type: String,
+      default: "/platform/baseapi/listHotels"
     },
     manualDisable: Boolean
   },
@@ -217,6 +225,16 @@ export default {
     }
   },
   methods: {
+    getListGroups(params) {
+      return axios.get(this.groupFetchUrl, {
+        params
+      });
+    },
+    getListHotels(params) {
+      return axios.get(this.hotelFetchUrl, {
+        params
+      });
+    },
     validateHotelGroupCode() {
       this.$refs.groupHotelForm.validateField("hotelGroupCode");
     },
@@ -249,7 +267,7 @@ export default {
     //获取集团搜索框数据
     async getGroup() {
       this.groups = [];
-      const res = await getListGroups();
+      const res = await this.getListGroups();
       if (res && res.data && res.data.retVal) {
         const list = res.data.retVal;
 
@@ -289,7 +307,7 @@ export default {
         code = this.hotelsFetch.code;
         label = this.hotelsFetch.label;
       } else {
-        res = await getListHotels({
+        res = await this.getListHotels({
           hotelGroupCode: hotelGroupCode,
           needmoreInfo: ""
         });

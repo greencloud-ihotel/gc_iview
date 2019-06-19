@@ -40,6 +40,14 @@ const router = new VueRouter({
     {
       path: "/SuperSearch",
       component: resolve => require(["./routers/SuperSearch.vue"], resolve)
+    },
+    {
+      path: "/CustomTable",
+      component: resolve => require(["./routers/CustomTable.vue"], resolve)
+    },
+    {
+      path: "/FilterList",
+      component: resolve => require(["./routers/FilterList.vue"], resolve)
     }
   ]
 });

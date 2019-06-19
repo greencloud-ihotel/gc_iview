@@ -10,6 +10,7 @@
         <router-link to="/TFSwitch">TFSwitch</router-link>
         <router-link to="/SuperSearch">SuperSearch</router-link>
         <router-link to="/CustomTable">CustomTable</router-link>
+        <router-link to="/FilterList">FilterList</router-link>
       </nav>
       <router-view></router-view>
     </div>
