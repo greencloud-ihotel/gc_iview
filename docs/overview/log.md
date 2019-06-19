@@ -1,8 +1,16 @@
 # 更新日志
 
+## V1.1.2
+
+    - Fix:AutoTable 请求头没拦截到
+
+## V1.1.1
+
+    - Feat:FilterSearch增加前缀参数
+
 ## V1.1.0
 
-    - 新增 SuperSearch
+    - Feat:新增 SuperSearch
 
 ## V1.0.7
 
