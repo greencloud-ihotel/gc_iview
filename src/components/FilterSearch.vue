@@ -35,6 +35,12 @@ export default {
         return 3;
       }
     },
+    preExplain: {
+      type: String,
+      default() {
+        return "筛选条件:";
+      }
+    },
     columns: {
       type: Array,
       required: true
@@ -135,7 +141,7 @@ export default {
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示: 
+          console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -179,7 +185,7 @@ export default {
         return {};
       } else {
         if (!_.has(checkboxs, "datas")) {
-          console.error(`checkboxs需要datas,结构如下: 
+          console.error(`checkboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -219,7 +225,7 @@ export default {
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下: 
+          console.log(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
@@ -381,7 +387,11 @@ export default {
             </div>
             {!_.isEmpty(this.checkboxs) ? (
               <div class="bottom">
-                <div class="first">筛选条件:</div>
+                <div class="first">
+                  {this.checkboxs.preExplain
+                    ? this.checkboxs.preExplain
+                    : "筛选条件:"}
+                </div>
                 <CheckboxGroup
                   value={
                     this.value[this.checkboxs.key]
