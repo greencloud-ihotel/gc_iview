@@ -141,7 +141,7 @@ export default {
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示:
+          console.error(`inputs需要datas,结构如下所示: 
           {
             datas: [
               {
@@ -185,7 +185,7 @@ export default {
         return {};
       } else {
         if (!_.has(checkboxs, "datas")) {
-          console.error(`checkboxs需要datas,结构如下:
+          console.error(`checkboxs需要datas,结构如下: 
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -225,7 +225,7 @@ export default {
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下:
+          console.log(`buttons需要datas,结构如下: 
           datas: [
               {
                 label: "查询",
@@ -302,7 +302,7 @@ export default {
                 {allRow}
               </div>
               <div class="rightList animated">
-                <div style={{ width: this.show ? "100%" : "50%" }}>
+                <div>
                   {(rowArray.length <= 1 && !this.hideShowClicked) ||
                   this.hideBtnHide ? null : (
                     <Button
@@ -338,12 +338,12 @@ export default {
 
                 <div
                   class={[
-                    "right animated",
-                    this.hideShowClicked
-                      ? this.show
-                        ? "fadeOutRight"
-                        : "fadeInRight"
-                      : null
+                    "right animated"
+                    // this.hideShowClicked
+                    //   ? this.show
+                    //     ? "fadeOutRight"
+                    //     : "fadeInRight"
+                    //   : null
                   ]}
                 >
                   {_.map(otherButtons, (val, index) => {
