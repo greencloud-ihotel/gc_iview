@@ -31,8 +31,7 @@ export default {
     },
     updateUrl: {
       type: String,
-      default: "",
-      required: true
+      default: ""
     },
     method: {
       type: String,
