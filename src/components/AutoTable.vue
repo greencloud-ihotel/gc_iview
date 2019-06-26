@@ -85,8 +85,9 @@ export default {
     originalStyle: {
       type: Boolean,
       default: true
-    }
+    },
     //是否使用原始样式，默认为false
+    process: Function
   },
   data() {
     return {
@@ -182,6 +183,8 @@ export default {
           } else {
             this.tableData = _.get(response.data.retVal, this.path);
           }
+          if (typeof this.process === "function")
+            this.tableData = this.process(this.tableData);
           this.$nextTick(() => {
             this.tableTotalRows = response.data.retVal.totalRows;
           });

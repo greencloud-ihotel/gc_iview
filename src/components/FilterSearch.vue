@@ -8,7 +8,9 @@ import {
   Icon,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  RadioGroup,
+  Radio
 } from "iview";
 import "animate.css";
 import _ from "lodash";
@@ -23,6 +25,9 @@ export default {
     };
   },
   props: {
+    freeze: {
+      type: Array
+    },
     //一行显示的个数
     rowNumProp: {
       type: Number,
@@ -110,7 +115,12 @@ export default {
       if (_.isString(action)) {
         switch (action) {
           case "reset":
-            this.setEmtpy(this.value);
+            _.map(this.value, (val, index) => {
+              if (_.indexOf(this.freeze, index) == -1) {
+                this.$set(this.value, index, "");
+              }
+            });
+            //this.setEmtpy(this.value);
             this.$emit("input", this.value);
             break;
           //Todo other type button
@@ -131,7 +141,7 @@ export default {
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示:
+          console.error(`inputs需要datas,结构如下所示: 
           {
             datas: [
               {
@@ -175,7 +185,7 @@ export default {
         return {};
       } else {
         if (!_.has(checkboxs, "datas")) {
-          console.error(`checkboxs需要datas,结构如下:
+          console.error(`checkboxs需要datas,结构如下: 
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -188,6 +198,26 @@ export default {
         return checkboxs;
       }
     },
+    radioboxs() {
+      const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
+      if (_.isEmpty(radioboxs)) {
+        console.warn("radioboxs为空");
+        return {};
+      } else {
+        if (!_.has(radioboxs, "datas")) {
+          console.error(`radioboxs需要datas,结构如下: 
+          datas: [
+              { label: "aa", key: "gg", value: "aa" },
+              { label: "ss", key: "aa", value: "cc" },
+              { label: "dd", key: "bb", value: "cc" }
+          ]`);
+        }
+        if (!_.has(radioboxs, "key")) {
+          console.error("radioboxs的key必传");
+        }
+        return radioboxs;
+      }
+    },
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
@@ -195,7 +225,7 @@ export default {
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下:
+          console.log(`buttons需要datas,结构如下: 
           datas: [
               {
                 label: "查询",
@@ -222,7 +252,7 @@ export default {
     let height =
       52 +
       (this.show ? Math.floor(inputDatas.length / rowNum) * 42 : 0) +
-      (this.checkboxs ? 35 : 0) +
+      (this.checkboxs || this.radioboxs ? 35 : 0) +
       11;
     let otherButtons = _.filter(
       datas,
@@ -272,7 +302,7 @@ export default {
                 {allRow}
               </div>
               <div class="rightList animated">
-                <div style={{ width: this.show ? "100%" : "50%" }}>
+                <div>
                   {(rowArray.length <= 1 && !this.hideShowClicked) ||
                   this.hideBtnHide ? null : (
                     <Button
@@ -308,12 +338,12 @@ export default {
 
                 <div
                   class={[
-                    "right animated",
-                    this.hideShowClicked
-                      ? this.show
-                        ? "fadeOutRight"
-                        : "fadeInRight"
-                      : null
+                    "right animated"
+                    // this.hideShowClicked
+                    //   ? this.show
+                    //     ? "fadeOutRight"
+                    //     : "fadeInRight"
+                    //   : null
                   ]}
                 >
                   {_.map(otherButtons, (val, index) => {
@@ -382,6 +412,27 @@ export default {
                 </CheckboxGroup>
               </div>
             ) : null}
+
+            {!_.isEmpty(this.radioboxs) ? (
+              <div class="bottom">
+                <div class="first">筛选条件:</div>
+                <RadioGroup
+                  value={this.value[this.radioboxs.key]}
+                  onInput={val => {
+                    this.$set(this.value, this.radioboxs.key, val);
+                  }}
+                >
+                  {_.map(_.get(this.radioboxs, "datas"), val => {
+                    return (
+                      <Radio label={val.value}>
+                        <span>{val.label}</span>
+                      </Radio>
+                    );
+                  })}
+                </RadioGroup>
+              </div>
+            ) : null}
+
             {this.show ? (
               <div class="fixedTextContain">
                 <span class="fixedText">

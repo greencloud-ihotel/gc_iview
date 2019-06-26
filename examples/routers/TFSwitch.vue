@@ -23,7 +23,7 @@ export default {
               return h("TFSwitch", {
                 props: {
                   row: params.row,
-                  url: "https://yapi.ihotel.cn/mock/60/updateTable"
+                  updateUrl: "https://yapi.ihotel.cn/mock/60/updateTable"
                 }
               });
             }
