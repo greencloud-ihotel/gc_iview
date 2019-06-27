@@ -131,6 +131,73 @@ export default {
       if (_.isFunction(action)) {
         action();
       }
+    },
+    renderInputs(rowNum, inputDatas, rowArray) {
+      let allRow = [];
+      _.map(rowArray, (row, index) => {
+        let currentNum = 0;
+        let arr = [];
+        _.map(row, val => {
+          let num = val.num ? val.num : 1;
+          currentNum = currentNum + num;
+          arr.push(
+            <div
+              class="itemOption"
+              style={[
+                {
+                  width: `${(100 / rowNum) * num}%`
+                },
+                val.style
+              ]}
+            >
+              {val.render ? (
+                val.render(h, val)
+              ) : (
+                <Input
+                  clearable
+                  placeholder={val.label}
+                  value={this.getValue(this.inputs.key, val.key)}
+                  onInput={value => {
+                    this.setValue(this.inputs.key, val.key, value);
+                  }}
+                />
+              )}
+            </div>
+          );
+        });
+        allRow.push(
+          this.show || index == 0 ? <div class="oneRow">{arr}</div> : ""
+        );
+      });
+      return allRow;
+    },
+    handlerCheckAll(checkbox) {
+      const allData = checkbox.datas.map(item => item.value);
+      if (checkbox.indeterminate) {
+        checkbox.checkAll = false;
+      } else {
+        checkbox.checkAll = !checkbox.checkAll;
+      }
+      checkbox.indeterminate = false;
+
+      if (checkbox.checkAll) {
+        this.value[checkbox.key] = allData.join(",");
+      } else {
+        this.value[checkbox.key] = "";
+      }
+    },
+    checkAllGroupChange(checkbox) {
+      const chooseItem = this.value[checkbox.key].split(",");
+      if (chooseItem.length === checkbox.datas.length) {
+        this.$set(checkbox, "indeterminate", false);
+        this.$set(checkbox, "checkAll", true);
+      } else if (this.value[checkbox.key].split(",").length > 0) {
+        this.$set(checkbox, "indeterminate", true);
+        this.$set(checkbox, "checkAll", false);
+      } else {
+        this.$set(checkbox, "indeterminate", false);
+        this.$set(checkbox, "checkAll", false);
+      }
     }
   },
   computed: {
@@ -179,23 +246,56 @@ export default {
       }
     },
     checkboxs() {
-      const checkboxs = _.find(this.columns, val => val.type === "checkboxs");
+      let flag = true;
+      const checkboxs = [];
+      this.columns.forEach(item => {
+        if (item.type === "checkboxs") {
+          if (!_.isEmpty(this.value)) {
+            console.log(this.value[item.key], item.key, this.value);
+
+            const chooseItem = _.compact(this.value[item.key].split(","));
+            if (chooseItem.length === item.datas.length) {
+              item.indeterminate = false;
+              item.checkAll = true;
+            } else if (chooseItem.length > 0) {
+              item.indeterminate = true;
+              item.checkAll = false;
+            } else {
+              item.indeterminate = false;
+              item.checkAll = false;
+            }
+          }
+
+          checkboxs.push(item);
+        }
+      });
+
       if (_.isEmpty(checkboxs)) {
+        /* eslint-disable */
         console.warn("checkboxs为空");
         return {};
       } else {
-        if (!_.has(checkboxs, "datas")) {
-          console.error(`checkboxs需要datas,结构如下: 
-          datas: [
+        _.map(checkboxs, checkbox => {
+          if (!_.has(checkbox, "datas")) {
+            /* eslint-disable */
+            console.error(`checkboxs需要datas,结构如下: 
+            datas: [
               { label: "aa", key: "gg", value: "aa" },
-              { label: "ss", key: "aa", value: "cc" },
-              { label: "dd", key: "bb", value: "cc" }
-          ]`);
+                { label: "ss", key: "aa", value: "cc" },
+                { label: "dd", key: "bb", value: "cc" }
+            ]`);
+            flag = false;
+          }
+          if (!_.has(checkbox, "key")) {
+            /* eslint-disable */
+            flag = false;
+            console.error("checkboxs的key必传");
+          }
+        });
+        if (flag) {
+
+          return checkboxs;
         }
-        if (!_.has(checkboxs, "key")) {
-          console.error("checkboxs的key必传");
-        }
-        return checkboxs;
       }
     },
     radioboxs() {
@@ -242,9 +342,8 @@ export default {
       }
     }
   },
-
   render(h) {
-    let allRow = [];
+    // let allRow = [];
     let rowNum = this.rowNum;
     let inputDatas = _.get(this.inputs, "datas");
     let rowArray = this.splitArray(inputDatas);
@@ -258,48 +357,13 @@ export default {
       datas,
       item => item.label != "查询" && item.label != "重置"
     );
-    _.map(rowArray, (row, index) => {
-      let currentNum = 0;
-      let arr = [];
-      _.map(row, val => {
-        let num = val.num ? val.num : 1;
-        currentNum = currentNum + num;
-        arr.push(
-          <div
-            class="itemOption"
-            style={[
-              {
-                width: `${(100 / rowNum) * num}%`
-              },
-              val.style
-            ]}
-          >
-            {val.render ? (
-              val.render(h, val)
-            ) : (
-              <Input
-                clearable
-                placeholder={val.label}
-                value={this.getValue(this.inputs.key, val.key)}
-                onInput={value => {
-                  this.setValue(this.inputs.key, val.key, value);
-                }}
-              />
-            )}
-          </div>
-        );
-      });
-      allRow.push(
-        this.show || index == 0 ? <div class="oneRow">{arr}</div> : ""
-      );
-    });
     return (
       <div class="contain">
         <div class={["filterSearch", this.fixed ? "fixed" : null]}>
           <Form>
             <div class="top">
               <div class={["InputList", this.show ? "w70" : "w50"]}>
-                {allRow}
+                {this.renderInputs(rowNum, inputDatas, rowArray)}
               </div>
               <div class="rightList animated">
                 <div>
@@ -387,29 +451,45 @@ export default {
             </div>
             {!_.isEmpty(this.checkboxs) ? (
               <div class="bottom">
-                <div class="first">
-                  {this.checkboxs.preExplain
-                    ? this.checkboxs.preExplain
-                    : "筛选条件:"}
-                </div>
-                <CheckboxGroup
-                  value={
-                    this.value[this.checkboxs.key]
-                      ? _.compact(this.value[this.checkboxs.key].split(","))
-                      : []
-                  }
-                  onInput={val => {
-                    this.$set(this.value, this.checkboxs.key, val.toString());
-                  }}
-                >
-                  {_.map(_.get(this.checkboxs, "datas"), val => {
-                    return (
-                      <Checkbox label={val.value}>
-                        <span>{val.label}</span>
+                {_.map(this.checkboxs, checkbox => {
+                  return (
+                    <div class="bottom first">
+                      <span>
+                        {checkbox.preExplain
+                          ? checkbox.preExplain
+                          : "筛选条件:"}
+                      </span>
+                      <Checkbox
+                        nativeOnClick={() => {
+                          this.handlerCheckAll(checkbox);
+                        }}
+                        indeterminate={checkbox.indeterminate}
+                        value={checkbox.checkAll}
+                      >
+                        <span>全选</span>
                       </Checkbox>
-                    );
-                  })}
-                </CheckboxGroup>
+                      <CheckboxGroup
+                        value={
+                          this.value[checkbox.key]
+                            ? _.compact(this.value[checkbox.key].split(","))
+                            : []
+                        }
+                        onInput={val => {
+                          this.$set(this.value, checkbox.key, val.toString());
+                          this.checkAllGroupChange(checkbox);
+                        }}
+                      >
+                        {_.map(_.get(checkbox, "datas"), val => {
+                          return (
+                            <Checkbox label={val.value}>
+                              <span>{val.label}</span>
+                            </Checkbox>
+                          );
+                        })}
+                      </CheckboxGroup>
+                    </div>
+                  );
+                })}
               </div>
             ) : null}
 
@@ -543,6 +623,7 @@ export default {
   }
   .bottom {
     display: flex;
+    align-items: center;
     .first {
       margin-right: 10px;
     }
