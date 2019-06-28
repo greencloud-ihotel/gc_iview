@@ -183,7 +183,7 @@ export default {
       if (checkbox.checkAll) {
         this.value[checkbox.key] = allData.join(",");
       } else {
-        this.value[checkbox.key] = "";
+        this.$set(this.value, checkbox.key, "");
       }
     },
     checkAllGroupChange(checkbox) {
@@ -293,7 +293,6 @@ export default {
           }
         });
         if (flag) {
-
           return checkboxs;
         }
       }
