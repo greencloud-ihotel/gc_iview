@@ -2,6 +2,7 @@ import "babel-polyfill";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import iview from "iview";
+import "iview/dist/styles/iview.css";
 import gc_iview from "../src/index";
 import App from "./app.vue";
 Vue.use(VueRouter);
