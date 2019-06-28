@@ -1,5 +1,11 @@
 # 更新日志
 
+## V1.2.0
+
+    - Feat:新增 CustomTable
+    - Fix:TFSwitch 去掉url必选的选项
+    - Fix:GroupHotelLink 增加filterList 路由
+
 ## V1.1.2
 
     - Fix:AutoTable 请求头没拦截到
