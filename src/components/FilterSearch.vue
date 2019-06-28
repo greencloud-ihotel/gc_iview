@@ -459,7 +459,8 @@ export default {
                           : "筛选条件:"}
                       </span>
                       <Checkbox
-                        nativeOnClick={() => {
+                        nativeOnClick={e => {
+                          e.stopPropagation();
                           this.handlerCheckAll(checkbox);
                         }}
                         indeterminate={checkbox.indeterminate}
