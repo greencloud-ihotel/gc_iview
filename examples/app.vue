@@ -11,6 +11,7 @@
         <router-link to="/SuperSearch">SuperSearch</router-link>
         <router-link to="/CustomTable">CustomTable</router-link>
         <router-link to="/FilterList">FilterList</router-link>
+        <router-link to="/UploadImages">UploadImages</router-link>
       </nav>
       <router-view></router-view>
     </div>

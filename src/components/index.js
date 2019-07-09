@@ -7,6 +7,7 @@ import EditTable from "./EditTable.vue";
 import SuperSearch from "./SuperSearch.vue";
 import CustomTable from "./CustomTable.vue";
 import FilterList from "./FilterList/FilterList.vue";
+import UploadImages from "./UploadImages.vue";
 export default [
   AutoTable,
   EditTable,
@@ -16,5 +17,6 @@ export default [
   CurdLine,
   SuperSearch,
   CustomTable,
-  FilterList
+  FilterList,
+  UploadImages
 ];

@@ -49,6 +49,10 @@ const router = new VueRouter({
     {
       path: "/FilterList",
       component: resolve => require(["./routers/FilterList.vue"], resolve)
+    },
+    {
+      path: "/UploadImages",
+      component: resolve => require(["./routers/UploadImages.vue"], resolve)
     }
   ]
 });
