@@ -31,6 +31,14 @@ export default {
     required: {
       type: Boolean,
       default: true
+    },
+    startDatePlaceHolder: {
+      type: String,
+      default: "开始日期"
+    },
+    endDatePlaceHolder: {
+      type: String,
+      default: "结束日期"
     }
   },
   methods: {
@@ -96,8 +104,10 @@ export default {
               }}
             >
               <DatePicker
+                transfer={true}
                 show-week-numbers
                 value={this.value.startDate}
+                placeholder={this.startDatePlaceHolder}
                 onInput={value => {
                   this.$set(
                     this.value,
@@ -125,6 +135,7 @@ export default {
               <DatePicker
                 show-week-numbers
                 value={this.value.endDate}
+                placeholder={this.endDatePlaceHolder}
                 onInput={value => {
                   this.$set(
                     this.value,
@@ -134,6 +145,7 @@ export default {
                   this.changeValue("endChange", value);
                 }}
                 type="date"
+                transfer={true}
                 options={this.options.startOptions}
               />
             </FormItem>

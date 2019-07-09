@@ -35,12 +35,7 @@ export default {
         return 3;
       }
     },
-    preExplain: {
-      type: String,
-      default() {
-        return "筛选条件:";
-      }
-    },
+
     columns: {
       type: Array,
       required: true
@@ -251,8 +246,6 @@ export default {
       this.columns.forEach(item => {
         if (item.type === "checkboxs") {
           if (!_.isEmpty(this.value)) {
-            console.log(this.value[item.key], item.key, this.value);
-
             const chooseItem = _.compact(this.value[item.key].split(","));
             if (chooseItem.length === item.datas.length) {
               item.indeterminate = false;
@@ -460,7 +453,8 @@ export default {
                       </span>
                       <Checkbox
                         nativeOnClick={e => {
-                          e.stopPropagation();
+                          e.preventDefault();
+
                           this.handlerCheckAll(checkbox);
                         }}
                         indeterminate={checkbox.indeterminate}
