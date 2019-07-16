@@ -11,3 +11,4 @@
   - [DatePickers](components/DatePickers.md)
   - [TFSwitch](components/TFSwitch.md)
   - [SuperSearch](components/SuperSearch.md)
+  - [UploadImages](components/UploadImages.md)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>数据:{{list}}</div>
+    <div style="padding:10px 0;">数据:{{list}}</div>
     <UploadImages v-model="list" :headers="headers"></UploadImages>
   </div>
 </template>
@@ -9,7 +9,7 @@
 export default {
   data(){
     return {
-      list:"http://a.jpg,http://b.jpg,http://c.jpg",
+      list:"https://dwz.cn/hZXJG01l,https://dwz.cn/EE8PYP6Z,https://dwz.cn/KGn7JMvg",
       headers:{
         Authorization:"test Authorization"
       }

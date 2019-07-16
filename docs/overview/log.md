@@ -1,5 +1,9 @@
 # 更新日志
 
+## V1.3.0
+
+    - Feat:新增 UploadImages组件
+
 ## V1.2.0
 
     - Feat:新增 CustomTable
