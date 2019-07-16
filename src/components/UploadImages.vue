@@ -24,6 +24,7 @@
     </div>
     <Upload
       ref="upload"
+
       :show-upload-list="false"
       :default-file-list="defaultList"
       :on-success="handleSuccess"
@@ -32,10 +33,11 @@
       :on-format-error="handleFormatError"
       :on-exceeded-size="handleMaxSize"
       :before-upload="handleBeforeUpload"
+      :action="action"
       multiple
       name="files"
       type="drag"
-      action="/file/files"
+      v-bind="$attrs"
       style="display: inline-block;width:58px;"
     >
       <div style="width: 58px;height:58px;line-height: 58px;">
@@ -60,7 +62,21 @@ export default {
     prop: "list",
     event: "change"
   },
-  props: ["list"],
+  props: {
+    list:{
+      type:String,
+      required:true,
+    },
+    max:{
+      type:Number,
+    },
+    action:{
+      type:String,
+      default(){
+        return "/file/files"
+      }
+    }
+  },
   computed: {
     defaultList() {
       if (_.isEmpty(this.list)) {
@@ -77,9 +93,6 @@ export default {
         return arr;
       }
     },
-    // headers() {
-    //   return { Authorization: store.get("token") };
-    // }
   },
   data() {
     return {
@@ -93,23 +106,25 @@ export default {
       this.imgName = name;
       this.visible = true;
     },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.$emit(
+    sync(){
+       this.$emit(
         "change",
         _.join(_.map(this.$refs.upload.fileList, "url"), ",")
       );
+    },
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      this.sync()
       this.uploadList = this.$refs.upload.fileList;
     },
     handleSuccess(res, file) {
       if (res && res.result == 0) {
         file.url = res.retVal[0];
-        this.$emit(
-          "change",
-          _.join(_.map(this.$refs.upload.fileList, "url"), ",")
-        );
+        this.sync()
         this.uploadList = this.$refs.upload.fileList;
+      }else {
+        this.$Message.info({ content: res.msg });
       }
     },
     handleFormatError(file) {
@@ -120,18 +135,23 @@ export default {
     },
     handleMaxSize(file) {
       this.$Notice.warning({
-        title: "Exceeding file size limit",
-        desc: "File  " + file.name + " is too large, no more than 2M."
+        title: "文件太大了",
+        desc: file.name + "不能超过2M"
       });
     },
+    clearUploadList() {
+      this.uploadList = [];
+    },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
-      if (!check) {
-        this.$Notice.warning({
-          title: "最多上传5张图片"
-        });
+      if(this.max>0){
+        const check = this.uploadList.length < this.max;
+        if (!check) {
+          this.$Notice.warning({
+            title: `最多上传${this.max}张图片`
+          });
+        }
+        return check;
       }
-      return check;
     }
   },
   mounted() {
