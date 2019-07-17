@@ -1,31 +1,35 @@
 <template>
-  <Form ref="groupHotelForm"
-        style="position:relative;top:-1px"
-        :model="value"
-        :label-width="labelWidth"
-        :rules="hasRule ? rules : rulesNull">
+  <Form
+    ref="groupHotelForm"
+    style="position:relative;top:-1px"
+    :model="value"
+    :label-width="labelWidth"
+    :rules="hasRule ? rules : rulesNull"
+  >
     <Row>
-      <i-Col :span="inline ? 12: 24">
-        <FormItem :label="labelTag.hotelGroupCode"
-                  prop="hotelGroupCode">
-          <Select :disabled="disableHotelGroup"
-                  not-found-text="暂无可选集团"
-                  v-model="value.hotelGroupCode"
-                  placeholder="请选择集团"
-                  :transfer="true"
-                  clearable
-                  filterable
-                  @on-change='changeHotelGroupCode'>
-            <Option v-for="(item,index) in groups"
-                    :value="item.value"
-                    :key="index">{{item.label}}({{item.value}})</Option>
+      <i-Col :span="inline ? 12 : 24">
+        <FormItem :label="labelTag.hotelGroupCode" prop="hotelGroupCode">
+          <Select
+            :disabled="disableHotelGroup"
+            not-found-text="暂无可选集团"
+            v-model="value.hotelGroupCode"
+            placeholder="请选择集团"
+            :transfer="true"
+            clearable
+            filterable
+            @on-change="changeHotelGroupCode"
+          >
+            <Option
+              v-for="(item, index) in groups"
+              :value="item.value"
+              :key="index"
+              >{{ item.label }}({{ item.value }})</Option
+            >
           </Select>
         </FormItem>
       </i-Col>
-      <i-Col :span="inline ? 12: 24"
-             v-if="multiple">
-        <FormItem :label="labelTag.hotelCode"
-                  prop="hotelCodes">
+      <i-Col :span="inline ? 12 : 24" v-if="multiple">
+        <FormItem :label="labelTag.hotelCode" prop="hotelCodes">
           <!-- <Select :disabled="disabled"
                   v-model="value.hotelCodes"
                   not-found-text="暂无可选酒店"
@@ -40,29 +44,36 @@
                     :value="item.value"
                     :key="index">{{item.label}}({{item.value}})</Option>
           </Select> -->
-          <HotelFilter v-model="value.hotelCodes"
-                       :codes="value.hotelGroupCode"
-                       :disabled="disableHotel"
-                       @changed="changeHotels"></HotelFilter>
+          <HotelFilter
+            v-model="value.hotelCodes"
+            :codes="value.hotelGroupCode"
+            :disabled="disableHotel"
+            @changed="changeHotels"
+          ></HotelFilter>
         </FormItem>
       </i-Col>
-      <i-Col :span="inline ? 12: 24"
-             v-if="!multiple">
-        <FormItem :label="labelTag.hotelCode"
-                  prop="hotelCode">
-          <Select :disabled="disableHotel"
-                  v-model="value.hotelCode"
-                  not-found-text="暂无可选酒店"
-                  :placeholder="hotelsFetch.placeholder ? hotelsFetch.placeholder : '请选择酒店'"
-                  :transfer="true"
-                  clearable
-                  filterable
-                  @on-change='changeHotelCode'
-                  @on-open-change='showMessage'
-                  :multiple="multiple">
-            <Option v-for="(item,index) in hotels"
-                    :value="item.value"
-                    :key="index">{{item.label}}({{item.value}})</Option>
+      <i-Col :span="inline ? 12 : 24" v-if="!multiple">
+        <FormItem :label="labelTag.hotelCode" prop="hotelCode">
+          <Select
+            :disabled="disableHotel"
+            v-model="value.hotelCode"
+            not-found-text="暂无可选酒店"
+            :placeholder="
+              hotelsFetch.placeholder ? hotelsFetch.placeholder : '请选择酒店'
+            "
+            :transfer="true"
+            clearable
+            filterable
+            @on-change="changeHotelCode"
+            @on-open-change="showMessage"
+            :multiple="multiple"
+          >
+            <Option
+              v-for="(item, index) in hotels"
+              :value="item.value"
+              :key="index"
+              >{{ item.label }}({{ item.value }})</Option
+            >
           </Select>
         </FormItem>
       </i-Col>
@@ -369,6 +380,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

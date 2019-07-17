@@ -24,7 +24,6 @@
     </div>
     <Upload
       ref="upload"
-
       :show-upload-list="false"
       :default-file-list="defaultList"
       :on-success="handleSuccess"
@@ -45,11 +44,7 @@
       </div>
     </Upload>
     <Modal title="View Image" v-model="visible">
-      <img
-        :src="imgName"
-        v-if="visible"
-        style="width: 100%"
-      />
+      <img :src="imgName" v-if="visible" style="width: 100%" />
     </Modal>
   </div>
 </template>
@@ -63,17 +58,17 @@ export default {
     event: "change"
   },
   props: {
-    list:{
-      type:String,
-      required:true,
+    list: {
+      type: String,
+      required: true
     },
-    max:{
-      type:Number,
+    max: {
+      type: Number
     },
-    action:{
-      type:String,
-      default(){
-        return "/file/files"
+    action: {
+      type: String,
+      default() {
+        return "/file/files";
       }
     }
   },
@@ -92,7 +87,7 @@ export default {
         });
         return arr;
       }
-    },
+    }
   },
   data() {
     return {
@@ -106,8 +101,8 @@ export default {
       this.imgName = name;
       this.visible = true;
     },
-    sync(){
-       this.$emit(
+    sync() {
+      this.$emit(
         "change",
         _.join(_.map(this.$refs.upload.fileList, "url"), ",")
       );
@@ -115,15 +110,15 @@ export default {
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.sync()
+      this.sync();
       this.uploadList = this.$refs.upload.fileList;
     },
     handleSuccess(res, file) {
       if (res && res.result == 0) {
         file.url = res.retVal[0];
-        this.sync()
+        this.sync();
         this.uploadList = this.$refs.upload.fileList;
-      }else {
+      } else {
         this.$Message.info({ content: res.msg });
       }
     },
@@ -143,7 +138,7 @@ export default {
       this.uploadList = [];
     },
     handleBeforeUpload() {
-      if(this.max>0){
+      if (this.max > 0) {
         const check = this.uploadList.length < this.max;
         if (!check) {
           this.$Notice.warning({
