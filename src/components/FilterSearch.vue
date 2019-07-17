@@ -203,7 +203,7 @@ export default {
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示: 
+          console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -271,7 +271,7 @@ export default {
         _.map(checkboxs, checkbox => {
           if (!_.has(checkbox, "datas")) {
             /* eslint-disable */
-            console.error(`checkboxs需要datas,结构如下: 
+            console.error(`checkboxs需要datas,结构如下:
             datas: [
               { label: "aa", key: "gg", value: "aa" },
                 { label: "ss", key: "aa", value: "cc" },
@@ -287,6 +287,8 @@ export default {
         });
         if (flag) {
           return checkboxs;
+        }else{
+          return {}
         }
       }
     },
@@ -297,7 +299,7 @@ export default {
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
-          console.error(`radioboxs需要datas,结构如下: 
+          console.error(`radioboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -317,7 +319,7 @@ export default {
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下: 
+          console.log(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
