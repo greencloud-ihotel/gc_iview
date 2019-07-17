@@ -146,7 +146,7 @@ export default {
               ]}
             >
               {val.render ? (
-                val.render(h, val)
+                val.render(null, val)
               ) : (
                 <Input
                   clearable
