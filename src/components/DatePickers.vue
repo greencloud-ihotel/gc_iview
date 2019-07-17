@@ -84,22 +84,45 @@ export default {
     },
     resetFields() {
       this.$refs["datePickersForm"].resetFields();
+    },
+    validateMessage(rule, value, callback, isStart) {
+      let val = this.value.endDate;
+      let msg = "结束时间不能为空";
+      if (isStart === true) {
+        val = this.value.startDate;
+        msg = "开始时间不能为空";
+      }
+      if (!val && this.required) {
+        callback(new Error(msg));
+      } else {
+        callback();
+      }
     }
   },
   render() {
     const { options } = this.$props;
+    const validateStartEmpty = (rule, value, callback) =>
+      this.validateMessage(rule, value, callback, true);
+    const validateEndEmpty = (rule, value, callback) =>
+      this.validateMessage(rule, value, callback, false);
     return (
       <div class="container">
         {this.value ? (
-          <Form class="datePickers" model={this.value} ref="datePickersForm">
+          <Form
+            model={this.value}
+            class="datePickers"
+            onInput={val => {
+              console.log(val);
+            }}
+            ref="datePickersForm"
+          >
             {options && options.startLabel ? (
               <span class="ml10">{options.startLabel}</span>
             ) : null}
             <FormItem
               prop="startDate"
               rules={{
-                required: this.required,
-                message: "开始时间不能为空",
+                validator: validateStartEmpty,
                 trigger: "blur,change"
               }}
             >
@@ -127,8 +150,7 @@ export default {
               class="ml10"
               prop="endDate"
               rules={{
-                required: this.required,
-                message: "结束时间不能为空",
+                validator: validateEndEmpty,
                 trigger: "blur,change"
               }}
             >

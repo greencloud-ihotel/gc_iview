@@ -6,7 +6,7 @@
   "main": "dist/index.umd.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "dev": "vue-cli-service serve ",
+    "dev": "vue-cli-service serve",
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
     "build:docs": "vue-cli-service build --dest ./docs/assets/dist --target lib --name index ./src/index.js",
     "build:prod": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
