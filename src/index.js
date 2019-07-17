@@ -1,8 +1,8 @@
 import components from "./components";
+import { version } from "../package.json";
 
 const useLib = Vue => {
   Vue.prototype.$complie = Vue.complie;
-  // Vue.use(iView);
 };
 const install = Vue => {
   if (install.installed) return;
@@ -17,7 +17,7 @@ if (typeof window !== "undefined" && window.Vue) {
   useLib(window.Vue);
 }
 const GC_IVIEW = {
-  version: "1.0.0",
+  version,
   install
 };
 console.log(GC_IVIEW);
