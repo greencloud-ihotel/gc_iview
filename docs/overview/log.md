@@ -3,6 +3,7 @@
 ## V1.3.1
 
     - Feat:构建方式重构，以vue-cli3.0方式构建
+    - Feat:FilterSearch支持隐藏
     - Fix:修复时间组件选中日期后还提示错误问题
 
 ## V1.3.0
