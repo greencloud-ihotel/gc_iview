@@ -1,11 +1,15 @@
 <template>
   <div>
     <ul>
-      <li v-for="(li,index) in list"
-          :key="index"
-          @click="chooseItem(li,index)"
-          :class="['li', { 'active': activeIndex === index }]">
-        {{label ? li[label] : li["label"]}}({{code ? li[code] : li["code"]}})
+      <li
+        v-for="(li, index) in list"
+        :key="index"
+        @click="chooseItem(li, index)"
+        :class="['li', { active: activeIndex === index }]"
+      >
+        {{ label ? li[label] : li["label"] }}({{
+          code ? li[code] : li["code"]
+        }})
       </li>
     </ul>
   </div>
