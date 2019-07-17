@@ -236,7 +236,7 @@ export default {
 };
 </script>
 
-<style lang="less" >
+<style lang="less">
 .buttons {
   .button {
     margin-right: 10px;

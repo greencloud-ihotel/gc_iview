@@ -1,100 +1,131 @@
 <style lang="less">
-@import './SuperSearch/super-search.less';
+@import "./SuperSearch/super-search.less";
 </style>
 <template>
   <div class="super-search">
     <!-- result start -->
     <div class="super-search-results">
       <div v-show="chosenItems.length">
-        <Tag :closable="!disabled"
-             class="super-search-tag-outter"
-             :class="{disabled: disabled}"
-             v-for="(item, index) in chosenItems"
-             :key="index"
-             @on-close="onRemove(item, index)"
-             @click.native="toggleShow(true)">{{item.descript}}</Tag>
-        <img v-show="!disabled"
-             :src="imgSrc"
-             width="16"
-             alt="close-all"
-             class="super-search-tag-close"
-             @click="onRemoveAll">
+        <Tag
+          :closable="!disabled"
+          class="super-search-tag-outter"
+          :class="{ disabled: disabled }"
+          v-for="(item, index) in chosenItems"
+          :key="index"
+          @on-close="onRemove(item, index)"
+          @click.native="toggleShow(true)"
+          >{{ item.descript }}</Tag
+        >
+        <img
+          v-show="!disabled"
+          :src="imgSrc"
+          width="16"
+          alt="close-all"
+          class="super-search-tag-close"
+          @click="onRemoveAll"
+        />
       </div>
-      <Button v-show="!chosenItems.length"
-              :disabled="disabled"
-              @click="toggleShow(true)">{{placeholder}}</Button>
+      <Button
+        v-show="!chosenItems.length"
+        :disabled="disabled"
+        @click="toggleShow(true)"
+        >{{ placeholder }}</Button
+      >
     </div>
     <!-- result end -->
 
     <!-- modal start -->
-    <Modal v-model="show"
-           class="super-search-modal"
-           width="725"
-           :closable="false"
-           :mask-closable="false"
-           footer-hide>
-      <h1 class="super-search-container super-search-title">{{title}}</h1>
+    <Modal
+      v-model="show"
+      class="super-search-modal"
+      width="725"
+      :closable="false"
+      :mask-closable="false"
+      footer-hide
+    >
+      <h1 class="super-search-container super-search-title">{{ title }}</h1>
       <div class="flex-side super-search-container super-search-bar">
-        <Condition ref="condition" v-model="condition.result" :columns="columns"></Condition>
+        <Condition
+          ref="condition"
+          v-model="condition.result"
+          :columns="columns"
+        ></Condition>
         <div>
-          <Input v-if="noTip"
-                 v-model.trim="condition.keyword"
-                 search
-                 clearable
-                 :disabled="condition.searchDisabled"
-                 placeholder="关键字"
-                 class="super-search-searcher"
-                 style="width: 166px;"
-                 @on-search="search" />
+          <Input
+            v-if="noTip"
+            v-model.trim="condition.keyword"
+            search
+            clearable
+            :disabled="condition.searchDisabled"
+            placeholder="关键字"
+            class="super-search-searcher"
+            style="width: 166px;"
+            @on-search="search"
+          />
 
-          <Poptip v-else
-                  trigger="focus"
-                  title=""
-                  content="点击右侧图标或者输入关键字后按下回车即可搜索">
-            <Input v-model.trim="condition.keyword"
-                   search
-                   clearable
-                   :disabled="condition.searchDisabled"
-                   placeholder="关键字"
-                   class="super-search-searcher"
-                   style="width: 166px;"
-                   @on-search="search" />
+          <Poptip
+            v-else
+            trigger="focus"
+            title=""
+            content="点击右侧图标或者输入关键字后按下回车即可搜索"
+          >
+            <Input
+              v-model.trim="condition.keyword"
+              search
+              clearable
+              :disabled="condition.searchDisabled"
+              placeholder="关键字"
+              class="super-search-searcher"
+              style="width: 166px;"
+              @on-search="search"
+            />
           </Poptip>
         </div>
       </div>
       <!-- search tag start -->
-      <div class="super-search-container super-search-tag-box"
-           v-show="condition.result.length">
-        <Tag closable
-             class="super-search-tag"
-             v-for="(item, index) in condition.result"
-             :key="index"
-             @on-close="onDelete(item, index)">{{item.descript}}</Tag>
+      <div
+        class="super-search-container super-search-tag-box"
+        v-show="condition.result.length"
+      >
+        <Tag
+          closable
+          class="super-search-tag"
+          v-for="(item, index) in condition.result"
+          :key="index"
+          @on-close="onDelete(item, index)"
+          >{{ item.descript }}</Tag
+        >
         <!-- <div class="super-search-tag-list">
         </div>-->
-        <img :src="imgSrc"
-             width="16"
-             alt="close-all"
-             class="super-search-tag-close"
-             @click="onDeleteAll">
+        <img
+          :src="imgSrc"
+          width="16"
+          alt="close-all"
+          class="super-search-tag-close"
+          @click="onDeleteAll"
+        />
       </div>
       <!-- search tag end -->
       <!-- transfer start -->
-      <Transfer ref="transfer" :untransferred.sync="unselected" :transferred.sync="selected" :loading="unselected.loading"></Transfer>
+      <Transfer
+        ref="transfer"
+        :untransferred.sync="unselected"
+        :transferred.sync="selected"
+        :loading="unselected.loading"
+      ></Transfer>
       <!-- transfer end -->
       <div class="super-search-footer">
-        <Button type="primary"
-                @click="toSave">{{saveText}}</Button>
-        <Button @click="toggleShow(false)">{{cancelText}}</Button>
+        <Button type="primary" @click="toSave">{{ saveText }}</Button>
+        <Button @click="toggleShow(false)">{{ cancelText }}</Button>
       </div>
     </Modal>
     <!-- modal end -->
   </div>
 </template>
 <script>
-import Condition from './SuperSearch/condition.vue'
-import Transfer from './SuperSearch/transfer.vue'
-import Mixin from './SuperSearch/mixin'
+import Condition from "./SuperSearch/condition.vue";
+import Transfer from "./SuperSearch/transfer.vue";
+import Mixin from "./SuperSearch/mixin";
 
 export default {
   name: "SuperSearch",
@@ -153,13 +184,13 @@ export default {
       type: Object,
       default: () => {
         return {
-          key: 'code',
-          code: 'code',
-          descript: 'descript'
-        }
+          key: "code",
+          code: "code",
+          descript: "descript"
+        };
       }
     },
-    listRender: Function,
+    listRender: Function
   },
   data() {
     return {
@@ -186,12 +217,12 @@ export default {
   },
   methods: {
     // 删除单个条件tag
-    onDelete (item, index) {
-      this.$refs.condition.delete(item, index)
+    onDelete(item, index) {
+      this.$refs.condition.delete(item, index);
     },
     // 删除所有条件tag
-    onDeleteAll () {
-      this.$refs.condition.deleteAll()
+    onDeleteAll() {
+      this.$refs.condition.deleteAll();
     },
     // 删除外部单个tag
     onRemove(item, index) {
@@ -219,26 +250,29 @@ export default {
           this.$emit("changed");
         });
       });
-    },    
+    },
     getParam(res) {
-      let map = {}
+      let map = {};
       res.forEach(e => {
         this.columns.forEach((ce, i) => {
           if (e._type === i) {
             map[ce.name]
-              ? map[ce.name] += ',' + e.code
-              : map[ce.name] = e.code;
+              ? (map[ce.name] += "," + e.code)
+              : (map[ce.name] = e.code);
           }
         });
       });
-      map[this.keywordName] = this.condition.keyword
-      return map
+      map[this.keywordName] = this.condition.keyword;
+      return map;
     },
     handle(obj) {
-      obj.content = typeof this.listRender === 'function' ? this.listRender(obj) : `${obj[this.listMap.descript]}(${obj[this.listMap.code]})`
-      obj.checked = false
-      if(!obj.extra) obj.extra = ''
-      obj.key = obj[this.listMap.key]
+      obj.content =
+        typeof this.listRender === "function"
+          ? this.listRender(obj)
+          : `${obj[this.listMap.descript]}(${obj[this.listMap.code]})`;
+      obj.checked = false;
+      if (!obj.extra) obj.extra = "";
+      obj.key = obj[this.listMap.key];
     },
     // 查询
     async searchByConditions() {
@@ -249,24 +283,28 @@ export default {
       this.condition.searchDisabled = true;
       this.unselected.loading = true;
       let res = await this.$http
-        .get(this.url, {params})
+        .get(this.url, { params })
         .then(res =>
-          res && res.data ? this.urlPath ? this.getPath(res.data, this.urlPath) : res.data : false
+          res && res.data
+            ? this.urlPath
+              ? this.getPath(res.data, this.urlPath)
+              : res.data
+            : false
         );
       console.log(res);
       this.unselected.loading = false;
       if (!res) return;
-      
+
       res.forEach((e, i) => {
-        this.handle(e, i)
-      })
+        this.handle(e, i);
+      });
       this.unselected.list = res;
       this.unselected.wholeList = res;
       setTimeout(() => {
         this.condition.searchDisabled = false;
       }, 150);
     },
-    search () {
+    search() {
       if (this.unselected.loading) return;
       this.unselected.list = [];
       this.unselected.wholeList = [];
@@ -278,7 +316,7 @@ export default {
         localStorage.hotelFilter_noTip = 1;
       }
     },
-    
+
     toSave() {
       this.$emit("input", this.selected.wholeList);
       this.$nextTick(() => {
@@ -291,7 +329,7 @@ export default {
         this.selected.list = this.selected.wholeList;
       }, 350);
     },
-    
+
     setList() {
       let i,
         len = this.chosenItems.length,
@@ -300,25 +338,28 @@ export default {
       for (i = 0; i < len; i++) {
         for (k = 0; k < ulen; k++) {
           if (
-            this.chosenItems[i][this.listMap.key] === this.unselected.wholeList[k][this.listMap.key] &&
+            this.chosenItems[i][this.listMap.key] ===
+              this.unselected.wholeList[k][this.listMap.key] &&
             this.chosenItems[i][this.listMap.descript] !==
               this.unselected.wholeList[k][this.listMap.descript]
           ) {
             console.log(this.chosenItems[i]);
-            this.chosenItems[i][this.listMap.descript] = this.unselected.wholeList[
-              k
-            ][this.listMap.descript];
+            this.chosenItems[i][
+              this.listMap.descript
+            ] = this.unselected.wholeList[k][this.listMap.descript];
             break;
           }
         }
       }
-      
-      let each
-      this.selected.wholeList = this.selected.list = this.chosenItems.map((e, i) => {
-        each = e
-        this.handle(each, i)
-        return each
-      });
+
+      let each;
+      this.selected.wholeList = this.selected.list = this.chosenItems.map(
+        (e, i) => {
+          each = e;
+          this.handle(each, i);
+          return each;
+        }
+      );
     },
     toggleShow(flag) {
       if (this.disabled) return;
@@ -328,7 +369,7 @@ export default {
           this.clear();
           this.unselected.list = this.unselected.wholeList;
           this.selected.list = this.selected.wholeList;
-          let key = this.listMap.key
+          let key = this.listMap.key;
           this.chosenItems.length
             ? this.selected.wholeList.forEach(e => {
                 this.chosenItems.every(ce => ce[key] !== e[key]) &&
@@ -347,7 +388,7 @@ export default {
     },
     clear() {
       this.condition.keyword = "";
-      this.$refs.transfer.clear()
+      this.$refs.transfer.clear();
       this.onDeleteAll();
     }
   },
@@ -363,10 +404,10 @@ export default {
       };
     });
   },
-  watch: {    
+  watch: {
     chosenItems(val) {
       let i,
-          key = this.listMap.key
+        key = this.listMap.key;
       for (i = 0; i < val.length; i++) {
         !val[i][key] && val.splice(i, 1) && i--;
       }

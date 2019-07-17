@@ -1,16 +1,19 @@
 <template>
   <div>
-    <Input v-model="searchValue"
-           @on-change="filterList"
-           placeholder="代码/描述" />
+    <Input
+      v-model="searchValue"
+      @on-change="filterList"
+      placeholder="代码/描述"
+    />
     <div class="box">
-      <SelectList :list="listFilter"
-                  :code="code"
-                  :label="label"
-                  @chooseItem="searchTable">
+      <SelectList
+        :list="listFilter"
+        :code="code"
+        :label="label"
+        @chooseItem="searchTable"
+      >
       </SelectList>
     </div>
-
   </div>
 </template>
 <script>

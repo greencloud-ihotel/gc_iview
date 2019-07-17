@@ -4,7 +4,7 @@ const useLib = Vue => {
   Vue.prototype.$complie = Vue.complie;
   // Vue.use(iView);
 };
-const install = (Vue, opts = {}) => {
+const install = Vue => {
   if (install.installed) return;
   // 安装所有组件
   useLib(Vue);

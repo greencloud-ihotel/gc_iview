@@ -1,8 +1,6 @@
 <template>
   <div>
-    <i-switch v-model='switchValue'
-              :disabled="disabled"
-              @input='change'>
+    <i-switch v-model="switchValue" :disabled="disabled" @input="change">
       <span slot="open">开</span>
       <span slot="close">关</span>
     </i-switch>
