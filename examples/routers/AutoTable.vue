@@ -1,9 +1,8 @@
 <template>
   <div>
-    <span>autoTableConfig:{{autoTableConfig}}</span>
+    <span>autoTableConfig:{{ autoTableConfig }}</span>
     <AutoTable v-bind="autoTableConfig"></AutoTable>
   </div>
-
 </template>
 
 <script>
@@ -23,5 +22,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

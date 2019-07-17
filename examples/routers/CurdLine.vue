@@ -1,9 +1,7 @@
 <template>
   <div>
-
-    <div class="data">{{curdLineData}}</div>
-    <curd-line :columns="curdLineColumn"
-               v-model="curdLineData"></curd-line>
+    <div class="data">{{ curdLineData }}</div>
+    <curd-line :columns="curdLineColumn" v-model="curdLineData"></curd-line>
   </div>
 </template>
 
@@ -51,5 +49,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,8 +1,7 @@
 <template>
   <div>
-    {{list}}
-    <EditTable v-bind="editTableConfig"
-               :data.sync="list"></EditTable>
+    {{ list }}
+    <EditTable v-bind="editTableConfig" :data.sync="list"></EditTable>
   </div>
 </template>
 
@@ -52,5 +51,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

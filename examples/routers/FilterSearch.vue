@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div class="data top">{{searchData}}</div>
-    <filter-search :columns="searchColumns"
-                   v-model="searchData"
-                   hidebtnhide="true"></filter-search>
+    <div class="data top">{{ searchData }}</div>
+    <filter-search
+      :columns="searchColumns"
+      v-model="searchData"
+      hidebtnhide="true"
+    ></filter-search>
   </div>
 </template>
 
