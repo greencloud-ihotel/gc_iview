@@ -57,15 +57,17 @@ export default {
       let rowIndex = 1;
       let arr = [];
       _.map(datas, (val, index) => {
-        let num = val.num ? val.num : 1;
-        count += num;
-        if (count >= this.rowNum * rowIndex || index + 1 == datas.length) {
-          arr.push(val);
-          datasArray.push(arr);
-          arr = [];
-          rowIndex += 1;
-        } else {
-          arr.push(val);
+        if (val.num !== 0) {
+          let num = val.num ? val.num : 1;
+          count += num;
+          if (count >= this.rowNum * rowIndex || index + 1 == datas.length) {
+            arr.push(val);
+            datasArray.push(arr);
+            arr = [];
+            rowIndex += 1;
+          } else {
+            arr.push(val);
+          }
         }
       });
       return datasArray;
@@ -146,7 +148,7 @@ export default {
               ]}
             >
               {val.render ? (
-                val.render(null, val)
+                val.render(this.$createElement, val)
               ) : (
                 <Input
                   clearable
