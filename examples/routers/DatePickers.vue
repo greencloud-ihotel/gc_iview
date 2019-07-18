@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ datePickersObj }}
     <DatePickers v-model="datePickersObj"></DatePickers>
   </div>
 </template>
@@ -19,6 +20,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>
