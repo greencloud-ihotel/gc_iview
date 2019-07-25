@@ -14,7 +14,7 @@ export default {
           { title: "id", key: "id" },
           { title: "username", key: "username" }
         ],
-        url: "/api/user/list",
+        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
         path: "datas"
       }
     };
