@@ -1,5 +1,5 @@
 <template>
-  <Card :class="[{ box: originalStyle }]">
+  <Card>
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
@@ -7,7 +7,6 @@
       :loading="tableIsLoading"
       :columns="columns"
       :data="tableData"
-      :height="tableHeight"
       v-bind="$attrs"
       v-on="$listeners"
     ></Table>
@@ -84,34 +83,21 @@ export default {
       type: Boolean,
       default: false
     },
-    height: {
-      type: Number,
-      default: 420
-    },
-    originalStyle: {
-      type: Boolean,
-      default: true
-    },
-    //是否使用原始样式，默认为false
+    // 是否使用原始样式，默认为false
     process: Function
   },
   data() {
     return {
       tableIsLoading: false, // 是否正在加载
-
       tableData: [], // 表格数据
       tableTotalRows: 0, // 表格总行数
       tableCurrentPage: 1, // 表格当前页
       tablePageSize: 30, // 表格每页条数
-      currentParams: {}, //当前参数
-      tableHeight: 420
+      currentParams: {} //当前参数
     };
   },
   created() {
     this.tablePageSize = this.pageSize;
-
-    this.tableHeight = this.height;
-
     // 判断是否存在action列,如果有则根据buttons: ['View', 'Edit', 'Delete'] 来生存操作按钮
     if (this.columns) {
       this.columns.forEach(item => {
@@ -153,9 +139,6 @@ export default {
         // 捕获到url属性发生变化 刷新下数据
         this.refresh();
       }
-    },
-    height(val) {
-      this.tableHeight = val;
     }
   },
   methods: {
@@ -179,7 +162,8 @@ export default {
       var baseParams = this.getParams(isInSide);
       let params = _.merge(this.initData, data, baseParams);
       this.currentParams = params;
-      this.$http
+      const axios = this.$http ? this.$http : require("axios");
+      axios
         .get(this.url, { params })
         .then(response => {
           // 使用箭头函数获取this
@@ -257,27 +241,6 @@ export default {
   &:hover {
     box-shadow: none;
     border-color: #eee;
-  }
-}
-.box {
-  padding: 0;
-  /deep/.ivu-table-cell {
-    padding: 0 5px;
-    height: 30px;
-    line-height: 30px;
-  }
-  /deep/.ivu-table td {
-    height: 30px;
-  }
-  /deep/.ivu-table th {
-    height: 30px;
-  }
-  .ivu-table .ivu-select {
-    line-height: 24px;
-    height: 24px;
-  }
-  /deep/ .ivu-card-body {
-    padding: 0;
   }
 }
 </style>
