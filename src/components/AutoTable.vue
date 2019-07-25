@@ -162,7 +162,11 @@ export default {
       var baseParams = this.getParams(isInSide);
       let params = _.merge(this.initData, data, baseParams);
       this.currentParams = params;
-      const axios = this.$http ? this.$http : require("axios");
+      const axios = this.$http
+        ? this.$http
+        : require("axios")
+        ? require("axios")
+        : window.axios;
       axios
         .get(this.url, { params })
         .then(response => {
