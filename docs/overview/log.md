@@ -1,5 +1,10 @@
 # 更新日志
 
+## V1.3.2
+
+    - Fix:修复AutoTable样式问题
+    - Fix:修复AutoTable axios问题
+
 ## V1.3.1
 
     - Feat:构建方式重构，以vue-cli3.0方式构建
