@@ -1,9 +1,9 @@
 <template>
   <div class="contain">
-    {{ autoForm.submitForm }}
+    router:{{ autoForm.submitForm }}
     <AutoForm
-      v-model="autoForm.submitForm"
       ref="form"
+      v-model="autoForm.submitForm"
       :fields="autoForm.fields"
       :row="2"
     ></AutoForm>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import _ from "lodash";
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
@@ -25,44 +26,73 @@ export default {
         callback();
       }
     };
-    const validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Please enter your password"));
-      } else {
-        callback();
-      }
-    };
     return {
       autoForm: {
         submitForm: {
           name: "111",
-          name2: "@222"
+          name2: "@222",
+          name3: "aaa",
+          a2: {
+            dd: "dddzzz"
+          },
+          a3: {
+            dd: "dddzzz"
+          }
         },
         fields: [
+          {
+            key: "name3",
+            label: "name3",
+            type: "input",
+            render: val => {
+              console.log("====================================");
+              console.log(_.get(this.autoForm.submitForm, val.key));
+              console.log("====================================");
+              return (
+                <i-input
+                  value={_.get(this.autoForm.submitForm, val.key)}
+                  onInput={value => {
+                    console.log(val);
+                    const newVal = _.set(
+                      this.autoForm.submitForm,
+                      val.key,
+                      value
+                    );
+                    this.autoForm.submitForm = _.assign({}, newVal);
+                  }}
+                ></i-input>
+              );
+            },
+            validators: [{ required: true, trigger: "blur" }]
+          },
           {
             key: "name",
             type: "input",
             icon: "ios-person-outline",
             label: "审批人",
             num: 2,
-            validators: [{ validator: validatePass, trigger: "blur" }]
+            validators: [
+              { required: true, trigger: "blur" },
+              { type: "email", trigger: "blur" }
+            ]
           },
           {
             key: "a2.dd",
             type: "input",
-            label: "aaa",
-            validators: [{ validator: validatePass2 }]
+            label: "a2.dd",
+            validators: [{ required: true, message: "必填a2.dd" }]
           },
           {
             key: "a3.cc",
             type: "input",
-            label: "审批人",
-            validators: [{ required: true, message: "必填3" }]
+            label: "a3.cc",
+            validators: [{ required: true, message: "必填a3.cc" }]
           },
           {
             key: "name2",
             type: "select",
             label: "name2:",
+            validators: [{ validator: validatePass, trigger: "blur" }],
             options: [
               {
                 label: "dddd",
@@ -73,18 +103,6 @@ export default {
                 value: "aaddda"
               }
             ]
-          },
-          {
-            key: "name3",
-            label: "name3",
-            render() {
-              return (
-                <div>
-                  <span>ddd</span>
-                  <span>ddd2</span>
-                </div>
-              );
-            }
           }
         ]
       }

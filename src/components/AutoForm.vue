@@ -1,8 +1,54 @@
+<template>
+  <div class="autoForm">
+    value:{{ this.value }}
+    <div>submitForm: {{ this.submitForm }}</div>
+    <Form
+      :labelWidth="70"
+      :model="submitForm"
+      class="form"
+      attrs="$attrs"
+      listeners="$listeners"
+      inline
+    >
+      <FormItem
+        v-for="item in fields"
+        :style="itemStyle(item)"
+        :label="item.label"
+        :key="item.key"
+        :prop="prop(item)"
+        :rules="item.validators"
+      >
+        <AutoFormInner :item="item" v-model="submitForm"></AutoFormInner>
+      </FormItem>
+    </Form>
+  </div>
+</template>
+
 <script>
 import _ from "lodash";
+import AutoFormInner from "../components/AutoFormInner/AutoFormInner";
 export default {
   name: "AutoForm",
-  model: {},
+  data() {
+    return {
+      ruleValidate: {
+        name: [
+          {
+            required: true,
+            message: "The name cannot be empty",
+            trigger: "blur"
+          }
+        ],
+        name2: [
+          {
+            required: true,
+            message: "The name2 cannot be empty",
+            trigger: "blur"
+          }
+        ]
+      }
+    };
+  },
   props: {
     value: {
       //表单导出源数据
@@ -24,6 +70,9 @@ export default {
       }
     }
   },
+  components: {
+    AutoFormInner
+  },
   computed: {
     submitForm: {
       get() {
@@ -35,6 +84,19 @@ export default {
     }
   },
   methods: {
+    prop(item) {
+      if (_.has(this.submitForm, item.key)) {
+        return item.key;
+      } else {
+        console.log(item);
+        console.error(`not found ${item.key}`);
+      }
+    },
+    itemStyle(item) {
+      const num = item.num ? item.num : 1;
+      return { width: `${(100 * num) / this.row}%` };
+    },
+
     reset(obj) {
       _.map(obj, (val, index) => {
         if (_.isString(val)) {
@@ -57,52 +119,6 @@ export default {
       console.log("validate");
       console.log("====================================");
     }
-  },
-  render() {
-    return (
-      <div class="autoForm">
-        {JSON.stringify(this.value)}
-        <Form
-          model={this.submitForm}
-          onInput={() => {}}
-          class="form"
-          labelWidth={70}
-          attrs={this.$attrs}
-          listeners={this.$listeners}
-          inline
-        >
-          {_.map(this.fields, val => {
-            const num = val.num ? val.num : 1;
-            return (
-              <FormItem
-                model={this.submitForm}
-                onInput={() => {}}
-                key={val.key}
-                prop={val.key}
-                label={val.label}
-                style={{ width: `${(100 * num) / this.row}%` }}
-                rules={val.validators ? val.validators : {}}
-              >
-                <Input
-                  type="text"
-                  placeholder={val.placeholder}
-                  value={_.get(this.value, val.key)}
-                  onInput={inputVal => {
-                    const newVal = _.set(this.submitForm, val.key, inputVal);
-                    this.submitForm = _.assign({}, newVal);
-                    this.$set(this.submitForm, val._key, newVal);
-                  }}
-                >
-                  {val.icon ? (
-                    <Icon type={val.icon} slot="prepend"></Icon>
-                  ) : null}
-                </Input>
-              </FormItem>
-            );
-          })}
-        </Form>
-      </div>
-    );
   }
 };
 </script>
