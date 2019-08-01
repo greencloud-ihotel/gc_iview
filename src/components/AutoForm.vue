@@ -88,8 +88,16 @@ export default {
       if (_.has(this.submitForm, item.key)) {
         return item.key;
       } else {
-        console.log(item);
-        console.error(`not found ${item.key}`);
+        if (_.indexOf(item.key, ".") > -1) {
+          let key = _.split(item.key, ".")[0];
+          if (_.has(this.submitForm, key)) {
+            return item.key;
+          } else {
+            console.error(
+              `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
+            );
+          }
+        }
       }
     },
     itemStyle(item) {

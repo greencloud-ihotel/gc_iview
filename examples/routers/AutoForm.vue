@@ -17,9 +17,6 @@ import _ from "lodash";
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
-      console.log("====================================");
-      console.log(value);
-      console.log("====================================");
       if (value === "") {
         callback(new Error("Please enter your password"));
       } else {
@@ -30,24 +27,25 @@ export default {
       autoForm: {
         submitForm: {
           name: "111",
-          name2: "@222",
+          name2: "aaa",
           name3: "aaa",
-          a2: {
-            dd: "dddzzz"
-          },
+          gg: "bbb",
           a3: {
             dd: "dddzzz"
           }
         },
         fields: [
           {
+            key: "gg",
+            label: "gg",
+            type: "datepicker",
+            validators: [{ required: true, trigger: "blur" }]
+          },
+          {
             key: "name3",
             label: "name3",
             type: "input",
             render: val => {
-              console.log("====================================");
-              console.log(_.get(this.autoForm.submitForm, val.key));
-              console.log("====================================");
               return (
                 <i-input
                   value={_.get(this.autoForm.submitForm, val.key)}
@@ -66,11 +64,21 @@ export default {
             validators: [{ required: true, trigger: "blur" }]
           },
           {
+            key: "datepickers",
+            num: 2,
+            label: "开始时间",
+            render: () => {
+              return (
+                <DatePickers options={{ endLabel: "结束时间" }}></DatePickers>
+              );
+            }
+          },
+          {
             key: "name",
             type: "input",
             icon: "ios-person-outline",
             label: "审批人",
-            num: 2,
+            num: 1,
             validators: [
               { required: true, trigger: "blur" },
               { type: "email", trigger: "blur" }
