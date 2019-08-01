@@ -21,9 +21,6 @@ export default {
   },
   methods: {
     changeVal(inputVal, val) {
-      console.log("====================================");
-      console.log(val);
-      console.log("====================================");
       const newVal = _.set(this.submitForm, val.key, inputVal);
       this.submitForm = _.assign({}, newVal);
     }
@@ -74,9 +71,6 @@ export default {
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
                       onOn-change={value => {
-                        console.log("====================================");
-                        console.log(value);
-                        console.log("====================================");
                         this.changeVal(value, val);
                       }}
                     ></DatePicker>

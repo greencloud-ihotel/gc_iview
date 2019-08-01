@@ -1,11 +1,10 @@
 <template>
   <div class="autoForm">
-    value:{{ this.value }}
-    <div>submitForm: {{ this.submitForm }}</div>
     <Form
       :labelWidth="70"
       :model="submitForm"
       class="form"
+      ref="autoForm"
       attrs="$attrs"
       listeners="$listeners"
       inline
@@ -122,10 +121,8 @@ export default {
     resetFields() {
       this.reset(this.submitForm);
     },
-    validate() {
-      console.log("====================================");
-      console.log("validate");
-      console.log("====================================");
+    validate(fn) {
+      this.$refs.autoForm.validate(fn);
     }
   }
 };

@@ -14,6 +14,7 @@
 
 <script>
 import _ from "lodash";
+
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
@@ -23,15 +24,19 @@ export default {
         callback();
       }
     };
+    console.log("====================================");
+    console.log(this.$reg.mobile instanceof RegExp);
+    console.log("====================================");
     return {
       autoForm: {
         submitForm: {
-          name: "111",
+          name: "111@qq.com",
           name2: "aaa",
           name3: "aaa",
-          gg: "bbb",
+          gg: "2019-12-22",
           a3: {
-            dd: "dddzzz"
+            dd: "dddzzz",
+            cc: "d"
           }
         },
         fields: [
@@ -39,7 +44,13 @@ export default {
             key: "gg",
             label: "gg",
             type: "datepicker",
-            validators: [{ required: true, trigger: "blur" }]
+            validators: [
+              {
+                required: true,
+                message: "Please select the date",
+                trigger: "blur"
+              }
+            ]
           },
           {
             key: "name3",
@@ -81,26 +92,22 @@ export default {
             num: 1,
             validators: [
               { required: true, trigger: "blur" },
-              { type: "email", trigger: "blur" }
+              { type: "regexp", trigger: "blur", Pattern: this.$reg.mobile }
             ]
-          },
-          {
-            key: "a2.dd",
-            type: "input",
-            label: "a2.dd",
-            validators: [{ required: true, message: "必填a2.dd" }]
           },
           {
             key: "a3.cc",
             type: "input",
             label: "a3.cc",
-            validators: [{ required: true, message: "必填a3.cc" }]
+            validators: [
+              { validator: validatePass, trigger: "blur" },
+              { type: "url", trigger: "blur" }
+            ]
           },
           {
             key: "name2",
             type: "select",
             label: "name2:",
-            validators: [{ validator: validatePass, trigger: "blur" }],
             options: [
               {
                 label: "dddd",
