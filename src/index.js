@@ -1,8 +1,10 @@
 import components from "./components";
+import reg from "./libs/regExp";
 import { version } from "../package.json";
 
 const useLib = Vue => {
   Vue.prototype.$complie = Vue.complie;
+  Vue.prototype.$reg = reg;
 };
 const install = Vue => {
   if (install.installed) return;
