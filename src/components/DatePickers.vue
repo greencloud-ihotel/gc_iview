@@ -181,6 +181,14 @@ export default {
 <style lang="less" scoped>
 .container {
   width: 100%;
+  .ivu-form-item-content,
+  .ivu-date-picker {
+    width: 100%;
+  }
+  .ivu-form-item {
+    flex: 1;
+    margin-right: 0;
+  }
   .ml10 {
     margin-left: 10px;
   }

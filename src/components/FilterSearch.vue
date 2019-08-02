@@ -201,7 +201,7 @@ export default {
     inputs() {
       const inputs = _.find(this.columns, val => val.type === "inputs");
       if (_.isEmpty(inputs)) {
-        console.warn("inputs为空");
+        console.info("inputs为空");
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
@@ -267,7 +267,7 @@ export default {
 
       if (_.isEmpty(checkboxs)) {
         /* eslint-disable */
-        console.warn("checkboxs为空");
+        console.info("checkboxs为空");
         return {};
       } else {
         _.map(checkboxs, checkbox => {
@@ -297,7 +297,7 @@ export default {
     radioboxs() {
       const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
       if (_.isEmpty(radioboxs)) {
-        console.warn("radioboxs为空");
+        console.info("radioboxs为空");
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
@@ -317,11 +317,11 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-        console.warn("buttons为空");
+         console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下:
+          console.error(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",

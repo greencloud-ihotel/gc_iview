@@ -1,5 +1,10 @@
 # 更新日志
 
+## V1.4.0
+
+    - Feat:增加 AutoForm 自动表格组件
+    - Feat:增加 常用的四种正则判断
+
 ## V1.3.2
 
     - Fix:修复AutoTable样式问题

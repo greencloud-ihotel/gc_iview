@@ -52,6 +52,10 @@ const router = new VueRouter({
     {
       path: "/UploadImages",
       component: resolve => require(["./routers/UploadImages.vue"], resolve)
+    },
+    {
+      path: "/AutoForm",
+      component: resolve => require(["./routers/AutoForm.vue"], resolve)
     }
   ]
 });
