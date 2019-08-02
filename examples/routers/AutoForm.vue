@@ -94,7 +94,7 @@ export default {
               { required: true, trigger: "blur" },
               {
                 trigger: "blur",
-                ...this.$reg.mobile
+                ...this.$reg.date
               }
             ]
           },

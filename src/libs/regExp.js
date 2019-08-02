@@ -8,8 +8,13 @@ const card = {
 };
 const zipCode = { pattern: /^[1-9]\d{5}(?!\d)$/, message: "邮政编码不正确" };
 
+const date = {
+  pattern: /^[1-2][0-9][0-9][0-9]-[0-1]{0,1}[0-9]-[0-3]{0,1}[0-9]$/,
+  message: "请输入格式为YYYY-MM-DD的时间"
+};
 export default {
   mobile,
   card,
-  zipCode
+  zipCode,
+  date
 };
