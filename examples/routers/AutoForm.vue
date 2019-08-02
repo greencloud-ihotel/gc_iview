@@ -92,7 +92,10 @@ export default {
             num: 1,
             validators: [
               { required: true, trigger: "blur" },
-              { type: "regexp", trigger: "blur", Pattern: this.$reg.mobile }
+              {
+                trigger: "blur",
+                ...this.$reg.mobile
+              }
             ]
           },
           {
