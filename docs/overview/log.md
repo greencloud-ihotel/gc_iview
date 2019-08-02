@@ -5,7 +5,12 @@
     - Feat:增加 AutoForm 自动表格组件
     - Feat:增加 常用的四种正则判断
 
-## V1.3.1 ~ V1.3.2
+## V1.3.2
+
+    - Fix:修复AutoTable样式问题
+    - Fix:修复AutoTable axios问题
+
+## V1.3.1
 
     - Feat:构建方式重构，以vue-cli3.0方式构建
     - Feat:FilterSearch支持隐藏
