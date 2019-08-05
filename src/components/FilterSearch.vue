@@ -624,6 +624,7 @@ export default {
     align-items: center;
     .first {
       margin-right: 10px;
+      font-size: 12px;
     }
   }
 }
