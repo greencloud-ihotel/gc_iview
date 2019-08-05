@@ -119,6 +119,7 @@ export default {
       }, 0);
     },
     resetFields() {
+      this.$refs.autoForm.resetFields();
       this.reset(this.submitForm);
     },
     validate(fn) {
