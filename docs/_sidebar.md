@@ -12,5 +12,6 @@
   - [TFSwitch](components/TFSwitch.md)
   - [SuperSearch](components/SuperSearch.md)
   - [UploadImages](components/UploadImages.md)
+  - [AutoForm](components/AutoForm.md)
 - **工具**
   - [常用正则](libs/regExp.md)
