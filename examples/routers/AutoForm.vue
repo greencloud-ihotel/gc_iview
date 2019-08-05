@@ -24,9 +24,6 @@ export default {
         callback();
       }
     };
-    console.log("====================================");
-    console.log(this.$reg.mobile instanceof RegExp);
-    console.log("====================================");
     return {
       autoForm: {
         submitForm: {

@@ -137,5 +137,8 @@ export default {
   .ivu-form-inline .ivu-form-item {
     margin-right: 0;
   }
+  /deep/ .ivu-date-picker {
+    width: 100% !important;
+  }
 }
 </style>
