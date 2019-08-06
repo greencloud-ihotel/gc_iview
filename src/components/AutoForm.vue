@@ -74,6 +74,9 @@ export default {
   },
   methods: {
     prop(item) {
+      console.log("====================================");
+      console.log(this.submitForm);
+      console.log("====================================");
       if (_.has(this.submitForm, item.key)) {
         return item.key;
       } else {
@@ -97,9 +100,7 @@ export default {
           }
         }
       });
-      setTimeout(() => {
-        this.submitForm = _.assign({}, obj);
-      }, 0);
+      this.submitForm = _.assign({}, obj);
     },
     resetFields() {
       this.$refs.autoForm.resetFields();
