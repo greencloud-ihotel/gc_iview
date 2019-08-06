@@ -26,16 +26,7 @@ export default {
     };
     return {
       autoForm: {
-        submitForm: {
-          name: "111@qq.com",
-          name2: "aaa",
-          name3: "aaa",
-          gg: "2019-12-22",
-          a3: {
-            dd: "dddzzz",
-            cc: "d"
-          }
-        },
+        submitForm: {},
         fields: [
           {
             key: "gg",

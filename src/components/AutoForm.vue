@@ -1,5 +1,6 @@
 <template>
   <div class="autoForm">
+    {{ submitForm }}
     <Form
       :labelWidth="70"
       :model="submitForm"
@@ -28,26 +29,6 @@ import _ from "lodash";
 import AutoFormInner from "../components/AutoFormInner/AutoFormInner";
 export default {
   name: "AutoForm",
-  data() {
-    return {
-      ruleValidate: {
-        name: [
-          {
-            required: true,
-            message: "The name cannot be empty",
-            trigger: "blur"
-          }
-        ],
-        name2: [
-          {
-            required: true,
-            message: "The name2 cannot be empty",
-            trigger: "blur"
-          }
-        ]
-      }
-    };
-  },
   props: {
     value: {
       //表单导出源数据
@@ -72,6 +53,15 @@ export default {
   components: {
     AutoFormInner
   },
+  beforeMount() {
+    const arr = this.value;
+    _.map(this.fields, val => {
+      if (_.isEmpty(_.get(arr, val.key))) {
+        _.set(arr, val.key, "");
+      }
+    });
+    this.submitForm = arr;
+  },
   computed: {
     submitForm: {
       get() {
@@ -87,16 +77,9 @@ export default {
       if (_.has(this.submitForm, item.key)) {
         return item.key;
       } else {
-        if (_.indexOf(item.key, ".") > -1) {
-          let key = _.split(item.key, ".")[0];
-          if (_.has(this.submitForm, key)) {
-            return item.key;
-          } else {
-            console.error(
-              `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
-            );
-          }
-        }
+        console.error(
+          `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
+        );
       }
     },
     itemStyle(item) {
