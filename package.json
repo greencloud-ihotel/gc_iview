@@ -1,13 +1,13 @@
 {
   "name": "gc_iview",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.umd.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
-    "build:docs": "vue-cli-service build --dest ./docs/assets/dist --target lib --name index ./src/index.js",
+    "build:docs": "cross-env BUID_TYPE=docs vue-cli-service  build  --dest ./docs/assets/dist --target lib --name index ./src/index.js",
     "build:prod": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
     "docs": "docsify serve docs",
     "lint": "vue-cli-service lint"
@@ -35,9 +35,11 @@
     "vue": "^2.5.17"
   },
   "peerDependencies": {
+    "animate.css": "^3.7.0",
     "axios": "^0.18.1",
-    "iview": "^3.1.3",
+    "iview": "^3.4.2",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "vue": "^2.5.17"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "@vue/cli-service": "^3.9.2",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.9.0",

@@ -233,7 +233,6 @@ export default {
         len = condition.data.length;
       for (i = 0; i < len; i++) {
         if (condition.data[i].code === item.code) {
-          console.log(i);
           this.$refs.table[item._type].$el
             .querySelector(".ivu-table-tbody")
             .children[i].querySelector(".ivu-checkbox-wrapper")

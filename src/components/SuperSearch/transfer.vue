@@ -279,7 +279,7 @@ export default {
     },
     "untransferred.list"(val) {
       this.unselected.list = val;
-    },
+    }
   }
 };
 </script>
