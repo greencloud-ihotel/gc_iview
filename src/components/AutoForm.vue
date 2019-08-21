@@ -1,6 +1,5 @@
 <template>
   <div class="autoForm">
-    {{ $attrs }}
     <Form
       class="form"
       ref="autoForm"
