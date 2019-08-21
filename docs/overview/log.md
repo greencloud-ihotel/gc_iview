@@ -1,5 +1,9 @@
 # 更新日志
 
+## V1.4.6 - 1.4.7
+
+    - Fix:AutoForm 支持 labelWidth 外部修改
+
 ## V1.4.5
 
     - Fix:AutoForm输出问题

@@ -4,6 +4,7 @@
     <AutoForm
       ref="form"
       v-model="autoForm.submitForm"
+      :label-width="100"
       :fields="autoForm.fields"
       :row="2"
     ></AutoForm>

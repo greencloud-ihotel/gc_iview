@@ -1,13 +1,14 @@
 <template>
   <div class="autoForm">
+    {{ $attrs }}
     <Form
-      :labelWidth="70"
-      :model="submitForm"
       class="form"
       ref="autoForm"
-      attrs="$attrs"
-      listeners="$listeners"
       inline
+      :labelWidth="labelWidth"
+      :model="submitForm"
+      v-bind="$attrs"
+      v-on="$listeners"
     >
       <FormItem
         v-for="item in fields"
@@ -62,6 +63,17 @@ export default {
     this.submitForm = arr;
   },
   computed: {
+    labelWidth() {
+      if (
+        !_.has(this.$attrs, "labelWidth") &&
+        !_.has(this.$attrs, "label-width")
+      ) {
+        return 70;
+      }
+      return (
+        _.get(this.$attrs, "labelWidth") || _.get(this.$attrs, "label-width")
+      );
+    },
     submitForm: {
       get() {
         return this.value;
@@ -73,9 +85,6 @@ export default {
   },
   methods: {
     prop(item) {
-      console.log("====================================");
-      console.log(this.submitForm);
-      console.log("====================================");
       if (_.has(this.submitForm, item.key)) {
         return item.key;
       } else {
