@@ -1,6 +1,5 @@
 <template>
   <div class="autoForm">
-    {{ submitForm }}
     <Form
       :labelWidth="70"
       :model="submitForm"

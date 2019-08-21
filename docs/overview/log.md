@@ -1,5 +1,9 @@
 # 更新日志
 
+## V1.4.5
+
+    - Fix:AutoForm输出问题
+
 ## V1.4.2 - 1.4.4
 
     - Feat: autoForm文档编写
