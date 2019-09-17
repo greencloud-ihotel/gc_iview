@@ -1,14 +1,16 @@
 <template>
   <div>
-    {{customTableValue}}
-    <custom-table :columns="columns"
-                  v-model="customTableValue"
-                  :newModel="true"
-                  :hasDelete="false"
-                  @change-click="changeHandler"
-                  ref="custmTable"></custom-table>
+    {{ customTableValue }}
+    <custom-table
+      :columns="columns"
+      :newModel="true"
+      :hasDelete="false"
+      v-model="customTableValue"
+      @change-click="changeHandler"
+      ref="custmTable"
+    ></custom-table>
     <Button @click="getData">获取数据</Button>
-    <p>获取数据data:{{columnsHanlderData}}</p>
+    <p>获取数据data:{{ columnsHanlderData }}</p>
   </div>
 </template>
 
@@ -139,6 +141,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-</style>

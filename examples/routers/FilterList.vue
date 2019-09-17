@@ -2,14 +2,16 @@
   <div>
     <Row>
       <i-Col span="6">
-        <filter-list @chooseItem="getCode"
-                     code="value"
-                     label="descript"
-                     :list="list"></filter-list>
+        <filter-list
+          @chooseItem="getCode"
+          code="value"
+          label="descript"
+          :list="list"
+        ></filter-list>
       </i-Col>
       <i-Col span="18">
         <div>
-          {{getData}}
+          {{ getData }}
         </div>
       </i-Col>
     </Row>
@@ -64,5 +66,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

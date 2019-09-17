@@ -1,10 +1,12 @@
 import components from "./components";
+import reg from "./libs/regExp";
+import { version } from "../package.json";
 
 const useLib = Vue => {
   Vue.prototype.$complie = Vue.complie;
-  // Vue.use(iView);
+  Vue.prototype.$reg = reg;
 };
-const install = (Vue, opts = {}) => {
+const install = Vue => {
   if (install.installed) return;
   // 安装所有组件
   useLib(Vue);
@@ -17,7 +19,7 @@ if (typeof window !== "undefined" && window.Vue) {
   useLib(window.Vue);
 }
 const GC_IVIEW = {
-  version: "1.0.0",
+  version,
   install
 };
 console.log(GC_IVIEW);

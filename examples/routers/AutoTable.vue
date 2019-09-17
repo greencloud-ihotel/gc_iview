@@ -1,9 +1,8 @@
 <template>
   <div>
-    <span>autoTableConfig:{{autoTableConfig}}</span>
+    <span>autoTableConfig:{{ autoTableConfig }}</span>
     <AutoTable v-bind="autoTableConfig"></AutoTable>
   </div>
-
 </template>
 
 <script>
@@ -15,7 +14,7 @@ export default {
           { title: "id", key: "id" },
           { title: "username", key: "username" }
         ],
-        url: "/api/user/list",
+        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
         path: "datas"
       }
     };
@@ -23,5 +22,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

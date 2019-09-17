@@ -57,15 +57,17 @@ export default {
       let rowIndex = 1;
       let arr = [];
       _.map(datas, (val, index) => {
-        let num = val.num ? val.num : 1;
-        count += num;
-        if (count >= this.rowNum * rowIndex || index + 1 == datas.length) {
-          arr.push(val);
-          datasArray.push(arr);
-          arr = [];
-          rowIndex += 1;
-        } else {
-          arr.push(val);
+        if (val.num !== 0) {
+          let num = val.num ? val.num : 1;
+          count += num;
+          if (count >= this.rowNum * rowIndex || index + 1 == datas.length) {
+            arr.push(val);
+            datasArray.push(arr);
+            arr = [];
+            rowIndex += 1;
+          } else {
+            arr.push(val);
+          }
         }
       });
       return datasArray;
@@ -146,7 +148,7 @@ export default {
               ]}
             >
               {val.render ? (
-                val.render(h, val)
+                val.render(this.$createElement, val)
               ) : (
                 <Input
                   clearable
@@ -199,11 +201,11 @@ export default {
     inputs() {
       const inputs = _.find(this.columns, val => val.type === "inputs");
       if (_.isEmpty(inputs)) {
-        console.warn("inputs为空");
+        console.info("inputs为空");
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示: 
+          console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -265,13 +267,13 @@ export default {
 
       if (_.isEmpty(checkboxs)) {
         /* eslint-disable */
-        console.warn("checkboxs为空");
+        console.info("checkboxs为空");
         return {};
       } else {
         _.map(checkboxs, checkbox => {
           if (!_.has(checkbox, "datas")) {
             /* eslint-disable */
-            console.error(`checkboxs需要datas,结构如下: 
+            console.error(`checkboxs需要datas,结构如下:
             datas: [
               { label: "aa", key: "gg", value: "aa" },
                 { label: "ss", key: "aa", value: "cc" },
@@ -287,17 +289,19 @@ export default {
         });
         if (flag) {
           return checkboxs;
+        }else{
+          return {}
         }
       }
     },
     radioboxs() {
       const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
       if (_.isEmpty(radioboxs)) {
-        console.warn("radioboxs为空");
+        console.info("radioboxs为空");
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
-          console.error(`radioboxs需要datas,结构如下: 
+          console.error(`radioboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -313,11 +317,11 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-        console.warn("buttons为空");
+         console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.log(`buttons需要datas,结构如下: 
+          console.error(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
@@ -622,6 +626,7 @@ export default {
     align-items: center;
     .first {
       margin-right: 10px;
+      font-size: 12px;
     }
   }
 }

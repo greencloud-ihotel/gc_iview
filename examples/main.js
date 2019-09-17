@@ -1,7 +1,7 @@
-import "babel-polyfill";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import iview from "iview";
+import "iview/dist/styles/iview.css";
 import gc_iview from "../src/index";
 import App from "./app.vue";
 Vue.use(VueRouter);
@@ -48,6 +48,14 @@ const router = new VueRouter({
     {
       path: "/FilterList",
       component: resolve => require(["./routers/FilterList.vue"], resolve)
+    },
+    {
+      path: "/UploadImages",
+      component: resolve => require(["./routers/UploadImages.vue"], resolve)
+    },
+    {
+      path: "/AutoForm",
+      component: resolve => require(["./routers/AutoForm.vue"], resolve)
     }
   ]
 });

@@ -1,5 +1,52 @@
 # 更新日志
 
+## V1.4.6 - 1.4.7
+
+    - Fix:AutoForm 支持 labelWidth 外部修改
+
+## V1.4.5
+
+    - Fix:AutoForm输出问题
+
+## V1.4.2 - 1.4.4
+
+    - Feat: autoForm文档编写
+    - Fix: 资源过大问题
+
+## V1.4.1
+
+    - Fix: 验证消息消除
+
+## V1.4.0
+
+    - Feat:增加 AutoForm 自动表格组件
+    - Feat:增加 常用的四种正则判断
+
+## V1.3.2
+
+    - Fix:修复AutoTable样式问题
+    - Fix:修复AutoTable axios问题
+
+## V1.3.1
+
+    - Feat:构建方式重构，以vue-cli3.0方式构建
+    - Feat:FilterSearch支持隐藏
+    - Fix:修复时间组件选中日期后还提示错误问题
+
+## V1.3.0
+
+    - Feat:新增 UploadImages组件
+
+## V1.2.1
+
+    - Fix:修复FilterSearch全选bug
+
+## V1.2.0
+
+    - Feat:新增 CustomTable
+    - Fix:TFSwitch 去掉url必选的选项
+    - Fix:GroupHotelLink 增加filterList 路由
+
 ## V1.1.2
 
     - Fix:AutoTable 请求头没拦截到
