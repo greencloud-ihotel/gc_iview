@@ -127,6 +127,7 @@ export default {
               }}
             >
               <DatePicker
+                {...{ attrs: this.$attrs }}
                 transfer={true}
                 show-week-numbers
                 value={this.value.startDate}
@@ -155,6 +156,7 @@ export default {
               }}
             >
               <DatePicker
+                {...{ attrs: this.$attrs }}
                 show-week-numbers
                 value={this.value.endDate}
                 placeholder={this.endDatePlaceHolder}
