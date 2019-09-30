@@ -289,8 +289,8 @@ export default {
         });
         if (flag) {
           return checkboxs;
-        }else{
-          return {}
+        } else {
+          return {};
         }
       }
     },
@@ -317,7 +317,7 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-         console.info("buttons为空");
+        console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
@@ -446,7 +446,7 @@ export default {
               </div>
             </div>
             {!_.isEmpty(this.checkboxs) ? (
-              <div class="bottom" style="flex-warp:warp;">
+              <div class="bottom" style="flex-wrap:wrap;">
                 {_.map(this.checkboxs, checkbox => {
                   return (
                     <div class="bottom first">
@@ -546,7 +546,7 @@ export default {
   position: relative;
   top: -10px;
   left: -10px;
-  width: calc(100% + 20px);
+  width: calc(~"100% + 20px");
   .w70 {
     width: 70% !important;
   }
