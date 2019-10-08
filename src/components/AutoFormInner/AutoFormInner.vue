@@ -25,8 +25,23 @@ export default {
       this.submitForm = _.assign({}, newVal);
     }
   },
+  created() {
+    const event = this.item.on;
+    let onChangeFn = function() {};
+    if (typeof event !== "undefined" && "on-change" in event) {
+      //const noop = function() {};
+      const bindOnChange = event["on-change"].bind();
+      event["on-change"] = value => {
+        this.changeVal(value, this.item);
+        bindOnChange.call(this, value);
+      };
+    }
+  },
   render() {
     const val = this.item;
+
+    const event = val.on;
+
     return (
       <div>
         {val.render
@@ -37,6 +52,7 @@ export default {
                   return (
                     <Input
                       type="text"
+                      {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
                       onInput={value => {
@@ -44,22 +60,61 @@ export default {
                       }}
                     >
                       {val.icon ? (
-                        <Icon type={val.icon} slot="prepend"></Icon>
+                        <Icon type={val.icon} slot="prepend" />
                       ) : null}
                     </Input>
+                  );
+                case "inputnumber":
+                  return (
+                    <InputNumber
+                      {...{ props: val.props ? val.props : {} }}
+                      placeholder={val.placeholder}
+                      value={_.get(this.submitForm, val.key) || 0}
+                      onOn-change={value => {
+                        this.changeVal(value, val);
+                      }}
+                    >
+                      {val.icon ? (
+                        <Icon type={val.icon} slot="prepend" />
+                      ) : null}
+                    </InputNumber>
                   );
                 case "select":
                   return (
                     <i-select
                       placeholder={val.placeholder}
+                      {...{ props: val.props ? val.props : {} }}
                       value={_.get(this.submitForm, val.key)}
-                      onInput={value => {
-                        this.changeVal(value, val);
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
                       }}
                     >
-                      {_.map(val.options, val => {
+                      {_.map(val.options, value => {
                         return (
-                          <i-option value={val.value}>{val.label}</i-option>
+                          <i-option
+                            value={
+                              value[
+                                val.option
+                                  ? val.option.code
+                                    ? val.option.code
+                                    : "value"
+                                  : "value"
+                              ]
+                            }
+                          >
+                            {
+                              value[
+                                val.option
+                                  ? val.option.label
+                                    ? val.option.label
+                                    : "label"
+                                  : "label"
+                              ]
+                            }
+                          </i-option>
                         );
                       })}
                     </i-select>
@@ -68,17 +123,19 @@ export default {
                   return (
                     <DatePicker
                       type="date"
+                      {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
                       onOn-change={value => {
                         this.changeVal(value, val);
                       }}
-                    ></DatePicker>
+                    />
                   );
                 default:
                   return (
                     <Input
                       type="text"
+                      {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
                       onInput={value => {
@@ -86,7 +143,7 @@ export default {
                       }}
                     >
                       {val.icon ? (
-                        <Icon type={val.icon} slot="prepend"></Icon>
+                        <Icon type={val.icon} slot="prepend" />
                       ) : null}
                     </Input>
                   );

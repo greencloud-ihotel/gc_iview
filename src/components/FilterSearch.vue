@@ -289,8 +289,8 @@ export default {
         });
         if (flag) {
           return checkboxs;
-        }else{
-          return {}
+        } else {
+          return {};
         }
       }
     },
@@ -317,7 +317,7 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-         console.info("buttons为空");
+        console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
@@ -446,16 +446,17 @@ export default {
               </div>
             </div>
             {!_.isEmpty(this.checkboxs) ? (
-              <div class="bottom">
+              <div class="bottom" style="flex-wrap:wrap;">
                 {_.map(this.checkboxs, checkbox => {
                   return (
                     <div class="bottom first">
-                      <span>
+                      <span style="flex-shrink:0;">
                         {checkbox.preExplain
                           ? checkbox.preExplain
                           : "筛选条件:"}
                       </span>
                       <Checkbox
+                        style="flex-shrink:0;"
                         nativeOnClick={e => {
                           e.preventDefault();
 
@@ -467,6 +468,7 @@ export default {
                         <span>全选</span>
                       </Checkbox>
                       <CheckboxGroup
+                        style="flex-shrink:0;font-size:12px;"
                         value={
                           this.value[checkbox.key]
                             ? _.compact(this.value[checkbox.key].split(","))
@@ -479,7 +481,7 @@ export default {
                       >
                         {_.map(_.get(checkbox, "datas"), val => {
                           return (
-                            <Checkbox label={val.value}>
+                            <Checkbox label={val.value} style="flex-shrink:0;">
                               <span>{val.label}</span>
                             </Checkbox>
                           );
@@ -493,7 +495,7 @@ export default {
 
             {!_.isEmpty(this.radioboxs) ? (
               <div class="bottom">
-                <div class="first">筛选条件:</div>
+                <div class="first">筛选条件 :</div>
                 <RadioGroup
                   value={this.value[this.radioboxs.key]}
                   onInput={val => {
@@ -544,7 +546,7 @@ export default {
   position: relative;
   top: -10px;
   left: -10px;
-  width: calc(100% + 20px);
+  width: calc(~"100% + 20px");
   .w70 {
     width: 70% !important;
   }

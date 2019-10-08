@@ -394,16 +394,20 @@ export default {
     },
     // 返回没有_customAddButton的数据
     getTableData() {
-      const data = _.cloneDeep(this.dataClone);
-      const filterIndex = data.findIndex(item => {
-        if (item._customAddButton) {
-          return item;
-        }
+      const data = this.dataClone.filter(item => {
+        return !item._customAddButton;
       });
-      if (filterIndex > -1) {
-        data.splice(filterIndex, 1);
-      }
       return data;
+      // const data = _.cloneDeep(this.dataClone);
+      // const filterIndex = data.findIndex(item => {
+      //   if (item._customAddButton) {
+      //     return item;
+      //   }
+      // });
+      // if (filterIndex > -1) {
+      //   data.splice(filterIndex, 1);
+      // }
+      // return data;
     },
     onSelectChange(val) {
       this.$emit("on-selection-change", val);
