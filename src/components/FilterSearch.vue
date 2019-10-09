@@ -74,7 +74,7 @@ export default {
     },
     hideShow() {
       this.hideShowClicked = true;
-      this.rowNum = !this.show ? 5 : 3;
+      this.rowNum = !this.show ? 5 : this.rowNumProp;
       this.show = !this.show;
     },
     getValue(valuekey, valKey) {
