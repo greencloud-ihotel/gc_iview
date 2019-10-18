@@ -24,7 +24,8 @@ export default {
       const toString = Object.prototype.toString;
 
       const value =
-        toString.call(inputVal) === "[object InputEvent]"
+        toString.call(inputVal) === "[object InputEvent]" ||
+        toString.call(inputVal) === "[object Object]"
           ? inputVal.target.value
           : inputVal;
       const newVal = _.set(this.submitForm, val.key, value);
