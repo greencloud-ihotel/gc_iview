@@ -21,7 +21,13 @@ export default {
   },
   methods: {
     changeVal(inputVal, val) {
-      const newVal = _.set(this.submitForm, val.key, inputVal);
+      const toString = Object.prototype.toString;
+
+      const value =
+        toString.call(inputVal) === "[object InputEvent]"
+          ? inputVal.target.value
+          : inputVal;
+      const newVal = _.set(this.submitForm, val.key, value);
       this.submitForm = _.assign({}, newVal);
     }
   },
@@ -55,8 +61,11 @@ export default {
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
-                      onInput={value => {
-                        this.changeVal(value, val);
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
                       }}
                     >
                       {val.icon ? (
@@ -70,8 +79,11 @@ export default {
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key) || 0}
-                      onOn-change={value => {
-                        this.changeVal(value, val);
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
                       }}
                     >
                       {val.icon ? (
