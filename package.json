@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
-    "build:docs": "cross-env BUID_TYPE=docs vue-cli-service  build  --dest ./docs/assets/dist --target lib --name index ./src/index.js",
     "build:prod": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
-    "docs": "docsify serve docs",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "lint": "vue-cli-service lint"
   },
   "repository": "git+https://github.com/huqiliang/gc_iview.git",
@@ -29,17 +29,18 @@
     "animate.css": "^3.7.0",
     "axios": "^0.18.1",
     "core-js": "^2.6.5",
-    "iview": "^3.4.2",
+    "iview": "^3.5.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
+    "view-design": "^4.0.0",
     "vue": "^2.5.17"
   },
   "peerDependencies": {
     "animate.css": "^3.7.0",
     "axios": "^0.18.1",
-    "iview": "^3.4.2",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
+    "view-design": "^4.0.0",
     "vue": "^2.5.17"
   },
   "devDependencies": {
@@ -54,7 +55,8 @@
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "vue-router": "^3.0.7",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.2.0"
   },
   "browserslist": [
     "> 1%",

@@ -1,0 +1,18 @@
+.theme-default-content:not(.custom) {
+  max-width: 90% !important;
+}
+.theme-default-content:not(.custom) > h1,
+.theme-default-content:not(.custom) > h2,
+.theme-default-content:not(.custom) > h3,
+.theme-default-content:not(.custom) > h4,
+.theme-default-content:not(.custom) > h5,
+.theme-default-content:not(.custom) > h6 {
+  padding-bottom: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+.db__demo {
+  padding: 22px 24px !important;
+}
+table {
+  margin: 0 !important;
+}

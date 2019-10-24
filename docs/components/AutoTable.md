@@ -6,161 +6,32 @@
 
 ## 示例
 
-1. 1.基础用法:自动表格的基本使用方法。
+<demo-box title="1. 基础用法">
+<div>
+  <p>自动表格的基本使用方法</p>
+  <AutoTable-1/>
+</div>
 
----
+<template slot="code">
 
-```javascript
-/*vue*/
-<template>
-  <div>
-    <auto-table v-bind="autoTableConfig"></auto-table>
-  </div>
+<<< docs/.vuepress/components/AutoTable/1.vue
+
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      autoTableConfig: {
-        columns: [
-          { title: "标识", key: "id" },
-          { title: "姓名", key: "username" },
-          { title: "性别", key: "sex" },
-          {
-            title: "操作",
-            key: "action",
-            width: 160,
-            align: "center",
-            buttons: ["修改"]
-          }
-        ],
-        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
-        path: "datas",
+</demo-box>
 
-      }
-    };
-  }
-};
-</script>
-
-<style>
-</style>
-```
-
----
-
-2. 2.和 filterSearch 相结合的用法:AutoTable 和 filterSearch 相结合。
-
----
-
-```javascript
-/*vue*/
-<template>
+<demo-box title="2. 搭配FilterSearch">
   <div>
-    <auto-table v-bind="autoTableConfig">
-      <Row slot="header"
-           :gutter="10">
-        <filter-search :columns="searchColumns"
-                      v-model="searchData"></filter-search>
-      </Row>
-    </auto-table>
+    <p>搭配 FilterSearch 组件 相结合的用法:AutoTable 和 FilterSearch 相结合。</p>
+    <AutoTable-2/>
   </div>
-</template>
+  <template slot="code">
 
-<script>
-export default {
-  data() {
-    return {
-      autoTableConfig: {
-        columns: [
-          { title: "标识", key: "id" },
-          { title: "姓名", key: "username" },
-          { title: "性别", key: "sex" },
-          {
-          title: "操作",
-          key: "action",
-          width: 160,
-          align: "center",
-          buttons: ["修改"]
-        }
-        ],
-        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
-        path: "datas",
-      },
-       searchData:{
-          conditionText:'',
-          searchBarStas:'',
-          category:'',
-          default:{
-              listProduct:[
-                   {
-                        code: 'New York',
-                        descript: 'New York'
-                    },
-              ]
-          }
-      },
-      searchColumns: [
-          {
-          datas: [
-              {
-              label: "请输入代码或者描述",
-              key: "conditionText"
-            },
-            {
-              label: "类型",
-              render: h => {
-                const placeholder = "类型";
-                return h("i-select",{
-                   props: {}
-                })
-              }
-            },
-          ],
-          type: "inputs"
-          },
-          {
-          datas: [
-            { label: "全选", key: "", value: "" },
-            { label: "待上线", key: "R", value: "R" },
-            { label: "有效", key: "I", value: "I" },
-            { label: "无效", key: "X", value: "X" }
-          ],
-          key: "searchBarStas", //传入节点值 不传扩展到根对象
-          type: "checkboxs"
-        },
-        {
-          datas: [
-            {
-              label: "查询",
-              action: () => {
-                //this.postTableData(1);
-              }
-            },
-            {
-              label: "重置",
-              action: "reset"
-            },
-            {
-              label: "新增",
-              action: () => {
-                //this.addAction();
-              }
-            }
-          ],
-          type: "buttons"
-        }
-      ],
+<<< docs/.vuepress/components/AutoTable/2.vue
 
-    };
-  }
-};
-</script>
+  </template>
 
-<style>
-</style>
-```
+</demo-box>
 
 ## API
 

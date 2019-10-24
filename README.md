@@ -40,3 +40,5 @@ npm run build:doc //构建库到文档使用
 npm run build:dev //构建开发环境库
 npm run build:prod //构建生产环境库
 ```
+
+## 文档编写
