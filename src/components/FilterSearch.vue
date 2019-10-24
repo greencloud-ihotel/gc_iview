@@ -440,12 +440,14 @@ export default {
                 </div>
               </div>
             </div>
-            {!_.isEmpty(this.checkboxs) ? (
-              <div class="bottom" style="flex-wrap:wrap;">
+            {this.$slots.footer ? (
+              this.$slots.footer
+            ) : !_.isEmpty(this.checkboxs) ? (
+              <div class="bottom">
                 {_.map(this.checkboxs, checkbox => {
                   return (
                     <div class="bottom first">
-                      <span style="flex-shrink:0;">
+                      <span class="preExplain">
                         {checkbox.preExplain
                           ? checkbox.preExplain
                           : "筛选条件:"}
@@ -532,6 +534,9 @@ export default {
   margin-bottom: 10px;
 }
 .filterSearch {
+  .ivu-checkbox-wrapper {
+    font-size: 12px !important;
+  }
   flex: 1;
   background: #f5f5f5;
   padding: 10px;
@@ -613,7 +618,12 @@ export default {
   }
   .bottom {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    .preExplain {
+      flex-shrink: 0;
+      margin-right: 5px;
+    }
     .first {
       margin-right: 10px;
       font-size: 12px;
