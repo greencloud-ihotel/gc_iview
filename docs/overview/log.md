@@ -1,5 +1,10 @@
 # 更新日志
 
+## V1.5.0
+
+    - Fix:FilterSearch样式问题修复(此问题可能会引起向下兼容问题 请注意)
+    - Feat:文档用vuepress重构，删除example文件夹 由文档文件夹components代替
+
 ## V1.4.6 - 1.4.7
 
     - Fix:AutoForm 支持 labelWidth 外部修改

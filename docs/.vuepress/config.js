@@ -36,8 +36,12 @@ module.exports = {
       }
     ],
     nav: [
-      { text: "入门", link: "/" },
-      { text: "更新日志", link: "https://google.com" }
+      { text: "快速入门", link: "/overview/install" },
+      { text: "更新日志", link: "/overview/log" },
+      {
+        text: "GitHub",
+        link: "https://greencloud-ihotel.github.io/gc_iview/#/"
+      }
     ]
   }
 };
