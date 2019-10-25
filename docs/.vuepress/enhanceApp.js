@@ -1,8 +1,10 @@
 import Vue from "vue";
 import ViewUI from "view-design";
 import "view-design/dist/styles/iview.css";
+import axios from "axios";
 import gc_iview from "../../src/index";
 import "./global.css";
 // import App from "./app.vue";
+Vue.prototype.$http = axios;
 Vue.use(ViewUI);
 Vue.use(gc_iview);

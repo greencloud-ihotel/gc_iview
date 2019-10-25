@@ -7,88 +7,23 @@ switch 组件封装,主要针对于后端返回 T 或 F ,而不是 true 或 fals
 
 ## 示例
 
-1.基础用法:状态开关的基础用法。
+<demo-block title='1. 基础用法' desc='状态开关的基础用法。'>
+  <div slot='demo'><TFSwitch-1></TFSwitch-1></div>
+  <div slot='code'>
 
----
+<<< @/docs/.vuepress/components/TFSwitch/1.vue
 
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>自动表格的基本使用方法。</p>
-</desc>
-<template>
-  <div>
-     <t-f-switch :updateUrl="updateUrl"  :row="rowData"></t-f-switch>
   </div>
-</template>
+</demo-block>
 
-<script>
-export default {
-  data() {
-    return {
-      updateUrl: "/product-room/bks/channelInfo/updateChannel",
-      rowData:{
-        isHalt:"T"
-      },
-    };
-  }
-};
-</script>
+<demo-block title='2.在 AutoTable 中使用' >
+  <div slot='demo'><TFSwitch-2></TFSwitch-2></div>
+  <div slot='code'>
 
-<style>
-</style>
-```
+<<< @/docs/.vuepress/components/TFSwitch/2.vue
 
----
-
-2.在 AutoTable 中使用。
-
----
-
-```javascript
-/*vue*/
-<template>
-  <div class="contanier">
-    <auto-table v-bind="autoTableConfig"></auto-table>
   </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      autoTableConfig: {
-        columns: [
-          { title: "用户id", key: "id" },
-          {
-            title: "姓名",
-            key: "username"
-          },
-          {
-            title: "启用",
-            key: "username",
-            render: (h,params) => {
-              return h("TFSwitch", {
-                props: {
-                  row: params.row,
-                  url: "https://yapi.ihotel.cn/mock/60/updateTable"
-                }
-              });
-              // use jsx
-              // return (<TFSwitch row={params.row}></TFSwitch>)
-            }
-          }
-        ],
-        url: "https://yapi.ihotel.cn/mock/60/AutoTable_1",
-        path: "datas"
-      }
-    };
-  }
-};
-</script>
-
-```
+</demo-block>
 
 ## API
 

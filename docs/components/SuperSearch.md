@@ -6,127 +6,23 @@
 
 ## 示例
 
-1. 基础用法: 提供简单的搜索条件。
+<demo-block title='1. 基础用法' desc='提供简单的搜索条件。'>
+  <div slot='demo'><SuperSearch-1></SuperSearch-1></div>
+  <div slot='code'>
 
-```javascript
-/*vue*/
-<template>
-  <super-search v-model="result"
-               :columns="columns"
-               :url="url"
-               :url-path="urlPath"
-			   :keyword-name="keywordName"
-               title="筛选示例"
-               placeholder="选择示例"></super-search>
-</template>
+<<< @/docs/.vuepress/components/SuperSearch/1.vue
 
-<script>
-export default {
-  name: "eg_SuperSearch",
-  data() {
-    return {
-      url: "https://yapi.ihotel.cn/mock/230/gc_iview/superSearch",
-      urlPath: 'retVal', //指定获取通过url返回结果的某一属性      
-      result: [], //所选列表结果
-      keywordName: 'defKeyword', //查询接口的关键字对应参数名
-      columns: [
-        {
-          name: "test", //最终搜索时对应的参数名
-          title: "测试", //显示的条件名
-          autoGetData: true, //是否自动根据dataUrl获取数据
-          dataUrl: "https://yapi.ihotel.cn/mock/230/gc_iview/test",
-          dataPath: "retVal", // dataURL 返回结果具体路径
-          data: [], //表格数据
-          loading: false //表格是否加载中
-        }
-      ]
-    };
-  }
-};
-</script>
+  </div>
+</demo-block>
 
-```
+<demo-block title='1. 提供左右两侧筛选条件用法'>
+  <div slot='demo'><SuperSearch-2></SuperSearch-2></div>
+  <div slot='code'>
 
-2. 提供左右两侧筛选条件用法
+<<< @/docs/.vuepress/components/SuperSearch/2.vue
 
-```javascript
-/*vue*/
-<template>
-  <super-search v-model="result"
-               :columns="columns"
-               :url="url"
-               url-path="retVal"
-               title="筛选示例"
-               placeholder="选择示例"></super-search>
-</template>
-
-<script>
-export default {
-  name: "eg_SuperSearch",
-  data() {
-    return {
-      url: "https://yapi.ihotel.cn/mock/230/gc_iview/superSearch",
-      result: [], //所选列表结果
-      columns: [
-        {
-          name: "test2",
-          title: "测试2",
-          list: [
-            {
-              code: "AN",
-              descript: "安徽"
-            },
-            {
-              code: "CQ",
-              descript: "重庆"
-            },
-            {
-              code: "FU",
-              descript: "福建"
-            }
-          ],
-          data: [],
-          dataUrl: "https://yapi.ihotel.cn/mock/230/gc_iview/listCodeCity",
-          dataPath: "retVal",
-          autoGetData: false,
-          /* onSelected: item => {  //左侧列表点击后触发事件, item 为当前点击数据
-            console.log(item, this);
-          }, */          
-          map: {
-            // listCode: 'leftCode', //指定左侧列表数据的code应绑定返回数据的 leftCode 属性值
-            // listDescript: 'leftDescript', //指定左侧列表数据的descript应绑定返回数据的 leftDescript 属性值
-            // dataCode: 'rightCode', //指定右侧列表数据的code应绑定返回数据的 rightCode 属性值
-            // dataDescript: 'rightDescript' //指定右侧列表数据的descript应绑定返回数据的 rightDescript 属性值
-          },
-          getParam(item) {
-            return {
-              provinceCode: item.code
-            };
-          }
-        }
-      ]
-      // 自定义搜索参数，否则组件使用默认形式计算
-      /* paramer(res, keyword) {
-          let map = {}
-          res.forEach(e => {
-            this.columns.forEach((ce, i) => {
-              if (e._type === i) {
-                map[ce.name]
-                  ? map[ce.name] = ',' + e.code
-                  : map[ce.name] = e.code;
-              }
-            });
-          });
-          map.keyword = keyword
-          return map
-      } */
-    };
-  },
-  created() {},
-  mounted() {}
-};
-</script>
-```
+  </div>
+</demo-block>
 
 ## API
 

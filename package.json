@@ -9,7 +9,7 @@
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
     "build:prod": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
     "docs": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "build:docs": "vuepress build docs",
     "lint": "vue-cli-service lint"
   },
   "repository": "git+https://github.com/huqiliang/gc_iview.git",

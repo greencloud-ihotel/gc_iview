@@ -1,10 +1,10 @@
 <template>
   <div class="content">
     <div class="title">
-      <span><slot name="title"></slot></span>
+      <span>{{ title }}</span>
     </div>
     <div class="desc">
-      <slot class="desc" name="desc"></slot>
+      {{ desc }}
     </div>
     <div class="contain">
       <slot name="demo"></slot>
@@ -34,6 +34,7 @@ export default {
       highLight: false
     };
   },
+  props: ["title", "desc"],
   methods: {
     toggle() {
       this.show = !this.show;
@@ -52,6 +53,7 @@ export default {
   border: 1px solid #ebebeb;
   border-radius: 3px;
   transition: 0.2s;
+  margin-bottom: 20px;
   .active {
     i,
     span {

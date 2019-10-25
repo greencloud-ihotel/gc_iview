@@ -6,9 +6,7 @@
 
 ## 示例
 
-<demo-block>
-  <div slot='title'>1. 基本用法</div>
-  <div slot='desc'>自动表单的基础使用</div>
+<demo-block title='1. 基本用法' desc='自动表单的基础使用'>
   <div slot='demo'><AutoForm-1></AutoForm-1></div>
   <div slot='code'>
 

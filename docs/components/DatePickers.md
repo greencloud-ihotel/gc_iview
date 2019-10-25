@@ -8,71 +8,23 @@ DatePickers 可以设置开始时间和结束时间
 
 ## 示例
 
-1.基础用法:日期选择器的基本使用方法。
+<demo-block title='1. 基础用法' desc='日期选择器的基本使用方法。'>
+  <div slot='demo' class='theme-default-w50'><DatePickers-1></DatePickers-1></div>
+  <div slot='code'>
 
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>日期选择器的基本使用方法。</p>
-</desc>
-<template>
-  <div>
-    <div class="data">{{dates}}</div>
-    <date-pickers v-model="dates" ></date-pickers>
+<<< @/docs/.vuepress/components/DatePickers/1.vue
+
   </div>
-</template>
-<script>
+</demo-block>
 
-export default {
-  data() {
-    return {
-      dates:{},
-      options:{
-        startLabel:"开始时间:",
-        endLabel:"开始时间:"
-      }
-    };
-  }
-};
-</script>
+<demo-block title='2. 使用 Label:' desc='日期选择器的传入 label。'>
+  <div slot='demo' class='theme-default-w50'><DatePickers-1></DatePickers-1></div>
+  <div slot='code'>
 
-<style>
-</style>
-```
+<<< @/docs/.vuepress/components/DatePickers/1.vue
 
-2.使用 Label:日期选择器的传入 label。
-
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>日期选择器的基本使用方法。</p>
-</desc>
-<template>
-  <div>
-    <div class="data">{{dates}}</div>
-    <date-pickers v-model="dates" :options="options" ></date-pickers>
   </div>
-</template>
-<script>
-
-export default {
-  data() {
-    return {
-      dates:{},
-      options:{
-        startLabel:"开始时间:",
-        endLabel:"结束时间:"
-      }
-    };
-  }
-};
-</script>
-
-<style>
-</style>
-```
+</demo-block>
 
 ## API
 
@@ -82,3 +34,7 @@ export default {
 | ------- | ------------------------------ | -------- | --------------- |
 | value   | value,v-model 数据             | 是       | 否              |
 | options | 主要用来传 label，使用方法见 2 | 是       | 否              |
+
+```
+
+```

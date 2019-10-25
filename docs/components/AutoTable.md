@@ -6,32 +6,23 @@
 
 ## 示例
 
-<demo-box title="1. 基础用法">
-<div>
-  <p>自动表格的基本使用方法</p>
-  <AutoTable-1/>
-</div>
+<demo-block title='1. 基本用法' desc='自动表格的基本使用方法'>
+  <div slot='demo'><AutoTable-1/></div>
+  <div slot='code'>
 
-<template slot="code">
+<<< @/docs/.vuepress/components/AutoTable/1.vue
 
-<<< docs/.vuepress/components/AutoTable/1.vue
-
-</template>
-
-</demo-box>
-
-<demo-box title="2. 搭配FilterSearch">
-  <div>
-    <p>搭配 FilterSearch 组件 相结合的用法:AutoTable 和 FilterSearch 相结合。</p>
-    <AutoTable-2/>
   </div>
-  <template slot="code">
+</demo-block>
 
-<<< docs/.vuepress/components/AutoTable/2.vue
+<demo-block title='2. 搭配FilterSearch' desc='搭配 FilterSearch 组件 相结合的用法:AutoTable 和 FilterSearch 相结合。'>
+  <div slot='demo'><AutoTable-2/></div>
+  <div slot='code'>
 
-  </template>
+<<< @/docs/.vuepress/components/AutoTable/2.vue
 
-</demo-box>
+  </div>
+</demo-block>
 
 ## API
 

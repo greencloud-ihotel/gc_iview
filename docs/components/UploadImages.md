@@ -1,4 +1,4 @@
-# UploadImages基本用法
+# UploadImages 基本用法
 
 ## 概述
 
@@ -7,38 +7,14 @@ Upload 上传组件例子封装,主要用于上传图片，一般用在表单中
 
 ## 示例
 
-1.基础用法:状态开关的基础用法。
+<demo-block title='1. 基础用法' desc='上传图片组件的基本用法,默认产生一个带逗号分隔的字符串，请和后端约定好此格式'>
+  <div slot='demo'><UploadImages-1></UploadImages-1></div>
+  <div slot='code'>
 
----
+<<< @/docs/.vuepress/components/UploadImages/1.vue
 
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>UploadImages基本用法。</p>
-</desc>
-<template>
-  <div>
-    <div style="padding:10px 0;">数据:{{list}}</div>
-    <upload-images v-model="list" :headers="headers"></upload-images>
   </div>
-</template>
-
-<script>
-export default {
-  data(){
-    return {
-     list:"https://dwz.cn/hZXJG01l,https://dwz.cn/EE8PYP6Z,https://dwz.cn/KGn7JMvg",
-      headers:{
-        Authorization:"test Authorization"
-      }
-    }
-  }
-}
-</script>
-```
-
----
+</demo-block>
 
 ## API
 
@@ -46,6 +22,10 @@ export default {
 
 | 属性   | 说明                                        | 是否必传 | 是否 iview 参数 |
 | ------ | ------------------------------------------- | -------- | --------------- |
-| list   | 上传图片列表，支持v-model                   | 是       | 否              |
+| list   | 上传图片列表，支持 v-model                  | 是       | 否              |
 | max    | 上传图片的最大个数                          | 否       | 否              |
 | action | 上传地址，默认为 /file/files,代理请自行配置 | 否       | 否              |
+
+```
+
+```

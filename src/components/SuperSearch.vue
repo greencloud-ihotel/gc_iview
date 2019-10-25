@@ -195,7 +195,7 @@ export default {
   data() {
     return {
       show: false,
-      noTip: localStorage.superSearch_noTip,
+      noTip: false,
       condition: {
         keyword: "",
         searchDisabled: false,
@@ -313,7 +313,7 @@ export default {
       this.searchByConditions();
       if (!this.noTip) {
         this.noTip = true;
-        localStorage.hotelFilter_noTip = 1;
+        //localStorage.hotelFilter_noTip = 1;
       }
     },
 
@@ -391,11 +391,6 @@ export default {
       this.$refs.transfer.clear();
       this.onDeleteAll();
     }
-  },
-  created() {
-    console.log("sc created", this.disabled);
-    window.sc = this;
-    // if (this.disabled) return;
   },
   mounted() {
     document.querySelectorAll(".super-search-popper").forEach(e => {

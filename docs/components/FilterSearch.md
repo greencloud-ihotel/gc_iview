@@ -6,198 +6,25 @@
 
 ## 示例
 
-1.基础用法:筛选框的基本使用方法。
+<demo-block title='1. 基础用法' desc='筛选框的基本使用方法。'>
 
----
+  <div slot='demo'><FilterSearch-1></FilterSearch-1></div>
+  <div slot='code'>
 
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>筛选框的基本使用方法。</p>
-</desc>
-<template>
-  <div>
-    <div class="data top">{{searchData}}</div>
-    <filter-search :columns="searchColumns"  v-model='searchData' hideBtnHide="true"></filter-search>
+<<< @/docs/.vuepress/components/FilterSearch/1.vue
+
   </div>
-</template>
+</demo-block>
 
-<script>
-export default {
-  data() {
-    return {
-      searchData:{
-          conditionText:'',
-          searchBarStas:'',
-          category:'',
-          default:{
-              listProduct:[
-                   {
-                        code: 'New York',
-                        descript: 'New York'
-                    },
-              ]
-          }
-      },
-      searchColumns: [
-        {
-          datas: [
-              {
-              label: "请输入代码或者描述",
-              key: "conditionText"
-            },
-            {
-              label: "类型",
-              key:"searchBarStas",
-            },
-          ],
-          type: "inputs"
-        },
-        {
-          datas: [
-            { label: "全选", key: "", value: "" },
-            { label: "待上线", key: "R", value: "R" },
-            { label: "有效", key: "I", value: "I" },
-            { label: "无效", key: "X", value: "X" }
-          ],
-          key: "searchBarStas", //传入节点值 不传扩展到根对象
-          type: "checkboxs"
-        },
-        {
-          datas: [
-            {
-              label: "查询",
-              action: () => {
-                //this.postTableData(1);
-              }
-            },
-            {
-              label: "重置",
-              action: "reset"
-            },
-            {
-              label: "新增",
-              action: () => {
-                //this.addAction();
-              }
-            }
-          ],
-          type: "buttons"
-        }
-      ],
-    };
-  }
-};
-</script>
+<demo-block title='2. 使用 render'>
 
-<style>
-.top{
-  padding-bottom:30px
-}
-</style>
-```
+  <div slot='demo'><FilterSearch-2></FilterSearch-2></div>
+  <div slot='code'>
 
----
+<<< @/docs/.vuepress/components/FilterSearch/2.vue
 
-2.使用 render
-
----
-
-```javascript
-/*vue*/
-<desc>
-  <p>基础用法:</p>
-  <p>筛选框的基本使用方法。</p>
-</desc>
-<template>
-  <div>
-    <div class="data top">{{searchData}}</div>
-    <filter-search :columns="searchColumns"  v-model='searchData' hideBtnHide="true"></filter-search>
   </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      searchData:{
-          conditionText:'',
-          searchBarStas:'',
-          category:'',
-          default:{
-            listProduct:[
-              {
-                  code: 'New York',
-                  descript: 'New York'
-              },
-            ]
-          }
-      },
-      searchColumns: [
-        {
-          datas: [
-            {
-              label: "请输入代码或者描述",
-              key: "conditionText",
-              render:(h,params)=>{
-                return h("Select",null,
-                  [
-                    h("Option",{props:{value:"ddd"}})
-                  ]
-                )
-              }
-            },
-            {
-              label: "类型",
-              key:"searchBarStas",
-            },
-          ],
-          type: "inputs"
-        },
-        {
-          datas: [
-            { label: "全选", key: "", value: "" },
-            { label: "待上线", key: "R", value: "R" },
-            { label: "有效", key: "I", value: "I" },
-            { label: "无效", key: "X", value: "X" }
-          ],
-          key: "searchBarStas", //传入节点值 不传扩展到根对象
-          type: "checkboxs"
-        },
-        {
-          datas: [
-            {
-              label: "查询",
-              action: () => {
-                console.log("abc")
-              }
-            },
-            {
-              label: "重置",
-              action: "reset"
-            },
-            {
-              label: "新增",
-              action: this.add
-            }
-          ],
-          type: "buttons"
-        }
-      ],
-    };
-  }
-};
-</script>
-
-<style>
-.top{
-  padding-bottom:30px
-}
-</style>
-```
-
----
+</demo-block>
 
 ## API
 
