@@ -1,7 +1,7 @@
 module.exports = {
   title: "gc_iview",
   description: "gc_iview说明文档",
-  base: "/gc_iview",
+  base: "/gc_iview/",
   themeConfig: {
     displayAllHeaders: true,
     sidebarDepth: 0,
@@ -36,7 +36,6 @@ module.exports = {
       }
     ],
     nav: [
-      { text: "快速入门", link: "/overview/install" },
       { text: "更新日志", link: "/overview/log" },
       {
         text: "GitHub",
