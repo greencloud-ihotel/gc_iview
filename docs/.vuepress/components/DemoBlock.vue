@@ -1,8 +1,14 @@
 <template>
   <div class="content">
+    <div class="title">
+      <span><slot name="title"></slot></span>
+    </div>
+    <div class="desc">
+      <slot class="desc" name="desc"></slot>
+    </div>
     <div class="contain">
-      <slot class="demo" name="demo"></slot>
-      <slot class="code" v-if="show" name="code"></slot>
+      <slot name="demo"></slot>
+      <slot v-if="show" name="code"></slot>
     </div>
     <div
       class="demo-block-control"
@@ -52,6 +58,29 @@ export default {
       color: #409eff;
       background-color: #f9fafc;
     }
+  }
+  .title {
+    padding-top: 30px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    span {
+      position: absolute;
+      line-height: 0px;
+      height: 20px;
+      text-align: center;
+      margin-left: 30px;
+      padding: 0 20px;
+      display: block;
+      background: #fff;
+    }
+  }
+  .desc {
+    margin-top: 20px;
+    padding: 20px;
+    text-indent: 2em;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
   }
   .contain {
     padding: 24px;
