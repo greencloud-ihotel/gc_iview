@@ -2,14 +2,10 @@
 
 ```tree
 gc_iview/
-├── build
 ├── dist //构建目录
 ├── docs //文档源码
-├── examples //示例
-├── mocker
-├── node_modules
 ├── src //源码
-└── types
+└── types //为未来TS做准备
 ```
 
 ## **_使用方式_**
