@@ -1,12 +1,3 @@
-# gc_iview
+# gc_ivew
 
-greenCloud -- 基于 vue 和 ivew 的组件库集合
-
-TodoList
-
-- [x] AutoTable
-- [x] FilterSearch
-- [x] CurdLine
-- [x] GroupHotelLink
-- [x] TFSwitch
-- [x] SuperSearch
+gc_ivew -- 基于 vue 和 ivew 的组件库集合

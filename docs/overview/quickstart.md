@@ -2,7 +2,7 @@
 
 ## 开始之前
 
-- 高效的开发，离不开基础工程的搭建。在开始使用 gc_view 之前，有必要先了解以下基础知识，我们也假设您已经写过 Vue，并掌握了下面的内容。
+高效的开发，离不开基础工程的搭建。在开始使用 gc_view 之前，有必要先了解以下基础知识，我们也假设您已经写过 Vue，并掌握了下面的内容。
 
 1. [vue](https://cn.vuejs.org/)
 
@@ -12,7 +12,9 @@
 
 4. [ivew](https://www.iviewui.com/docs/guide/start)
 
-- 以下概念贯穿 vue/iView 前后，建议开发者花点时间来了解。
+---
+
+以下概念贯穿 vue/iView 前后，建议开发者花点时间来了解。
 
 1. [props](https://cn.vuejs.org/v2/guide/components-props.html) --- 数据传递
 
@@ -23,6 +25,8 @@
 4. [jxs](https://cn.vuejs.org/v2/guide/render-function.html#ad)
 
 5. 事件及事件机制
+
+---
 
 ## 组件编写规范
 

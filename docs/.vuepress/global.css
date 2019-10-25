@@ -1,6 +1,10 @@
 body {
   font-size: 14px !important;
 }
+p {
+  padding: 10px 0;
+}
+
 .theme-default-w50 {
   width: 50%;
 }
