@@ -1,4 +1,4 @@
-# UploadImages 基本用法
+# UploadImages
 
 ## 概述
 
