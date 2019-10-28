@@ -1,20 +1,23 @@
 <template>
   <div class="autoForm">
-    <Form class="form"
-          ref="autoForm"
-          inline
-          :labelWidth="labelWidth"
-          :model="submitForm"
-          v-bind="$attrs"
-          v-on="$listeners">
-      <FormItem v-for="item in fields"
-                :style="itemStyle(item)"
-                :label="item.label"
-                :key="item.key"
-                :prop="prop(item)"
-                :rules="item.validators">
-        <AutoFormInner :item="item"
-                       v-model="submitForm"></AutoFormInner>
+    <Form
+      class="form"
+      ref="autoForm"
+      inline
+      :labelWidth="labelWidth"
+      :model="submitForm"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <FormItem
+        v-for="item in fields"
+        :style="itemStyle(item)"
+        :label="item.label"
+        :key="item.key"
+        :prop="prop(item)"
+        :rules="item.validators"
+      >
+        <AutoFormInner :item="item" v-model="submitForm"></AutoFormInner>
       </FormItem>
     </Form>
   </div>
@@ -63,23 +66,6 @@ export default {
       }
     });
     this.submitForm = arr;
-  },
-  watch: {
-    fields(val, oldVal) {
-      const arr = this.value;
-      _.map(this.fields, val => {
-        if (typeof val.key !== "undefined") {
-          if (_.isEmpty(_.get(arr, val.key))) {
-            if (val.type === "inputnumber") {
-              _.set(arr, val.key, 0);
-            } else {
-              _.set(arr, val.key, "");
-            }
-          }
-        }
-      });
-      this.submitForm = arr;
-    }
   },
   computed: {
     labelWidth() {

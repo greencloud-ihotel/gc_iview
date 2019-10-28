@@ -34,7 +34,6 @@ export default {
   },
   created() {
     const event = this.item.on;
-    let onChangeFn = function() {};
     if (typeof event !== "undefined" && "on-change" in event) {
       //const noop = function() {};
       const bindOnChange = event["on-change"].bind();
