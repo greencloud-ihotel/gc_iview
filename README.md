@@ -25,16 +25,19 @@ npm run dev  //启动示例
 ## 启动文档
 
 ```bash
-npm i docsify-cli -g
-docsify serve docs  //启动文档
+npm run docs
 ```
 
 ## 构建
 
 ```bash
-npm run build:doc //构建库到文档使用
-npm run build:dev //构建开发环境库
-npm run build:prod //构建生产环境库
+npm run build:doc //构建文档
+npm run build:dev //构建库开发环境库 目录:dist/dev
+npm run build:prod //构建生产环境库  目录:dist
 ```
 
-## 文档编写
+## 文档发布
+
+```bash
+sh deploy_docs.sh
+```

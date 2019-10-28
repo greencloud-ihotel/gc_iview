@@ -14,21 +14,12 @@ module.exports = {
     // if (process.env.NODE_ENV == "production") {
     config.externals = [
       {
-        vue: {
-          root: "Vue",
-          commonjs: "vue",
-          commonjs2: "vue",
-          amd: "vue"
-        },
+        vue: "vue",
         iview: "iview",
-        axios: {
-          root: "axios",
-          commonjs: "axios",
-          commonjs2: "axios",
-          amd: "axios"
-        },
+        axios: "axios",
         moment: "moment",
-        "animate.css": "animate.css"
+        "animate.css": "animate.css",
+        lodash: "lodash"
       },
       /^iview.*/
     ];
