@@ -74,7 +74,7 @@ export default {
     },
     hideShow() {
       this.hideShowClicked = true;
-      this.rowNum = !this.show ? 5 : 3;
+      this.rowNum = !this.show ? 5 : this.rowNumProp;
       this.show = !this.show;
     },
     getValue(valuekey, valKey) {
@@ -343,18 +343,23 @@ export default {
     let inputDatas = _.get(this.inputs, "datas");
     let rowArray = this.splitArray(inputDatas);
     let datas = _.get(this.buttons, "datas");
-    let height =
-      52 +
-      (this.show ? Math.floor(inputDatas.length / rowNum) * 42 : 0) +
-      (this.checkboxs || this.radioboxs ? 35 : 0) +
-      11;
+    let height = this.$refs.filterSearch
+      ? this.$refs.filterSearch.offsetHeight + 10
+      : 0;
+    // 52 +
+    // (this.show ? Math.floor(inputDatas.length / rowNum) * 42 : 0) +
+    // (this.checkboxs || this.radioboxs ? 35 : 0) +
+    // 11;
     let otherButtons = _.filter(
       datas,
       item => item.label != "查询" && item.label != "重置"
     );
     return (
       <div class="contain">
-        <div class={["filterSearch", this.fixed ? "fixed" : null]}>
+        <div
+          ref="filterSearch"
+          class={["filterSearch", this.fixed ? "fixed" : null]}
+        >
           <Form>
             <div class="top">
               <div class={["InputList", this.show ? "w70" : "w50"]}>

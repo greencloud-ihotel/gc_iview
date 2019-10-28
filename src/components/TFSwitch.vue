@@ -2,7 +2,7 @@
   <div>
     <i-switch v-model="switchValue"
               :disabled="disabled"
-              @input="change">
+              @on-change="change">
       <span slot="open">开</span>
       <span slot="close">关</span>
     </i-switch>
@@ -65,25 +65,23 @@ export default {
       const CLOSE = this.close;
       const key = this.propName;
       if (this.updateUrl === "") {
-        // this.switchValue = !this.switchValue;
-        this.row[key] = this.row[key] === CLOSE ? CLOSE : OPEN;
+        this.$set(this.row, key, value ? OPEN : CLOSE);
+        this.$emit("input", value ? OPEN : CLOSE);
       } else {
-        this.row[key] = value ? OPEN : CLOSE;
+        this.$set(this.row, key, value ? OPEN : CLOSE);
         this.row.updateIsHaltOnly = CLOSE;
+        const resData = await this.$http[this.method](this.updateUrl, this.row);
+        if (resData.data.result === 0) {
+          this.row[key] = value === OPEN ? CLOSE : OPEN;
+          this.$emit("input", value ? OPEN : CLOSE);
+          this.$Message.success(resData.data.msg);
+          this.$emit(SWITCH_SUCCESS, value ? OPEN : CLOSE);
+        } else {
+          this.row[key] = !value ? CLOSE : OPEN;
 
-        this.$http[this.method](this.updateUrl, this.row).then(resData => {
-          if (resData.data.result !== 0) {
-            //this.switchValue = !this.switchValue;
-            this.row[key] = this.row[key] === CLOSE ? CLOSE : OPEN;
-            this.$emit("input", this.row[key] === CLOSE ? CLOSE : OPEN);
-            this.$emit(SWITCH_ERROR, this.row[key]);
-          } else {
-            this.row[key] = this.row[key] === OPEN ? CLOSE : OPEN;
-            this.$emit("input", this.row[key] === OPEN ? CLOSE : OPEN);
-            this.$Message.success(resData.data.msg);
-            this.$emit(SWITCH_SUCCESS, this.row[key]);
-          }
-        });
+          this.$emit("input", value ? OPEN : CLOSE);
+          this.$emit(SWITCH_ERROR, value ? OPEN : CLOSE);
+        }
       }
     }
   },
