@@ -21,12 +21,11 @@ export default {
   },
   methods: {
     changeVal(inputVal, val) {
-      const toString = Object.prototype.toString;
-
       const value =
-        toString.call(inputVal) === "[object InputEvent]" ||
-        toString.call(inputVal) === "[object Object]"
-          ? inputVal.target.value
+        val.type === "input"
+          ? typeof inputVal === "object"
+            ? inputVal.target.value
+            : inputVal
           : inputVal;
       const newVal = _.set(this.submitForm, val.key, value);
       this.submitForm = _.assign({}, newVal);

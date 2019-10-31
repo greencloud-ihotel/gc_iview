@@ -4,6 +4,7 @@
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
     <Table :loading="tableIsLoading"
+           ref="table"
            :columns="columns"
            :data="tableData"
            v-bind="$attrs"
@@ -140,6 +141,9 @@ export default {
     }
   },
   methods: {
+    selectAll(status) {
+      this.$refs.table.selectAll(status);
+    },
     getTableData() {
       return this.tableData;
     },
