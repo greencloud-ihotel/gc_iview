@@ -117,7 +117,6 @@ export default {
                 this.$set(this.value, index, "");
               }
             });
-            //this.setEmtpy(this.value);
             this.$emit("input", this.value);
             break;
           //Todo other type button
@@ -248,6 +247,9 @@ export default {
       this.columns.forEach(item => {
         if (item.type === "checkboxs") {
           if (!_.isEmpty(this.value)) {
+            if (typeof item.key === "undefined") {
+              return false;
+            }
             const chooseItem = _.compact(this.value[item.key].split(","));
             if (chooseItem.length === item.datas.length) {
               item.indeterminate = false;

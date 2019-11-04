@@ -14,6 +14,7 @@
                 :prop="prop(item)"
                 :rules="item.validators">
         <AutoFormInner :item="item"
+                       ref="autoFormInner"
                        v-model="submitForm"></AutoFormInner>
       </FormItem>
     </Form>
@@ -103,6 +104,16 @@ export default {
     }
   },
   methods: {
+    getItem(refs) {
+      const item = this.$refs.autoFormInner.find(component => {
+        return Object.keys(component.$refs)[0] === refs;
+      });
+      if (item) {
+        return item.$refs[refs];
+      } else {
+        return {};
+      }
+    },
     prop(item) {
       if (typeof item.key !== "undefined") {
         if (_.has(this.submitForm, item.key)) {

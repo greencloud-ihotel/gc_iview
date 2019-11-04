@@ -33,9 +33,8 @@ export default {
   },
   created() {
     const event = this.item.on;
-    let onChangeFn = function() {};
+
     if (typeof event !== "undefined" && "on-change" in event) {
-      //const noop = function() {};
       const bindOnChange = event["on-change"].bind();
       event["on-change"] = value => {
         this.changeVal(value, this.item);
@@ -58,6 +57,7 @@ export default {
                   return (
                     <Input
                       type="text"
+                      ref={val.ref}
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key)}
@@ -76,6 +76,7 @@ export default {
                 case "inputnumber":
                   return (
                     <InputNumber
+                      ref={val.ref}
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
                       value={_.get(this.submitForm, val.key) || 0}
@@ -94,6 +95,7 @@ export default {
                 case "select":
                   return (
                     <i-select
+                      ref={val.ref}
                       placeholder={val.placeholder}
                       {...{ props: val.props ? val.props : {} }}
                       value={_.get(this.submitForm, val.key)}
@@ -134,6 +136,7 @@ export default {
                 case "datepicker":
                   return (
                     <DatePicker
+                      ref={val.ref}
                       type="date"
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
@@ -146,6 +149,7 @@ export default {
                 default:
                   return (
                     <Input
+                      ref={val.ref}
                       type="text"
                       {...{ props: val.props ? val.props : {} }}
                       placeholder={val.placeholder}
