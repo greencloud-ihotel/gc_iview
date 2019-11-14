@@ -144,7 +144,19 @@ export default {
     },
     resetFields() {
       this.$refs.autoForm.resetFields();
+      this.deleteUnnecessaryProp();
       //this.reset(this.submitForm);
+    },
+    deleteUnnecessaryProp() {
+      const submitFormKey = Object.keys(this.submitForm);
+      submitFormKey.forEach(key => {
+        const findProp = this.fields.find(field => {
+          return field.key === key;
+        });
+        if (!findProp) {
+          delete this.submitForm[key];
+        }
+      });
     },
     validate(fn) {
       this.$refs.autoForm.validate(fn);
