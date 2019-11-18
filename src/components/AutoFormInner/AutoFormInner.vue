@@ -21,12 +21,21 @@ export default {
   },
   methods: {
     changeVal(inputVal, val) {
-      const value =
-        val.type === "input"
-          ? typeof inputVal === "object"
-            ? inputVal.target.value
-            : inputVal
-          : inputVal;
+      let value = "";
+      if (val.type === "input") {
+        if (typeof inputVal === "object") {
+          value = inputVal.target.value;
+        } else {
+          value = inputVal;
+        }
+      } else if (val.type === "select") {
+        if (typeof inputVal === "object") {
+          value = inputVal.value;
+        } else {
+          value = inputVal;
+        }
+      }
+
       const newVal = _.set(this.submitForm, val.key, value);
       this.submitForm = _.assign({}, newVal);
     }
@@ -35,11 +44,23 @@ export default {
     const event = this.item.on;
 
     if (typeof event !== "undefined" && "on-change" in event) {
-      const bindOnChange = event["on-change"].bind();
+      const bindOnChange = event["on-change"].bind(this);
       event["on-change"] = value => {
         this.changeVal(value, this.item);
         bindOnChange.call(this, value);
       };
+    }
+    if (typeof this.item["props"] === "undefined") {
+      this.$set(this.item, "props", {});
+    }
+    if (typeof this.item["on"] === "undefined") {
+      this.$set(this.item, "on", {});
+    }
+    if (typeof this.item["options"] === "undefined") {
+      this.$set(this.item, "options", []);
+    }
+    if (typeof this.item["option"] === "undefined") {
+      this.$set(this.item, "option", {});
     }
   },
   render() {
@@ -58,8 +79,13 @@ export default {
                     <Input
                       type="text"
                       ref={val.ref}
-                      {...{ props: val.props ? val.props : {} }}
-                      placeholder={val.placeholder}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
                       value={_.get(this.submitForm, val.key)}
                       on={{
                         "on-change": value => {
@@ -77,8 +103,13 @@ export default {
                   return (
                     <InputNumber
                       ref={val.ref}
-                      {...{ props: val.props ? val.props : {} }}
-                      placeholder={val.placeholder}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
                       value={_.get(this.submitForm, val.key) || 0}
                       on={{
                         "on-change": value => {
@@ -96,8 +127,13 @@ export default {
                   return (
                     <i-select
                       ref={val.ref}
-                      placeholder={val.placeholder}
-                      {...{ props: val.props ? val.props : {} }}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
+                        }
+                      }}
                       value={_.get(this.submitForm, val.key)}
                       on={{
                         "on-change": value => {
@@ -128,6 +164,17 @@ export default {
                                   : "label"
                               ]
                             }
+                            {val.props.labelInValue
+                              ? `( ${
+                                  value[
+                                    val.option
+                                      ? val.option.code
+                                        ? val.option.code
+                                        : "value"
+                                      : "value"
+                                  ]
+                                })`
+                              : null}
                           </i-option>
                         );
                       })}
@@ -138,8 +185,13 @@ export default {
                     <DatePicker
                       ref={val.ref}
                       type="date"
-                      {...{ props: val.props ? val.props : {} }}
-                      placeholder={val.placeholder}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
+                        }
+                      }}
                       value={_.get(this.submitForm, val.key)}
                       onOn-change={value => {
                         this.changeVal(value, val);
@@ -151,8 +203,13 @@ export default {
                     <Input
                       ref={val.ref}
                       type="text"
-                      {...{ props: val.props ? val.props : {} }}
-                      placeholder={val.placeholder}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
                       value={_.get(this.submitForm, val.key)}
                       onInput={value => {
                         this.changeVal(value, val);
