@@ -4,14 +4,6 @@ import { InputNumber } from "iview";
 export default {
   name: "CustomTable",
   props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    border: {
-      type: Boolean,
-      default: false
-    },
     hasDelete: {
       type: Boolean,
       default: true
@@ -31,10 +23,6 @@ export default {
     newModel: {
       type: Boolean,
       default: true
-    },
-    precision: {
-      type: Number,
-      default: 2
     },
     filterRow: {
       type: Boolean,
@@ -106,7 +94,7 @@ export default {
       },
       deep: true
     },
-    columns() {
+    columns(val) {
       this.renderFilterTableColumns();
     }
   },
@@ -197,7 +185,7 @@ export default {
     buttonComponent(params, item, key, button) {
       let event = {};
       const innerEvent = {
-        click: () => {
+        click: event => {
           if (button.key === "delete") {
             this.delete(params.index);
           }
@@ -240,7 +228,12 @@ export default {
       // }
       return (
         <Input
-          {...{ props: params.column.props }}
+          {...{
+            props: {
+              ...params.column.props,
+              placeholder: `请输入${params.column.title}`
+            }
+          }}
           value={params.row[key]}
           on={{
             ...event
@@ -281,7 +274,6 @@ export default {
           this.$emit("select-on-change", [key, value, params]);
           if (params.column.labelInValue) {
             this.$emit("select-on-change-label", [
-              /* eslint-disable-next-line */
               target.label.replace(/[\(](([\s\S])*?)[\)]/g, ""),
               params
             ]);
@@ -291,7 +283,12 @@ export default {
       const event = this.mergeEvent(params.column.on, innerEvent, params);
       return (
         <i-select
-          {...{ props: params.column.props }}
+          {...{
+            props: {
+              ...params.column.props,
+              placeholder: `请选择${params.column.title}`
+            }
+          }}
           value={params.row[key]}
           clearable
           filterable
@@ -345,7 +342,12 @@ export default {
       const event = this.mergeEvent(params.column.on, innerEvent, params);
       return (
         <InputNumber
-          {...{ props: params.column.props }}
+          {...{
+            props: {
+              ...params.column.props,
+              placeholder: `请输入${params.column.title}`
+            }
+          }}
           value={value}
           active-change={false}
           on={{
@@ -496,6 +498,9 @@ export default {
         }
         if (typeof item.on === "undefined") {
           this.$set(item, "on", {});
+        }
+        if (typeof item.options === "undefined") {
+          this.$set(item, "options", []);
         }
       });
 
@@ -798,15 +803,14 @@ export default {
         {this.filterRow ? (
           <i-table
             ref="filterTable"
-            border={this.border}
+            {...{ on: { ...this.$listeners } }}
+            {...{ attrs: this.$attrs }}
             data={this.filters}
             columns={this.tableColumnsFilters}
           />
         ) : null}
         <i-table
           ref="table"
-          border={this.border}
-          loading={this.loading}
           show-header={this.filterRow ? false : true}
           columns={columns}
           data={this.dataClone}
