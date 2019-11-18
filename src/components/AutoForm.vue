@@ -12,7 +12,7 @@
                 :label="item.label"
                 :key="item.key"
                 :prop="prop(item)"
-                :rules="item.validators">
+                :rules="validatorsHandler(item)">
         <AutoFormInner :item="item"
                        ref="autoFormInner"
                        v-model="submitForm"></AutoFormInner>
@@ -160,6 +160,20 @@ export default {
     },
     validate(fn) {
       this.$refs.autoForm.validate(fn);
+    },
+    validatorsHandler(item) {
+      item.validators = item.validators ? item.validators : [];
+      const validators = !Array.isArray(item.validators)
+        ? [].push(item.validators)
+        : item.validators;
+
+      validators.forEach(valid => {
+        valid.message = valid.message
+          ? valid.message
+          : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
+      });
+
+      return validators;
     }
   }
 };
