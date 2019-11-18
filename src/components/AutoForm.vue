@@ -15,9 +15,13 @@
         :label="item.label"
         :key="item.key"
         :prop="prop(item)"
-        :rules="item.validators"
+        :rules="validatorsHandler(item)"
       >
-        <AutoFormInner :item="item" v-model="submitForm"></AutoFormInner>
+        <AutoFormInner
+          :item="item"
+          ref="autoFormInner"
+          v-model="submitForm"
+        ></AutoFormInner>
       </FormItem>
     </Form>
   </div>
@@ -89,12 +93,22 @@ export default {
     }
   },
   methods: {
+    getItem(refs) {
+      const item = this.$refs.autoFormInner.find(component => {
+        return Object.keys(component.$refs)[0] === refs;
+      });
+      if (item) {
+        return item.$refs[refs];
+      } else {
+        return {};
+      }
+    },
     prop(item) {
       if (typeof item.key !== "undefined") {
         if (_.has(this.submitForm, item.key)) {
           return item.key;
         } else {
-          console.error(
+          window.console.error(
             `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
           );
         }
@@ -119,10 +133,36 @@ export default {
     },
     resetFields() {
       this.$refs.autoForm.resetFields();
+      this.deleteUnnecessaryProp();
       //this.reset(this.submitForm);
+    },
+    deleteUnnecessaryProp() {
+      const submitFormKey = Object.keys(this.submitForm);
+      submitFormKey.forEach(key => {
+        const findProp = this.fields.find(field => {
+          return field.key === key;
+        });
+        if (!findProp) {
+          delete this.submitForm[key];
+        }
+      });
     },
     validate(fn) {
       this.$refs.autoForm.validate(fn);
+    },
+    validatorsHandler(item) {
+      item.validators = item.validators ? item.validators : [];
+      const validators = !Array.isArray(item.validators)
+        ? [].push(item.validators)
+        : item.validators;
+
+      validators.forEach(valid => {
+        valid.message = valid.message
+          ? valid.message
+          : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
+      });
+
+      return validators;
     }
   }
 };

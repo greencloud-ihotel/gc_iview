@@ -117,7 +117,6 @@ export default {
                 this.$set(this.value, index, "");
               }
             });
-            //this.setEmtpy(this.value);
             this.$emit("input", this.value);
             break;
           //Todo other type button
@@ -145,7 +144,8 @@ export default {
                   width: `${(100 / rowNum) * num}%`
                 },
                 val.style
-              ]}>
+              ]}
+            >
               {val.render ? (
                 val.render(this.$createElement, val)
               ) : (
@@ -200,11 +200,11 @@ export default {
     inputs() {
       const inputs = _.find(this.columns, val => val.type === "inputs");
       if (_.isEmpty(inputs)) {
-        console.info("inputs为空");
+        window.console.info("inputs为空");
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          console.error(`inputs需要datas,结构如下所示:
+          window.console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -247,6 +247,9 @@ export default {
       this.columns.forEach(item => {
         if (item.type === "checkboxs") {
           if (!_.isEmpty(this.value)) {
+            if (typeof item.key === "undefined") {
+              return false;
+            }
             const chooseItem = _.compact(this.value[item.key].split(","));
             if (chooseItem.length === item.datas.length) {
               item.indeterminate = false;
@@ -373,7 +376,8 @@ export default {
                       type="primary"
                       class="hideShow"
                       size="large"
-                      onClick={this.hideShow}>
+                      onClick={this.hideShow}
+                    >
                       {this.show ? "隐藏" : "过滤"}
                       <Icon
                         style={{ marginLeft: "3px" }}
@@ -390,7 +394,8 @@ export default {
                       return (
                         <Button
                           type="primary"
-                          onClick={() => this.doAction(val.action)}>
+                          onClick={() => this.doAction(val.action)}
+                        >
                           {val.label}
                         </Button>
                       );
@@ -406,13 +411,15 @@ export default {
                     //     ? "fadeOutRight"
                     //     : "fadeInRight"
                     //   : null
-                  ]}>
+                  ]}
+                >
                   {_.map(otherButtons, (val, index) => {
                     if (index < 2) {
                       return (
                         <Button
                           type="primary"
-                          onClick={() => this.doAction(val.action)}>
+                          onClick={() => this.doAction(val.action)}
+                        >
                           {val.label}
                         </Button>
                       );
@@ -465,7 +472,8 @@ export default {
                           this.handlerCheckAll(checkbox);
                         }}
                         indeterminate={checkbox.indeterminate}
-                        value={checkbox.checkAll}>
+                        value={checkbox.checkAll}
+                      >
                         <span>全选</span>
                       </Checkbox>
                       <CheckboxGroup
@@ -478,7 +486,8 @@ export default {
                         onInput={val => {
                           this.$set(this.value, checkbox.key, val.toString());
                           this.checkAllGroupChange(checkbox);
-                        }}>
+                        }}
+                      >
                         {_.map(_.get(checkbox, "datas"), val => {
                           return (
                             <Checkbox label={val.value} style="flex-shrink:0;">
@@ -500,7 +509,8 @@ export default {
                   value={this.value[this.radioboxs.key]}
                   onInput={val => {
                     this.$set(this.value, this.radioboxs.key, val);
-                  }}>
+                  }}
+                >
                   {_.map(_.get(this.radioboxs, "datas"), val => {
                     return (
                       <Radio label={val.value}>
@@ -519,7 +529,8 @@ export default {
                     value={this.fixed}
                     onInput={value => {
                       this.fixed = value;
-                    }}>
+                    }}
+                  >
                     固定筛选框
                   </Checkbox>
                 </span>

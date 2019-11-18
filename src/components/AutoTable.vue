@@ -200,7 +200,7 @@ export default {
         })
         .catch(error => {
           // 接口请求失败
-          console.log(error);
+          window.console.log(error);
           this.tableIsLoading = false;
         });
     },
