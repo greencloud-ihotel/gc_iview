@@ -42,7 +42,8 @@ export default {
       default: false
     },
     addClickBeforeChange: {
-      type: Function
+      type: Function,
+      default: function() {}
     }
   },
   data() {
