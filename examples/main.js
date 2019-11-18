@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import iview from "iview";
-import "iview/dist/styles/iview.css";
+import ViewUI from "view-design";
+import "view-design/dist/styles/iview.css";
 import gc_iview from "../src/index";
 import App from "./app.vue";
 Vue.use(VueRouter);
-Vue.use(iview);
+Vue.use(ViewUI);
 // 使用gc_iview
 Vue.use(gc_iview);
 
@@ -56,6 +56,10 @@ const router = new VueRouter({
     {
       path: "/AutoForm",
       component: resolve => require(["./routers/AutoForm.vue"], resolve)
+    },
+    {
+      path: "/GroupAndHotel",
+      component: resolve => require(["./routers/GroupAndHotel.vue"], resolve)
     }
   ]
 });
