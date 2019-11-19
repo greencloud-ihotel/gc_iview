@@ -2,7 +2,7 @@
   <div>
     <custom-table :columns="columns"
                   ref="customTable"
-                  :newModel='true'
+                  :newModel='false'
                   :filterRow="true"
                   v-model="data"
                   @on-search="search"></custom-table>
@@ -103,8 +103,6 @@ export default {
   },
   methods: {
     search(data) {
-      console.log(data);
-
       if (Object.getOwnPropertyNames(data).length) {
         this.orginalData = [...this.data];
         let sex = "";
