@@ -268,14 +268,12 @@ export default {
       });
 
       if (_.isEmpty(checkboxs)) {
-        /* eslint-disable */
-        console.info("checkboxs为空");
+        window.console.info("checkboxs为空");
         return {};
       } else {
         _.map(checkboxs, checkbox => {
           if (!_.has(checkbox, "datas")) {
-            /* eslint-disable */
-            console.error(`checkboxs需要datas,结构如下:
+            window.console.error(`checkboxs需要datas,结构如下:
             datas: [
               { label: "aa", key: "gg", value: "aa" },
                 { label: "ss", key: "aa", value: "cc" },
@@ -284,9 +282,8 @@ export default {
             flag = false;
           }
           if (!_.has(checkbox, "key")) {
-            /* eslint-disable */
             flag = false;
-            console.error("checkboxs的key必传");
+            window.console.error("checkboxs的key必传");
           }
         });
         if (flag) {
@@ -299,11 +296,11 @@ export default {
     radioboxs() {
       const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
       if (_.isEmpty(radioboxs)) {
-        console.info("radioboxs为空");
+        window.console.info("radioboxs为空");
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
-          console.error(`radioboxs需要datas,结构如下:
+          window.console.error(`radioboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -311,7 +308,7 @@ export default {
           ]`);
         }
         if (!_.has(radioboxs, "key")) {
-          console.error("radioboxs的key必传");
+          window.console.error("radioboxs的key必传");
         }
         return radioboxs;
       }
@@ -340,7 +337,7 @@ export default {
       }
     }
   },
-  render(h) {
+  render() {
     // let allRow = [];
     let rowNum = this.rowNum;
     let inputDatas = _.get(this.inputs, "datas");
