@@ -316,11 +316,11 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-        console.info("buttons为空");
+        window.console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          console.error(`buttons需要datas,结构如下:
+          window.console.error(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
