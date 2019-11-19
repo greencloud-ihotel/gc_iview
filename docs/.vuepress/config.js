@@ -20,6 +20,7 @@ module.exports = {
         title: "组件",
         children: [
           "components/AutoTable",
+          "components/CustomTable",
           "components/EditTable",
           "components/CurdLine",
           "components/FilterSearch",
