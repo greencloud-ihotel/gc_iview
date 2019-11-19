@@ -1,6 +1,6 @@
 {
   "name": "gc_iview",
-  "version": "1.5.4",
+  "version": "1.5.3",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.umd.min.js",
   "typings": "dist/types/index.d.ts",
@@ -32,7 +32,6 @@
     "iview": "^3.5.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "view-design": "^4.0.0",
     "vue": "^2.5.17"
   },
   "peerDependencies": {
@@ -40,7 +39,7 @@
     "axios": "^0.18.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "view-design": "^4.0.0",
+    "iview": "^3.5.1",
     "vue": "^2.5.17"
   },
   "devDependencies": {
