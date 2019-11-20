@@ -6723,6 +6723,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
         } else {
           value = inputVal;
         }
+      } else {
+        value = inputVal;
       }
 
       var newVal = external_lodash_default.a.set(this.submitForm, val.key, value);
