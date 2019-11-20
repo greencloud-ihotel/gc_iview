@@ -34,6 +34,8 @@ export default {
         } else {
           value = inputVal;
         }
+      } else {
+        value = inputVal;
       }
 
       const newVal = _.set(this.submitForm, val.key, value);
