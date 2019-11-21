@@ -134,7 +134,13 @@ export default {
     resetFields() {
       this.$refs.autoForm.resetFields();
       this.deleteUnnecessaryProp();
-      //this.reset(this.submitForm);
+    },
+    resetField(name) {
+      this.$refs.autoForm.fields.forEach(item => {
+        if (!name || item.prop === name) {
+          item.resetField();
+        }
+      });
     },
     deleteUnnecessaryProp() {
       const submitFormKey = Object.keys(this.submitForm);
@@ -143,7 +149,7 @@ export default {
           return field.key === key;
         });
         if (!findProp) {
-          delete this.submitForm[key];
+          this.$delete(this.submitForm, key, null);
         }
       });
     },
