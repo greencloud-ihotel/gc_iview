@@ -1,6 +1,8 @@
 <template>
   <div>
-    <i-switch v-model="switchValue" :disabled="disabled" @on-change="change">
+    <i-switch v-model="switchValue"
+              :disabled="disabled"
+              @on-change="change">
       <span slot="open">开</span>
       <span slot="close">关</span>
     </i-switch>
@@ -39,10 +41,8 @@ export default {
       default: ""
     },
     row: {
-      type: Object,
-      default: () => {
-        return {};
-      }
+      type: [Function, Object],
+      default: () => {}
     },
     updateUrl: {
       type: String,
@@ -62,20 +62,21 @@ export default {
       const OPEN = this.open;
       const CLOSE = this.close;
       const key = this.propName;
+      const row = typeof this.row === "function" ? this.row() : this.row;
       if (this.updateUrl === "") {
-        this.$set(this.row, key, value ? OPEN : CLOSE);
+        this.$set(row, key, value ? OPEN : CLOSE);
         this.$emit("input", value ? OPEN : CLOSE);
       } else {
-        this.$set(this.row, key, value ? OPEN : CLOSE);
-        this.row.updateIsHaltOnly = CLOSE;
-        const resData = await this.$http[this.method](this.updateUrl, this.row);
+        this.$set(row, key, value ? OPEN : CLOSE);
+        row.updateIsHaltOnly = CLOSE;
+        const resData = await this.$http[this.method](this.updateUrl, row);
         if (resData.data.result === 0) {
-          this.row[key] = value === OPEN ? CLOSE : OPEN;
+          row[key] = value === OPEN ? CLOSE : OPEN;
           this.$emit("input", value ? OPEN : CLOSE);
           this.$Message.success(resData.data.msg);
           this.$emit(SWITCH_SUCCESS, value ? OPEN : CLOSE);
         } else {
-          this.row[key] = !value ? CLOSE : OPEN;
+          row[key] = !value ? CLOSE : OPEN;
 
           this.$emit("input", value ? OPEN : CLOSE);
           this.$emit(SWITCH_ERROR, value ? OPEN : CLOSE);

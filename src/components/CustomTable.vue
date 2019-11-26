@@ -99,6 +99,9 @@ export default {
     }
   },
   methods: {
+    exportData(params) {
+      this.$refs.table.exportCsv(params);
+    },
     mergeEvent(events = {}, innerEvent = {}) {
       const arg = Array.from(arguments).slice(2);
       const innerEventName = Object.keys(innerEvent);

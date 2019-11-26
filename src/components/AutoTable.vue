@@ -3,32 +3,26 @@
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
-    <Table
-      :loading="tableIsLoading"
-      ref="table"
-      :columns="columns"
-      :data="tableData"
-      v-bind="$attrs"
-      v-on="$listeners"
-    ></Table>
-    <div
-      class="page"
-      v-if="tableData && tableData.length > 0"
-      v-show="!hidePage"
-    >
-      <Page
-        v-on="$listeners"
-        class="pagebar"
-        @on-page-size-change="pageSizeChange"
-        :current="tableCurrentPage"
-        :show-sizer="!showSize"
-        show-elevator
-        :page-size="tablePageSize"
-        :total="tableTotalRows"
-        show-total
-        @on-change="onPageChange"
-        :transfer="transfer"
-      ></Page>
+    <Table :loading="tableIsLoading"
+           ref="table"
+           :columns="columns"
+           :data="tableData"
+           v-bind="$attrs"
+           v-on="$listeners"></Table>
+    <div class="page"
+         v-if="tableData && tableData.length > 0"
+         v-show="!hidePage">
+      <Page v-on="$listeners"
+            class="pagebar"
+            @on-page-size-change="pageSizeChange"
+            :current="tableCurrentPage"
+            :show-sizer="!showSize"
+            show-elevator
+            :page-size="tablePageSize"
+            :total="tableTotalRows"
+            show-total
+            @on-change="onPageChange"
+            :transfer="transfer"></Page>
     </div>
   </Card>
 </template>
@@ -153,6 +147,9 @@ export default {
     }
   },
   methods: {
+    exportData(params) {
+      this.$refs.autoTable.exportCsv(params);
+    },
     selectAll(status) {
       this.$refs.table.selectAll(status);
     },
