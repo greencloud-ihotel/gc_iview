@@ -143,47 +143,42 @@ export default {
                         ...event
                       }}
                     >
-                      {_.map(
-                        typeof val.options === "function"
-                          ? val.options()
-                          : val.options,
-                        value => {
-                          return (
-                            <i-option
-                              value={
-                                value[
-                                  val.option
+                      {_.map(val.options, value => {
+                        return (
+                          <i-option
+                            value={
+                              value[
+                                val.option
+                                  ? val.option.code
                                     ? val.option.code
-                                      ? val.option.code
-                                      : "value"
                                     : "value"
-                                ]
-                              }
-                            >
-                              {
-                                value[
-                                  val.option
+                                  : "value"
+                              ]
+                            }
+                          >
+                            {
+                              value[
+                                val.option
+                                  ? val.option.label
                                     ? val.option.label
-                                      ? val.option.label
-                                      : "label"
                                     : "label"
-                                ]
-                              }
-                              {val.props.labelInValue
-                                ? `( ${
-                                    value[
-                                      val.option
+                                  : "label"
+                              ]
+                            }
+                            {val.props.labelInValue
+                              ? `( ${
+                                  value[
+                                    val.option
+                                      ? val.option.code
                                         ? val.option.code
-                                          ? val.option.code
-                                          : "value"
                                         : "value"
-                                    ]
-                                  })`
-                                : null}
-                            </i-option>
-                          );
-                        }
-                      )}
+                                      : "value"
+                                  ]
+                                })`
+                              : null}
+                          </i-option>
+                        );
+                      })}
                     </i-select>
                   );
                 case "datepicker":
