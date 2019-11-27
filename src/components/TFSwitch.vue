@@ -40,9 +40,15 @@ export default {
       type: String,
       default: ""
     },
+    path: {
+      type: String,
+      default: ""
+    },
     row: {
-      type: [Function, Object],
-      default: () => {}
+      type: Object,
+      default: () => {
+        return {};
+      }
     },
     updateUrl: {
       type: String,
@@ -58,26 +64,46 @@ export default {
     }
   },
   methods: {
+    handlerPath(path) {
+      if (path) {
+        path = path.split(".");
+        return path;
+      } else {
+        return [];
+      }
+    },
+    getObj(array) {
+      let current = this.row;
+
+      const propName = this.propName;
+      let tmp = {};
+      for (let i = 0, j = array.length; i < j; i++) {
+        const property = array[i];
+        tmp = current[property];
+        if (tmp.hasOwnProperty(propName)) {
+          return tmp;
+        }
+      }
+    },
     async change(value) {
       const OPEN = this.open;
       const CLOSE = this.close;
       const key = this.propName;
-      const row = typeof this.row === "function" ? this.row() : this.row;
+      const path = this.handlerPath(this.path);
+      const row = this.getObj(path);
+
       if (this.updateUrl === "") {
-        this.$set(row, key, value ? OPEN : CLOSE);
         this.$emit("input", value ? OPEN : CLOSE);
       } else {
         this.$set(row, key, value ? OPEN : CLOSE);
-        row.updateIsHaltOnly = CLOSE;
-        const resData = await this.$http[this.method](this.updateUrl, row);
-        if (resData.data.result === 0) {
-          row[key] = value === OPEN ? CLOSE : OPEN;
-          this.$emit("input", value ? OPEN : CLOSE);
-          this.$Message.success(resData.data.msg);
-          this.$emit(SWITCH_SUCCESS, value ? OPEN : CLOSE);
-        } else {
-          row[key] = !value ? CLOSE : OPEN;
 
+        const resData = await this.$http[this.method](this.updateUrl, this.row);
+
+        if (resData.data.result === 0) {
+          this.$emit("input", value ? OPEN : CLOSE);
+          this.$emit(SWITCH_SUCCESS, value ? OPEN : CLOSE);
+          this.$Message.success(resData.data.msg);
+        } else {
           this.$emit("input", value ? OPEN : CLOSE);
           this.$emit(SWITCH_ERROR, value ? OPEN : CLOSE);
         }
@@ -92,11 +118,6 @@ export default {
       this.$emit("input", val);
     }
   }
-  // mounted() {
-  //   const OPEN = this.open;
-  //   const key = this.propName;
-  //   this.switchValue = !!this.row && this.row[key] === OPEN;
-  // }
 };
 </script>
 
