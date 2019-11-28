@@ -77,6 +77,9 @@ export default {
 
       const propName = this.propName;
       let tmp = {};
+      if (!array.length) {
+        return current;
+      }
       for (let i = 0, j = array.length; i < j; i++) {
         const property = array[i];
         tmp = current[property];
