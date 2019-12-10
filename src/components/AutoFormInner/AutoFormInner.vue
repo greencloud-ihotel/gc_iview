@@ -146,35 +146,12 @@ export default {
                       {_.map(val.options, value => {
                         return (
                           <i-option
-                            value={
-                              value[
-                                val.option
-                                  ? val.option.code
-                                    ? val.option.code
-                                    : "value"
-                                  : "value"
-                              ]
-                            }
+                            key={value[val.option.code || "value"]}
+                            value={value[val.option.code || "value"]}
                           >
-                            {
-                              value[
-                                val.option
-                                  ? val.option.label
-                                    ? val.option.label
-                                    : "label"
-                                  : "label"
-                              ]
-                            }
+                            {value[val.option.label || "label"]}
                             {val.props.labelInValue
-                              ? `( ${
-                                  value[
-                                    val.option
-                                      ? val.option.code
-                                        ? val.option.code
-                                        : "value"
-                                      : "value"
-                                  ]
-                                })`
+                              ? `( ${value[val.option.code || "value"]})`
                               : null}
                           </i-option>
                         );
