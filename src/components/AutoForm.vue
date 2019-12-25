@@ -1,27 +1,23 @@
 <template>
   <div class="autoForm">
-    <Form
-      class="form"
-      ref="autoForm"
-      inline
-      :labelWidth="labelWidth"
-      :model="submitForm"
-      v-bind="$attrs"
-      v-on="$listeners"
-    >
-      <FormItem
-        v-for="item in fields"
-        :style="itemStyle(item)"
-        :label="item.label"
-        :key="item.key"
-        :prop="prop(item)"
-        :rules="validatorsHandler(item)"
-      >
-        <AutoFormInner
-          :item="item"
-          ref="autoFormInner"
-          v-model="submitForm"
-        ></AutoFormInner>
+    <Form class="form "
+          ref="autoForm"
+          inline
+          :labelWidth="labelWidth"
+          :model="submitForm"
+          v-bind="$attrs"
+          v-on="$listeners">
+      <FormItem v-for="item in fields"
+                :label-width="item.props.labelWidth || labelWidth"
+                :style="itemStyle(item)"
+                :label="item.label"
+                :class="[`form-item-${item.type}` ]"
+                :key="item.key"
+                :prop="prop(item)"
+                :rules="validatorsHandler(item)">
+        <AutoFormInner :item="item"
+                       ref="autoFormInner"
+                       v-model="submitForm"></AutoFormInner>
       </FormItem>
     </Form>
   </div>
@@ -163,9 +159,12 @@ export default {
         : item.validators;
 
       validators.forEach(valid => {
-        valid.message = valid.message
-          ? valid.message
-          : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
+        if (valid.hasOwnProperty("validator")) {
+        } else {
+          valid.message = valid.hasOwnProperty("message")
+            ? valid.message
+            : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
+        }
       });
 
       return validators;
