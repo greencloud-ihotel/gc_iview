@@ -11,7 +11,7 @@
                 :label-width="item.props.labelWidth || labelWidth"
                 :style="itemStyle(item)"
                 :label="item.label"
-                :class="[`form-item-${item.type}` ]"
+                :class="[`form-item-${item.type}`]"
                 :key="item.key"
                 :prop="prop(item)"
                 :rules="validatorsHandler(item)">
@@ -63,6 +63,9 @@ export default {
             _.set(arr, val.key, "");
           }
         }
+      }
+      if (!val.hasOwnProperty("props")) {
+        this.$set(val, "props", {});
       }
     });
     this.submitForm = arr;
