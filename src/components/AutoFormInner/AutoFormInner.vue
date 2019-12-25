@@ -22,14 +22,13 @@ export default {
   methods: {
     changeVal(inputVal, val) {
       let value = "";
-      if (val.type === "input") {
-        if (typeof inputVal === "object") {
-          value = inputVal.target.value;
-        } else {
-          value = inputVal;
-        }
+      if (val.type === "input" && typeof inputVal === "object") {
+        value = inputVal.target.value;
       } else if (val.type === "select") {
-        if (typeof inputVal === "object") {
+        // 多选
+        if (Array.isArray(inputVal) && val.props.labelInValue) {
+          value = inputVal.map(item => item.value);
+        } else if (typeof inputVal === "object") {
           value = inputVal.value;
         } else {
           value = inputVal;
@@ -37,7 +36,6 @@ export default {
       } else {
         value = inputVal;
       }
-
       const newVal = _.set(this.submitForm, val.key, value);
       this.submitForm = _.assign({}, newVal);
     }
