@@ -127,7 +127,7 @@ export default {
               }}
             >
               <DatePicker
-                {...{ attrs: this.$attrs }}
+                {...{ type: "date", attrs: this.$attrs }}
                 transfer={true}
                 show-week-numbers
                 value={this.value.startDate}
@@ -140,7 +140,6 @@ export default {
                   );
                   this.changeValue("startChange", value);
                 }}
-                type="date"
                 options={this.options.startOptions}
               />
             </FormItem>
@@ -156,7 +155,7 @@ export default {
               }}
             >
               <DatePicker
-                {...{ attrs: this.$attrs }}
+                {...{ type: "date", attrs: this.$attrs }}
                 show-week-numbers
                 value={this.value.endDate}
                 placeholder={this.endDatePlaceHolder}
@@ -168,7 +167,6 @@ export default {
                   );
                   this.changeValue("endChange", value);
                 }}
-                type="date"
                 transfer={true}
                 options={this.options.startOptions}
               />
