@@ -36,8 +36,9 @@ export default {
       } else {
         value = inputVal;
       }
-      const newVal = _.set(this.submitForm, val.key, value);
-      this.submitForm = _.assign({}, newVal);
+      this.$set(this.submitForm, val.key, value);
+      // const newVal = _.set(this.submitForm, val.key, value);
+      // this.submitForm = _.assign({}, newVal);
     }
   },
   created() {
@@ -85,7 +86,7 @@ export default {
                             val.props.placeholder || `请输入${val.label}`
                         }
                       }}
-                      value={_.get(this.submitForm, val.key)}
+                      value={this.submitForm[val.key]}
                       on={{
                         "on-change": value => {
                           this.changeVal(value, val);
@@ -109,7 +110,7 @@ export default {
                             val.props.placeholder || `请输入${val.label}`
                         }
                       }}
-                      value={_.get(this.submitForm, val.key) || 0}
+                      value={this.submitForm[val.key] || 0}
                       on={{
                         "on-change": value => {
                           this.changeVal(value, val);
@@ -133,7 +134,7 @@ export default {
                             val.props.placeholder || `请选择${val.label}`
                         }
                       }}
-                      value={_.get(this.submitForm, val.key)}
+                      value={this.submitForm[val.key]}
                       on={{
                         "on-change": value => {
                           this.changeVal(value, val);
@@ -168,7 +169,7 @@ export default {
                             val.props.placeholder || `请选择${val.label}`
                         }
                       }}
-                      value={_.get(this.submitForm, val.key)}
+                      value={this.submitForm[val.key]}
                       onOn-change={value => {
                         this.changeVal(value, val);
                       }}
@@ -186,7 +187,7 @@ export default {
                             val.props.placeholder || `请输入${val.label}`
                         }
                       }}
-                      value={_.get(this.submitForm, val.key)}
+                      value={this.submitForm[val.key]}
                       onInput={value => {
                         this.changeVal(value, val);
                       }}
