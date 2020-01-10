@@ -388,8 +388,11 @@ export default {
                       item => item.label == "查询" || item.label == "重置"
                     ),
                     val => {
+                      const directives = val.directives || [];
+
                       return (
                         <Button
+                          {...{ directives }}
                           type="primary"
                           onClick={() => this.doAction(val.action)}
                         >
@@ -412,8 +415,11 @@ export default {
                 >
                   {_.map(otherButtons, (val, index) => {
                     if (index < 2) {
+                      const directives = val.directives || [];
+
                       return (
                         <Button
+                          {...{ directives }}
                           type="primary"
                           onClick={() => this.doAction(val.action)}
                         >
@@ -433,10 +439,15 @@ export default {
                       </Button>
                       <DropdownMenu slot="list">
                         {_.map(otherButtons, (val, index) => {
+                          const directives = val.directives || [];
+
                           if (index >= 2) {
                             return (
                               <DropdownItem>
-                                <div onClick={() => this.doAction(val.action)}>
+                                <div
+                                  {...{ directives }}
+                                  onClick={() => this.doAction(val.action)}
+                                >
                                   {val.label}
                                 </div>
                               </DropdownItem>
