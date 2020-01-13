@@ -3,26 +3,32 @@
     <!-- 头部插槽内容 -->
     <slot name="header"></slot>
     <!-- 块级元素 不需要Row/div嵌套 -->
-    <Table :loading="tableIsLoading"
-           ref="table"
-           :columns="columns"
-           :data="tableData"
-           v-bind="$attrs"
-           v-on="$listeners"></Table>
-    <div class="page"
-         v-if="tableData && tableData.length > 0"
-         v-show="!hidePage">
-      <Page v-on="$listeners"
-            class="pagebar"
-            @on-page-size-change="pageSizeChange"
-            :current="tableCurrentPage"
-            :show-sizer="!showSize"
-            show-elevator
-            :page-size="tablePageSize"
-            :total="tableTotalRows"
-            show-total
-            @on-change="onPageChange"
-            :transfer="transfer"></Page>
+    <Table
+      :loading="tableIsLoading"
+      ref="table"
+      :columns="columns"
+      :data="tableData"
+      v-bind="$attrs"
+      v-on="$listeners"
+    ></Table>
+    <div
+      class="page"
+      v-if="tableData && tableData.length > 0"
+      v-show="!hidePage"
+    >
+      <Page
+        v-on="$listeners"
+        class="pagebar"
+        @on-page-size-change="pageSizeChange"
+        :current="tableCurrentPage"
+        :show-sizer="!showSize"
+        show-elevator
+        :page-size="tablePageSize"
+        :total="tableTotalRows"
+        show-total
+        @on-change="onPageChange"
+        :transfer="transfer"
+      ></Page>
     </div>
   </Card>
 </template>
@@ -104,7 +110,16 @@ export default {
         if (item.key && !_.has(item, "render") && item.key == "action") {
           let arr = [];
           _.map(item.buttons, val => {
-            arr.push(<span class="button">{val}</span>);
+            if (typeof val === "string") {
+              arr.push(<span class="button">{val}</span>);
+            } else if (Object.prototype.toString(val) === "[object Object]") {
+              const directives = val.directives || [];
+              arr.push(
+                <span class="button" {...{ directives }}>
+                  {val.label}
+                </span>
+              );
+            }
           });
           item.render = (h, params) => {
             return (
