@@ -46,3 +46,13 @@
 | transfer      | 分页页数下拉框放置位置            | 否       | 是 [API](https://www.iviewui.com/components/page#Page_props) | false  |
 | showSize      | 显示分页，用来改变 page-size      | 否       | 是 [API](https://www.iviewui.com/components/page#Page_props) | false  |
 | originalStyle | 是否显示原始 iview 的样式         | 否       | 是 [API](https://www.iviewui.com/components/page#Page_props) | true   |
+
+### columns
+
+| directives | 指令 在 buttons 中的传入方式为 buttons: [
+{
+label: "修改",
+value: "edit",
+directives: [{ name: "name", value: "value" }]
+}
+], | 否 | | directives: [{ name: "name", value: "value" }] |
