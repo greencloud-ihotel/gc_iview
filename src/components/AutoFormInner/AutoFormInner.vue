@@ -36,7 +36,7 @@ export default {
       } else {
         value = inputVal;
       }
-      this.$set(this, "submitForm", { ...this.submitForm, [val.key]: value });
+      this.$set(this.submitForm, [val.key], value);
     }
   },
   created() {
