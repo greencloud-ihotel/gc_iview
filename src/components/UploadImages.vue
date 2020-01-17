@@ -62,6 +62,9 @@ export default {
       type: String,
       required: true
     },
+    path: {
+      type: String
+    },
     max: {
       type: Number
     },
@@ -115,7 +118,7 @@ export default {
     },
     handleSuccess(res, file) {
       if (res && res.result == 0) {
-        file.url = res.retVal[0];
+        file.url = this.path ? _.get(res, this.path) : res.retVal[0];
         this.sync();
         this.uploadList = this.$refs.upload.fileList;
       } else {

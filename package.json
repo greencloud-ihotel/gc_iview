@@ -1,6 +1,6 @@
 {
   "name": "gc_iview",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.umd.min.js",
   "typings": "dist/types/index.d.ts",
