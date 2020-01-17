@@ -36,9 +36,7 @@ export default {
       } else {
         value = inputVal;
       }
-      this.$set(this.submitForm, val.key, value);
-      // const newVal = _.set(this.submitForm, val.key, value);
-      // this.submitForm = _.assign({}, newVal);
+      this.$set(this.submitForm, [val.key], value);
     }
   },
   created() {
