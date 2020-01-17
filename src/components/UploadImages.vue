@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     handleView(name) {
-      this.imgName = name;
       this.visible = true;
     },
     sync() {
@@ -118,7 +117,9 @@ export default {
     },
     handleSuccess(res, file) {
       if (res && res.result == 0) {
-        file.url = this.path ? _.get(res, this.path) : res.retVal[0];
+        const url = this.path ? _.get(res, this.path) : res.retVal[0];
+        file.url = url;
+        this.imgName = url;
         this.sync();
         this.uploadList = this.$refs.upload.fileList;
       } else {
