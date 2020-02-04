@@ -12,7 +12,7 @@
                 :style="itemStyle(item)"
                 :label="item.label"
                 :class="[`form-item-${item.type}`]"
-                :key="item.key"
+                :key="item.key || null"
                 :prop="prop(item)"
                 :rules="validatorsHandler(item)">
         <AutoFormInner :item="item"
@@ -53,22 +53,22 @@ export default {
     AutoFormInner
   },
   beforeMount() {
-    const arr = this.value;
-    _.map(this.fields, val => {
-      if (typeof val.key !== "undefined") {
-        if (_.isEmpty(_.get(arr, val.key))) {
-          if (val.type === "inputnumber") {
-            _.set(arr, val.key, 0);
-          } else {
-            _.set(arr, val.key, "");
-          }
-        }
-      }
-      if (!val.hasOwnProperty("props")) {
-        this.$set(val, "props", {});
-      }
-    });
-    this.submitForm = arr;
+    // const arr = this.value;
+    // _.map(this.fields, val => {
+    //   if (typeof val.key !== "undefined") {
+    //     if (_.isEmpty(_.get(arr, val.key))) {
+    //       if (val.type === "inputnumber") {
+    //         _.set(arr, val.key, 0);
+    //       } else {
+    //         _.set(arr, val.key, "");
+    //       }
+    //     }
+    //   }
+    //   if (!val.hasOwnProperty("props")) {
+    //     this.$set(val, "props", {});
+    //   }
+    // });
+    // this.submitForm = arr;
   },
   computed: {
     labelWidth() {
@@ -103,15 +103,16 @@ export default {
       }
     },
     prop(item) {
-      if (typeof item.key !== "undefined") {
-        if (_.has(this.submitForm, item.key)) {
-          return item.key;
-        } else {
-          window.console.error(
-            `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
-          );
-        }
-      }
+      return item.key;
+      // if (typeof item.key !== "undefined") {
+      //   if (_.has(this.submitForm, item.key)) {
+      //     return item.key;
+      //   } else {
+      //     window.console.error(
+      //       `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
+      //     );
+      //   }
+      // }
     },
     itemStyle(item) {
       const num = item.num ? item.num : 1;
