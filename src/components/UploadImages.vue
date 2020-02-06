@@ -27,7 +27,7 @@
       :show-upload-list="false"
       :default-file-list="defaultList"
       :on-success="handleSuccess"
-      :format="['jpg', 'jpeg', 'png', '.ico']"
+      :format="format"
       :max-size="2048"
       :on-format-error="handleFormatError"
       :on-exceeded-size="handleMaxSize"
@@ -58,6 +58,12 @@ export default {
     event: "change"
   },
   props: {
+    format: {
+      type: Array,
+      default() {
+        return ["jpg", "jpeg", "png", "ico"];
+      }
+    },
     list: {
       type: String,
       required: true
@@ -129,7 +135,7 @@ export default {
     handleFormatError(file) {
       this.$Notice.warning({
         title: file.name + "的文件名不正确",
-        desc: "请上传jpg或者png结尾的图片"
+        desc: "请上传图片"
       });
     },
     handleMaxSize(file) {

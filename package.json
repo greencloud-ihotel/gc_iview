@@ -1,13 +1,13 @@
 {
   "name": "gc_iview",
-  "version": "1.6.6",
+  "version": "1.6.8",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.umd.min.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "dev": "echo '单独调试已删除 请查看文档示例并调试' && vuepress dev docs",
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
-    "build:prod": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
+    "build": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
     "docs": "vuepress dev docs",
     "build:docs": "vuepress build docs",
     "lint": "vue-cli-service lint"
