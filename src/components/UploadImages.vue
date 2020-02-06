@@ -100,7 +100,7 @@ export default {
     };
   },
   methods: {
-    handleView(name) {
+    handleView() {
       this.visible = true;
     },
     sync() {
