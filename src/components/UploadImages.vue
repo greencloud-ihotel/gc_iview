@@ -27,7 +27,7 @@
       :show-upload-list="false"
       :default-file-list="defaultList"
       :on-success="handleSuccess"
-      :format="['jpg', 'jpeg', 'png']"
+      :format="['jpg', 'jpeg', 'png', '.ico']"
       :max-size="2048"
       :on-format-error="handleFormatError"
       :on-exceeded-size="handleMaxSize"
