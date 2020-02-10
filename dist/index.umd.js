@@ -4298,7 +4298,7 @@ exports.push([module.i, "ul{list-style-type:none;padding:0}.super-search-tag-out
 /***/ "9224":
 /***/ (function(module) {
 
-module.exports = {"a":"1.6.8"};
+module.exports = {"a":"1.6.9"};
 
 /***/ }),
 
@@ -6778,7 +6778,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
             },
             "ref": val.ref,
             "props": _objectSpread({}, _objectSpread({}, val.props, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
+              placeholder: val.props ? val.props.placeholder : "\u8BF7\u8F93\u5165".concat(val.label)
             }))
           }, {
             "on": _objectSpread({
@@ -6797,7 +6797,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
           return h("InputNumber", helper_default()([{
             "ref": val.ref,
             "props": _objectSpread({}, _objectSpread({}, val.props, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
+              placeholder: val.props ? val.props.placeholder : "\u8BF7\u8F93\u5165".concat(val.label)
             })),
             "attrs": {
               "value": _this2.submitForm[val.key] || 0
@@ -6819,7 +6819,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
           return h("i-select", helper_default()([{
             "ref": val.ref,
             "props": _objectSpread({}, _objectSpread({}, val.props, {
-              placeholder: val.props.placeholder || "\u8BF7\u9009\u62E9".concat(val.label)
+              placeholder: val.props ? val.props.placeholder : "\u8BF7\u9009\u62E9".concat(val.label)
             })),
             "attrs": {
               "value": _this2.submitForm[val.key]
@@ -6847,7 +6847,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
               "value": _this2.submitForm[val.key]
             },
             "props": _objectSpread({}, _objectSpread({}, val.props, {
-              placeholder: val.props.placeholder || "\u8BF7\u9009\u62E9".concat(val.label)
+              placeholder: val.props ? val.props.placeholder : "\u8BF7\u9009\u62E9".concat(val.label)
             })),
             "on": {
               "on-change": function onChange(value) {
@@ -6864,7 +6864,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
               "value": _this2.submitForm[val.key]
             },
             "props": _objectSpread({}, _objectSpread({}, val.props, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
+              placeholder: val.props ? val.props.placeholder : "\u8BF7\u8F93\u5165".concat(val.label)
             })),
             "on": {
               "input": function input(value) {
