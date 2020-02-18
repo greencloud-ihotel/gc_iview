@@ -1,23 +1,29 @@
 <template>
   <div class="autoForm">
-    <Form class="form "
-          ref="autoForm"
-          inline
-          :labelWidth="labelWidth"
-          :model="submitForm"
-          v-bind="$attrs"
-          v-on="$listeners">
-      <FormItem v-for="item in fields"
-                :label-width="item.props.labelWidth || labelWidth"
-                :style="itemStyle(item)"
-                :label="item.label"
-                :class="[`form-item-${item.type}`]"
-                :key="item.key || null"
-                :prop="prop(item)"
-                :rules="validatorsHandler(item)">
-        <AutoFormInner :item="item"
-                       ref="autoFormInner"
-                       v-model="submitForm"></AutoFormInner>
+    <Form
+      class="form "
+      ref="autoForm"
+      inline
+      :labelWidth="labelWidth"
+      :model="submitForm"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <FormItem
+        v-for="item in fields"
+        :label-width="!!item.props ? item.props.labelWidth : labelWidth"
+        :style="itemStyle(item)"
+        :label="item.label"
+        :class="[`form-item-${item.type}`]"
+        :key="item.key || null"
+        :prop="prop(item)"
+        :rules="validatorsHandler(item)"
+      >
+        <AutoFormInner
+          :item="item"
+          ref="autoFormInner"
+          v-model="submitForm"
+        ></AutoFormInner>
       </FormItem>
     </Form>
   </div>
