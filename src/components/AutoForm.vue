@@ -142,12 +142,12 @@ export default {
         : item.validators;
 
       validators.forEach(valid => {
-        if (valid.hasOwnProperty("validator")) {
-        } else {
+        // if (valid.hasOwnProperty("validator")) {
+        // } else {
           valid.message = valid.hasOwnProperty("message")
             ? valid.message
-            : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
-        }
+            : item.type === "input" ? `请输入${item.label}` : `请选择${item.label}`
+        //}
       });
 
       return validators;

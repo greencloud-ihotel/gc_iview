@@ -80,9 +80,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props
-                            ? val.props.placeholder
-                            : `请输入${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -105,9 +104,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props
-                            ? val.props.placeholder
-                            : `请输入${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key] || 0}
@@ -130,9 +128,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props
-                            ? val.props.placeholder
-                            : `请选择${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -166,9 +163,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props
-                            ? val.props.placeholder
-                            : `请选择${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -185,9 +181,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props
-                            ? val.props.placeholder
-                            : `请输入${val.label}`
+                          placeholder:  val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
