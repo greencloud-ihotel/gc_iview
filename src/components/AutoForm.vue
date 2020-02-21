@@ -147,7 +147,7 @@ export default {
         } else {
           valid.message = valid.hasOwnProperty("message")
             ? valid.message
-            : item.type === "input" ? `请输入${item.label}` : `请选择${item.label}`
+            : item.type === "input" || item.type === "inputnumber" ? `请输入${item.label}` : `请选择${item.label}`
         }
       });
 

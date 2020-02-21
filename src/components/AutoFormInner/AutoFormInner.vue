@@ -108,7 +108,7 @@ export default {
                             || `请输入${val.label}`
                         }
                       }}
-                      value={this.submitForm[val.key] || 0}
+                      value={this.submitForm[val.key]}
                       on={{
                         "on-change": value => {
                           this.changeVal(value, val);
