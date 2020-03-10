@@ -80,8 +80,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:
-                            val.props.placeholder || `请输入${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -104,11 +104,11 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:
-                            val.props.placeholder || `请输入${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
-                      value={this.submitForm[val.key] || 0}
+                      value={this.submitForm[val.key]}
                       on={{
                         "on-change": value => {
                           this.changeVal(value, val);
@@ -128,8 +128,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:
-                            val.props.placeholder || `请选择${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -163,8 +163,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:
-                            val.props.placeholder || `请选择${val.label}`
+                          placeholder: val.props.placeholder
+                            || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -181,8 +181,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:
-                            val.props.placeholder || `请输入${val.label}`
+                          placeholder:  val.props.placeholder
+                            || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}

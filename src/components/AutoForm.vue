@@ -1,23 +1,29 @@
 <template>
   <div class="autoForm">
-    <Form class="form "
-          ref="autoForm"
-          inline
-          :labelWidth="labelWidth"
-          :model="submitForm"
-          v-bind="$attrs"
-          v-on="$listeners">
-      <FormItem v-for="item in fields"
-                :label-width="item.props.labelWidth || labelWidth"
-                :style="itemStyle(item)"
-                :label="item.label"
-                :class="[`form-item-${item.type}`]"
-                :key="item.key"
-                :prop="prop(item)"
-                :rules="validatorsHandler(item)">
-        <AutoFormInner :item="item"
-                       ref="autoFormInner"
-                       v-model="submitForm"></AutoFormInner>
+    <Form
+      class="form "
+      ref="autoForm"
+      inline
+      :labelWidth="labelWidth"
+      :model="submitForm"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <FormItem
+        v-for="item in fields"
+        :label-width="!!item.props ? item.props.labelWidth : labelWidth"
+        :style="itemStyle(item)"
+        :label="item.label"
+        :class="[`form-item-${item.type}`]"
+        :key="item.key || null"
+        :prop="prop(item)"
+        :rules="validatorsHandler(item)"
+      >
+        <AutoFormInner
+          :item="item"
+          ref="autoFormInner"
+          v-model="submitForm"
+        ></AutoFormInner>
       </FormItem>
     </Form>
   </div>
@@ -52,24 +58,6 @@ export default {
   components: {
     AutoFormInner
   },
-  beforeMount() {
-    const arr = this.value;
-    _.map(this.fields, val => {
-      if (typeof val.key !== "undefined") {
-        if (_.isEmpty(_.get(arr, val.key))) {
-          if (val.type === "inputnumber") {
-            _.set(arr, val.key, 0);
-          } else {
-            _.set(arr, val.key, "");
-          }
-        }
-      }
-      if (!val.hasOwnProperty("props")) {
-        this.$set(val, "props", {});
-      }
-    });
-    this.submitForm = arr;
-  },
   computed: {
     labelWidth() {
       if (
@@ -103,15 +91,7 @@ export default {
       }
     },
     prop(item) {
-      if (typeof item.key !== "undefined") {
-        if (_.has(this.submitForm, item.key)) {
-          return item.key;
-        } else {
-          window.console.error(
-            `modelKey:${item.key}存在多级key为空情况.请在model里面加入父节点`
-          );
-        }
-      }
+      return item.key;
     },
     itemStyle(item) {
       const num = item.num ? item.num : 1;
@@ -163,14 +143,18 @@ export default {
 
       validators.forEach(valid => {
         if (valid.hasOwnProperty("validator")) {
+          return valid.validator
         } else {
           valid.message = valid.hasOwnProperty("message")
             ? valid.message
-            : `${item.type === "input" ? "请输入" : "请选择"}${item.label}`;
+            : item.type === "input" || item.type === "inputnumber" ? `请输入${item.label}` : `请选择${item.label}`
         }
       });
 
       return validators;
+    },
+    validateField(prop, callback) {
+      this.$refs.autoForm.validateField(prop, callback);
     }
   }
 };

@@ -1,5 +1,5 @@
 <script>
-import { DatePicker, Form, FormItem } from "iview";
+// import {  Form, FormItem } from "iview";
 import moment from "moment";
 import _ from "lodash";
 export default {
@@ -109,10 +109,14 @@ export default {
       <div class="container">
         {this.value ? (
           <Form
-            model={this.value}
+            props={{
+              model:this.value
+            }}
             class="datePickers"
-            onInput={val => {
-              console.log(val);
+            on={{
+              Input:val => {
+                console.log(val);
+              }
             }}
             ref="datePickersForm"
           >
