@@ -35,7 +35,10 @@ export default {
         return 3;
       }
     },
-
+    showFixBarCheckbox: {
+      type: Boolean,
+      default: false
+    },
     columns: {
       type: Array,
       required: true
@@ -136,6 +139,7 @@ export default {
         _.map(row, val => {
           let num = val.num ? val.num : 1;
           currentNum = currentNum + num;
+
           arr.push(
             <div
               class="itemOption"
@@ -530,7 +534,7 @@ export default {
               </div>
             ) : null}
 
-            {this.show ? (
+            {this.show && this.showFixBarCheckbox ? (
               <div class="fixedTextContain">
                 <span class="fixedText">
                   <Checkbox
