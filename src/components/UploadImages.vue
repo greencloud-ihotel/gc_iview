@@ -33,6 +33,7 @@
       :on-exceeded-size="handleMaxSize"
       :before-upload="handleBeforeUpload"
       :action="action"
+      :headers="headers"
       multiple
       name="files"
       type="drag"
@@ -102,6 +103,9 @@ export default {
     return {
       imgName: "",
       visible: false,
+      headers: localStorage.getItem("token")
+        ? { Authorization: localStorage.getItem("token") }
+        : {},
       uploadList: []
     };
   },
