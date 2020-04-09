@@ -6,6 +6,7 @@
     <Table
       :loading="tableIsLoading"
       ref="table"
+      row-key
       :columns="columns"
       :data="tableData"
       v-bind="$attrs"
@@ -39,6 +40,9 @@ export default {
   name: "AutoTable",
   inheritAttrs: false,
   props: {
+    loadData: {
+      type: Function
+    },
     method: {
       type: String,
       default: "get"
@@ -49,12 +53,12 @@ export default {
     },
     url: {
       type: String,
-      default: "",
-      required: true,
-      validator: value => {
-        // 这个值必须匹配下列字符串中的一个
-        return value !== "";
-      }
+      default: ""
+      //required: true,
+      // validator: value => {
+      //   // 这个值必须匹配下列字符串中的一个
+      //   return value !== "";
+      // }
     }, //接口地址
     path: {
       type: String,
@@ -193,7 +197,22 @@ export default {
         : require("axios")
         ? require("axios")
         : window.axios;
-      axios[this.method](this.url, this.method === "get" ? { params } : params)
+      const pAjax = new Promise((resolve, reject) => {
+        if (typeof this.loadData === "function" && !this.url) {
+          this.loadData(params).then(response => {
+            resolve(response);
+          });
+        } else {
+          axios[this.method](
+            this.url,
+            this.method === "get" ? { params } : params
+          ).then(response => {
+            resolve(response);
+          });
+        }
+      });
+
+      pAjax
         .then(response => {
           // 使用箭头函数获取this
           this.tableIsLoading = false;
