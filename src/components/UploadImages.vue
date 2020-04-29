@@ -82,7 +82,7 @@ export default {
       }
     },
     headers: {
-      type: String,
+      type: Object,
       default() {
         return localStorage.getItem("token")
           ? { Authorization: localStorage.getItem("token") }
@@ -111,7 +111,6 @@ export default {
     return {
       imgName: "",
       visible: false,
-
       uploadList: []
     };
   },
