@@ -80,6 +80,14 @@ export default {
       default() {
         return "/file/files";
       }
+    },
+    headers: {
+      type: String,
+      default() {
+        return localStorage.getItem("token")
+          ? { Authorization: localStorage.getItem("token") }
+          : {};
+      }
     }
   },
   computed: {
@@ -103,9 +111,7 @@ export default {
     return {
       imgName: "",
       visible: false,
-      headers: localStorage.getItem("token")
-        ? { Authorization: localStorage.getItem("token") }
-        : {},
+
       uploadList: []
     };
   },
