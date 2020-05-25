@@ -6,7 +6,7 @@
         <div class="demo-upload-list-cover">
           <Icon
             type="ios-eye-outline"
-            @click.native="handleView(item.name)"
+            @click.native="handleView(item.url)"
           ></Icon>
           <Icon
             type="ios-trash-outline"
@@ -115,7 +115,8 @@ export default {
     };
   },
   methods: {
-    handleView() {
+    handleView(url) {
+      this.imgName = url;
       this.visible = true;
     },
     sync() {
