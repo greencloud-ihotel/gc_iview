@@ -204,11 +204,11 @@ export default {
     inputs() {
       const inputs = _.find(this.columns, val => val.type === "inputs");
       if (_.isEmpty(inputs)) {
-        window.console.info("inputs为空");
+       console.info("inputs为空");
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-          window.console.error(`inputs需要datas,结构如下所示:
+         console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -272,12 +272,12 @@ export default {
       });
 
       if (_.isEmpty(checkboxs)) {
-        window.console.info("checkboxs为空");
+        console.info("checkboxs为空");
         return {};
       } else {
         _.map(checkboxs, checkbox => {
           if (!_.has(checkbox, "datas")) {
-            window.console.error(`checkboxs需要datas,结构如下:
+           console.error(`checkboxs需要datas,结构如下:
             datas: [
               { label: "aa", key: "gg", value: "aa" },
                 { label: "ss", key: "aa", value: "cc" },
@@ -287,7 +287,7 @@ export default {
           }
           if (!_.has(checkbox, "key")) {
             flag = false;
-            window.console.error("checkboxs的key必传");
+           console.error("checkboxs的key必传");
           }
         });
         if (flag) {
@@ -300,11 +300,11 @@ export default {
     radioboxs() {
       const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
       if (_.isEmpty(radioboxs)) {
-        window.console.info("radioboxs为空");
+       console.info("radioboxs为空");
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
-          window.console.error(`radioboxs需要datas,结构如下:
+         console.error(`radioboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -312,7 +312,7 @@ export default {
           ]`);
         }
         if (!_.has(radioboxs, "key")) {
-          window.console.error("radioboxs的key必传");
+         console.error("radioboxs的key必传");
         }
         return radioboxs;
       }
@@ -320,11 +320,11 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-        window.console.info("buttons为空");
+       console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-          window.console.error(`buttons需要datas,结构如下:
+         console.error(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
