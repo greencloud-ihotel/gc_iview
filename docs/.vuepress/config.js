@@ -28,7 +28,8 @@ module.exports = {
           "components/TFSwitch",
           "components/SuperSearch",
           "components/UploadImages",
-          "components/AutoForm"
+          "components/AutoForm",
+          "components/CascaderSelect"
         ]
       },
       {

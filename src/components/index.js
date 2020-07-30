@@ -9,7 +9,8 @@ import SuperSearch from "./SuperSearch.vue";
 import CustomTable from "./CustomTable.vue";
 import FilterList from "./FilterList/FilterList.vue";
 import UploadImages from "./UploadImages.vue";
-
+import CascaderSelect from "./CascaderSelect/CascaderSelect.vue";
+import CascaderSelectItem from "./CascaderSelect/CascaderSelectItem.vue";
 export default [
   AutoForm,
   AutoTable,
@@ -21,5 +22,7 @@ export default [
   SuperSearch,
   CustomTable,
   FilterList,
-  UploadImages
+  UploadImages,
+  CascaderSelect,
+  CascaderSelectItem
 ];
