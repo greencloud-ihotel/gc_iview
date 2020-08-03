@@ -1,6 +1,6 @@
 <template>
   <Select
-    v-model="formData[propKey]"
+    v-model="cascaderSelect.formData[propKey]"
     clearable
     filterable
     @on-change="changeHandler"
@@ -24,10 +24,10 @@ export default {
   name: "CascaderSelectItem",
   mixins: [Emitter],
   inject: {
-    formData: {
+    cascaderSelect: {
       default: {}
     }
-  }, //["formData"],
+  },
   props: {
     value: {
       type: Object,
@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     formDataValue() {
-      return this.formData[this.propKey];
+      return this.cascaderSelect.formData[this.propKey];
     },
     computedDisabled: {
       get() {
@@ -108,7 +108,7 @@ export default {
     },
     async getData() {
       try {
-        const loadDataPromise = this.loadData(this.formData);
+        const loadDataPromise = this.loadData(this.cascaderSelect.formData);
         loadDataPromise.then(data => {
           this.$set(this, "options", data);
           this.changeRequest(false);
@@ -152,10 +152,10 @@ export default {
     console.log("item mounted");
     this.dispatch("CascaderSelect", "on-cascader-item-add", this);
     this.$on("set-group", obj => {
-      this.formData[obj.key] = obj.value;
+      this.cascaderSelect.formData[obj.key] = obj.value;
     });
     this.$on("set-hotel", obj => {
-      this.formData[obj.key] = obj.value;
+      this.cascaderSelect.formData[obj.key] = obj.value;
     });
     this.$on("disabled-group", obj => {
       this.disabledData = obj.disabled;

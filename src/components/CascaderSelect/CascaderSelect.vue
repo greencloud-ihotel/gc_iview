@@ -25,7 +25,7 @@ export default {
   },
   provide() {
     return {
-      formData: this.formData
+      cascaderSelect: this
     };
   },
   watch: {},
@@ -68,7 +68,6 @@ export default {
           item.options = findItem.options;
         }
       }
-      // item.formData = this.formData;
     });
     this.$on("on-cascader-item-open-change", ({ id, pId }) => {
       const findParentItem = this.cascaderSelectList.find(
