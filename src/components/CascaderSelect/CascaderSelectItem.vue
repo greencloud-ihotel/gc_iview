@@ -7,7 +7,7 @@
     @on-open-change="openChangeHandler"
     v-on="$listeners"
     v-bind="$attrs"
-    :disabled="disabledData"
+    :disabled="userDisabled || disabled"
   >
     <template v-for="item in options">
       <Option :value="item.value" :key="item.value"
@@ -23,11 +23,7 @@ import Emitter from "../../libs/emitter.js";
 export default {
   name: "CascaderSelectItem",
   mixins: [Emitter],
-  inject: {
-    cascaderSelect: {
-      default: {}
-    }
-  },
+  inject: ["cascaderSelect"],
   props: {
     value: {
       type: Object,
@@ -54,12 +50,17 @@ export default {
     message: {
       type: String,
       default: ""
+    },
+    // 针对集团酒店联动组件权限的disabled是否使用
+    userLoginDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disabledData: this.disabled,
       options: [],
+      userDisabled: false,
       parentHasValue: false,
       isOpenChange: false,
       isRequest: true //是否可以重新请求加载
@@ -72,34 +73,35 @@ export default {
           return;
         }
         if (val && val !== oldVal) {
-          if (!this.options.length) {
+          // if (!this.options.length) {
+          //   this.getData();
+          // }
+          const notRequest = this.options.some(item => item.value === val);
+          if (!notRequest) {
             this.getData();
           }
         } else {
           this.isOpenChange = false;
         }
         console.log("watch", val, oldVal);
-      }
+      },
+      immediate: true
     }
   },
   computed: {
     formDataValue() {
       return this.cascaderSelect.formData[this.propKey];
-    },
-    computedDisabled: {
-      get() {
-        return this.disabled;
-      },
-      set(boolean) {
-        this.disabled = boolean;
-      }
     }
+    // computedDisabled() {
+    //   return this.userLoginDisabled ? this.userDisabled : this.disabled;
+    // }
   },
   methods: {
     reset() {
       this.changeRequest(true);
       this.clearOptions(true);
     },
+
     changeRequest(boolean) {
       this.isRequest = boolean;
     },
@@ -121,10 +123,13 @@ export default {
       if (boolean) {
         this.isOpenChange = true;
         if (this.pId && !this.parentHasValue) {
-          this.dispatch("CascaderSelect", "on-cascader-item-open-change", {
-            id: this.propKey,
-            pId: this.pId
-          });
+          this.pId &&
+            this.pId.split(",").forEach(item => {
+              this.dispatch("CascaderSelect", "on-cascader-item-open-change", {
+                id: this.propKey,
+                pId: item
+              });
+            });
         } else {
           if (this.isRequest) {
             this.getData();
@@ -137,12 +142,25 @@ export default {
       }
     },
     changeHandler(value) {
+      const pId = this.pId ? this.pId.split(",") : [];
+      // if (this.pId) {
+
+      //   this.pId.split(",").forEach(item => {
+      //     this.dispatch("CascaderSelect", "on-cascader-item-clear-value", {
+      //       pId: item,
+      //       value,
+      //       id: this.propKey
+      //     });
+      //     this.$emit("on-change", value);
+      //   });
+      // } else {
       this.dispatch("CascaderSelect", "on-cascader-item-clear-value", {
-        pId: this.pId,
+        pId,
         value,
         id: this.propKey
       });
       this.$emit("on-change", value);
+      // }
     }
   },
   created() {
@@ -158,10 +176,10 @@ export default {
       this.cascaderSelect.formData[obj.key] = obj.value;
     });
     this.$on("disabled-group", obj => {
-      this.disabledData = obj.disabled;
+      this.userDisabled = obj.disabled;
     });
     this.$on("disabled-hotel", obj => {
-      this.disabledData = obj.disabled;
+      this.userDisabled = obj.disabled;
     });
   }
 };

@@ -42,7 +42,8 @@ export default {
   methods: {
     findClearItem({ pId, id, value }) {
       return this.cascaderSelectList.find(item => {
-        return item.pId === id;
+        const pIdList = item.pId ? item.pId.split(",") : [];
+        return pIdList.includes(id);
       });
     }
   },
@@ -52,7 +53,7 @@ export default {
       if (findItem) {
         findItem.reset();
         findItem.parentHasValue = false;
-        this.formData[findItem.$props.propKey] = null;
+        this.formData[findItem.$props.propKey] = undefined;
       }
     });
     this.$on("on-cascader-item-add", item => {
@@ -73,9 +74,10 @@ export default {
       const findParentItem = this.cascaderSelectList.find(
         item => item.$props.propKey === pId
       );
-      const findItem = this.cascaderSelectList.find(
-        item => item.$props.pId === pId && item.$props.propKey === id
-      );
+      const findItem = this.cascaderSelectList.find(item => {
+        const pIdList = item.$props.pId ? item.$props.pId.split(",") : [];
+        return pIdList.includes(pId) && item.$props.propKey === id;
+      });
 
       if (findParentItem && this.formData[findParentItem.$props.propKey]) {
         if (findItem) {
