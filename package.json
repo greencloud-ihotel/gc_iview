@@ -1,6 +1,6 @@
 {
   "name": "gc_iview",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "green cloud ui library macked by vue and iview",
   "main": "dist/index.umd.min.js",
   "typings": "dist/types/index.d.ts",
@@ -9,6 +9,7 @@
     "build:dev": "vue-cli-service build --dest ./dist/dev --target lib --name index ./src/index.js --report",
     "build": "vue-cli-service build --dest ./dist --target lib --name index ./src/index.js --no-clean",
     "docs": "vuepress dev docs",
+    "deploy:docs": "sh deploy_docs.sh",
     "build:docs": "vuepress build docs",
     "lint": "vue-cli-service lint"
   },
