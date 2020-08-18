@@ -73,9 +73,6 @@ export default {
           return;
         }
         if (val && val !== oldVal) {
-          // if (!this.options.length) {
-          //   this.getData();
-          // }
           const notRequest = this.options.some(item => item.value === val);
           if (!notRequest) {
             this.getData();
@@ -83,7 +80,6 @@ export default {
         } else {
           this.isOpenChange = false;
         }
-        console.log("watch", val, oldVal);
       },
       immediate: true
     }
@@ -92,9 +88,6 @@ export default {
     formDataValue() {
       return this.cascaderSelect.formData[this.propKey];
     }
-    // computedDisabled() {
-    //   return this.userLoginDisabled ? this.userDisabled : this.disabled;
-    // }
   },
   methods: {
     reset() {
@@ -109,9 +102,17 @@ export default {
       this.options.length = 0;
     },
     async getData() {
+      const map = {};
       try {
         const loadDataPromise = this.loadData(this.cascaderSelect.formData);
         loadDataPromise.then(data => {
+          data = data.filter(item => {
+            if (!map[item.value]) {
+              map[item.value] = true;
+              return item;
+            }
+          });
+
           this.$set(this, "options", data);
           this.changeRequest(false);
         });
@@ -134,8 +135,6 @@ export default {
           if (this.isRequest) {
             this.getData();
           }
-
-          this.$emit("on-open-change");
         }
       } else {
         this.isOpenChange = false;
@@ -143,24 +142,12 @@ export default {
     },
     changeHandler(value) {
       const pId = this.pId ? this.pId.split(",") : [];
-      // if (this.pId) {
 
-      //   this.pId.split(",").forEach(item => {
-      //     this.dispatch("CascaderSelect", "on-cascader-item-clear-value", {
-      //       pId: item,
-      //       value,
-      //       id: this.propKey
-      //     });
-      //     this.$emit("on-change", value);
-      //   });
-      // } else {
       this.dispatch("CascaderSelect", "on-cascader-item-clear-value", {
         pId,
         value,
         id: this.propKey
       });
-      this.$emit("on-change", value);
-      // }
     }
   },
   created() {

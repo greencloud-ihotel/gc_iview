@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     findClearItem({ pId, id, value }) {
-      return this.cascaderSelectList.find(item => {
+      return this.cascaderSelectList.filter(item => {
         const pIdList = item.pId ? item.pId.split(",") : [];
         return pIdList.includes(id);
       });
@@ -49,11 +49,13 @@ export default {
   },
   created() {
     this.$on("on-cascader-item-clear-value", ({ pId, id, value }) => {
-      const findItem = this.findClearItem({ pId, id, value });
-      if (findItem) {
-        findItem.reset();
-        findItem.parentHasValue = false;
-        this.formData[findItem.$props.propKey] = undefined;
+      const findItemList = this.findClearItem({ pId, id, value });
+      if (findItemList.length) {
+        findItemList.forEach(findItem => {
+          findItem.reset();
+          findItem.parentHasValue = false;
+          this.formData[findItem.$props.propKey] = "";
+        });
       }
     });
     this.$on("on-cascader-item-add", item => {
