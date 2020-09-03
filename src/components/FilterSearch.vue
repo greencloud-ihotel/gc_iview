@@ -63,7 +63,7 @@ export default {
     },
     hideShow() {
       this.hideShowClicked = true;
-      this.rowNum = !this.show ? 5 : this.rowNumProp;
+      //this.rowNum = this.rowNumProp; //!this.show ? 5 : this.rowNumProp;
       this.show = !this.show;
     },
     getValue(valuekey, valKey) {
@@ -190,11 +190,11 @@ export default {
     inputs() {
       const inputs = _.find(this.columns, val => val.type === "inputs");
       if (_.isEmpty(inputs)) {
-       console.info("inputs为空");
+        console.info("inputs为空");
         return {};
       } else {
         if (!_.has(inputs, "datas")) {
-         console.error(`inputs需要datas,结构如下所示:
+          console.error(`inputs需要datas,结构如下所示:
           {
             datas: [
               {
@@ -263,7 +263,7 @@ export default {
       } else {
         _.map(checkboxs, checkbox => {
           if (!_.has(checkbox, "datas")) {
-           console.error(`checkboxs需要datas,结构如下:
+            console.error(`checkboxs需要datas,结构如下:
             datas: [
               { label: "aa", key: "gg", value: "aa" },
                 { label: "ss", key: "aa", value: "cc" },
@@ -273,7 +273,7 @@ export default {
           }
           if (!_.has(checkbox, "key")) {
             flag = false;
-           console.error("checkboxs的key必传");
+            console.error("checkboxs的key必传");
           }
         });
         if (flag) {
@@ -286,11 +286,11 @@ export default {
     radioboxs() {
       const radioboxs = _.find(this.columns, val => val.type === "radioboxs");
       if (_.isEmpty(radioboxs)) {
-       console.info("radioboxs为空");
+        console.info("radioboxs为空");
         return {};
       } else {
         if (!_.has(radioboxs, "datas")) {
-         console.error(`radioboxs需要datas,结构如下:
+          console.error(`radioboxs需要datas,结构如下:
           datas: [
               { label: "aa", key: "gg", value: "aa" },
               { label: "ss", key: "aa", value: "cc" },
@@ -298,7 +298,7 @@ export default {
           ]`);
         }
         if (!_.has(radioboxs, "key")) {
-         console.error("radioboxs的key必传");
+          console.error("radioboxs的key必传");
         }
         return radioboxs;
       }
@@ -306,11 +306,11 @@ export default {
     buttons() {
       const buttons = _.find(this.columns, val => val.type === "buttons");
       if (_.isEmpty(buttons)) {
-       console.info("buttons为空");
+        console.info("buttons为空");
         return {};
       } else {
         if (!_.has(buttons, "datas")) {
-         console.error(`buttons需要datas,结构如下:
+          console.error(`buttons需要datas,结构如下:
           datas: [
               {
                 label: "查询",
@@ -336,10 +336,7 @@ export default {
     let height = this.$refs.filterSearch
       ? this.$refs.filterSearch.offsetHeight + 10
       : 0;
-    // 52 +
-    // (this.show ? Math.floor(inputDatas.length / rowNum) * 42 : 0) +
-    // (this.checkboxs || this.radioboxs ? 35 : 0) +
-    // 11;
+
     let otherButtons = _.filter(
       datas,
       item => item.label != "查询" && item.label != "重置"
@@ -352,7 +349,7 @@ export default {
         >
           <Form>
             <div class="top">
-              <div class={["InputList", this.show ? "w70" : "w50"]}>
+              <div class={["InputList", this.show ? "w50" : "w50"]}>
                 {this.renderInputs(rowNum, inputDatas, rowArray)}
               </div>
               <div class="rightList animated">
@@ -545,7 +542,7 @@ export default {
 <style lang="less" scoped>
 .contain {
   width: 100%;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 .filterSearch {
   .ivu-checkbox-wrapper {
@@ -553,7 +550,7 @@ export default {
   }
   flex: 1;
   background: #f5f5f5;
-  padding: 10px;
+  padding: 10px 16px 0;
   position: relative;
   width: 100%;
   .w70 {
@@ -589,7 +586,8 @@ export default {
       display: flex;
       flex-wrap: wrap;
       .itemOption {
-        height: 42px;
+        height: 33px;
+
         overflow: hidden;
         text-align: left;
         padding-right: 10px;
@@ -600,7 +598,7 @@ export default {
     }
     .rightList {
       width: 50%;
-      height: 42px;
+      height: 32px;
       display: flex;
       justify-content: space-between;
       .hideShow {
@@ -620,7 +618,7 @@ export default {
         }
       }
       button {
-        margin: 0px 10px 10px;
+        margin: 0 0 10px 10px;
         width: 70px;
         height: 33px;
       }
@@ -629,6 +627,7 @@ export default {
   .oneRow {
     width: 100%;
     display: flex;
+    margin-bottom: 10px;
   }
   .bottom {
     display: flex;

@@ -105,7 +105,7 @@ export default {
       const map = {};
       try {
         const loadDataPromise = this.loadData(this.cascaderSelect.formData);
-        loadDataPromise.then(data => {
+        return loadDataPromise.then(data => {
           data = data.filter(item => {
             if (!map[item.value]) {
               map[item.value] = true;
