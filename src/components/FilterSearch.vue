@@ -1,18 +1,4 @@
 <script>
-import {
-  CheckboxGroup,
-  Form,
-  Checkbox,
-  Button,
-  Input,
-  Icon,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  RadioGroup,
-  Radio
-} from "iview";
-import "animate.css";
 import _ from "lodash";
 export default {
   name: "FilterSearch",

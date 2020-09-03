@@ -30,7 +30,7 @@
     "animate.css": "^3.7.0",
     "axios": "^0.18.1",
     "core-js": "^2.6.5",
-    "iview": "^3.5.1",
+    "view-design": "^4.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "vue": "^2.5.17"
@@ -38,7 +38,7 @@
   "peerDependencies": {
     "animate.css": "^3.7.0",
     "axios": "^0.18.1",
-    "iview": "^3.5.1",
+    "view-design": "^4.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "vue": "^2.5.17"
