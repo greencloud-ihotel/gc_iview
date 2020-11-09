@@ -141,24 +141,28 @@ export default {
         }
       });
     },
-    validate() {
-      return new Promise((resolve, reject) => {
-        this.$refs.autoForm.validate(valid => {
-          if (!valid) {
-            const prop = this.validateError;
-            const instance = this.$refs[prop][0];
-            this.validateError = null;
-            const { top } = instance.$el.getBoundingClientRect();
-            if (instance.$children[0].$children[0].focus) {
-              instance.$children[0].$children[0].focus();
-              return false;
+    validate(fn) {
+      return new Promise(async (resolve, reject) => {
+        if (fn) {
+          resolve(this.$refs.autoForm.validate(fn));
+        } else {
+          this.$refs.autoForm.validate(valid => {
+            if (!valid) {
+              const prop = this.validateError;
+              const instance = this.$refs[prop][0];
+              this.validateError = null;
+              const { top } = instance.$el.getBoundingClientRect();
+              if (instance.$children[0].$children[0].focus) {
+                instance.$children[0].$children[0].focus();
+                return false;
+              }
+              if (top > window.innerHeight) {
+                window.scrollTo(0, (window.innerHeight - 30) / 2);
+              }
             }
-            if (top > window.innerHeight) {
-              window.scrollTo(0, (window.innerHeight - 30) / 2);
-            }
-          }
-          resolve(valid);
-        });
+            resolve(valid);
+          });
+        }
       });
     },
     validated(prop, status, error) {
