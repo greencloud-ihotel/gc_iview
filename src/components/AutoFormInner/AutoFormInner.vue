@@ -1,6 +1,7 @@
 <script>
 import _ from "lodash";
 export default {
+  name: "AutoFormInner",
   props: {
     value: {
       required: true
@@ -80,8 +81,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props.placeholder
-                            || `请输入${val.label}`
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -104,8 +105,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props.placeholder
-                            || `请输入${val.label}`
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -128,8 +129,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props.placeholder
-                            || `请选择${val.label}`
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -163,8 +164,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder: val.props.placeholder
-                            || `请选择${val.label}`
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}
@@ -181,8 +182,8 @@ export default {
                       {...{
                         props: {
                           ...val.props,
-                          placeholder:  val.props.placeholder
-                            || `请输入${val.label}`
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
                         }
                       }}
                       value={this.submitForm[val.key]}

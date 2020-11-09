@@ -8,6 +8,7 @@
       :model="submitForm"
       v-bind="$attrs"
       v-on="$listeners"
+      @on-validate="validated"
     >
       <template v-for="item in fields">
         <FormItem
@@ -18,6 +19,7 @@
           :key="item.key || null"
           :prop="prop(item)"
           :rules="validatorsHandler(item)"
+          :ref="item.key"
           v-if="typeof item.show === 'undefined' ? true : item.show"
         >
           <AutoFormInner
@@ -59,6 +61,11 @@ export default {
   },
   components: {
     AutoFormInner
+  },
+  data() {
+    return {
+      validateError: null
+    };
   },
   computed: {
     labelWidth() {
@@ -134,8 +141,31 @@ export default {
         }
       });
     },
-    validate(fn) {
-      this.$refs.autoForm.validate(fn);
+    validate() {
+      return new Promise((resolve, reject) => {
+        this.$refs.autoForm.validate(valid => {
+          if (!valid) {
+            const prop = this.validateError;
+            const instance = this.$refs[prop][0];
+            this.validateError = null;
+            const { top } = instance.$el.getBoundingClientRect();
+            if (instance.$children[0].$children[0].focus) {
+              instance.$children[0].$children[0].focus();
+              return false;
+            }
+            if (top > window.innerHeight) {
+              window.scrollTo(0, (window.innerHeight - 30) / 2);
+            }
+          }
+          resolve(valid);
+        });
+      });
+    },
+    validated(prop, status, error) {
+      if (!status && !this.validateError) {
+        this.validateError = prop;
+      }
+      this.$emit("on-validate", prop, status, error);
     },
     validatorsHandler(item) {
       item.validators = item.validators ? item.validators : [];
@@ -160,6 +190,12 @@ export default {
     validateField(prop, callback) {
       this.$refs.autoForm.validateField(prop, callback);
     }
+    // validateHandler(prop, status, error) {
+    //   console.log(prop, status, error);
+    // }
+  },
+  mounted() {
+    console.log(this.$refs.autoForm);
   }
 };
 </script>

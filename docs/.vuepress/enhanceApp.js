@@ -1,6 +1,6 @@
 import Vue from "vue";
-import IView from "iview";
-import "iview/dist/styles/iview.css";
+import IView from "view-design";
+import "view-design/dist/styles/iview.css";
 import axios from "axios";
 import gc_iview from "../../src/index";
 import "./global.css";
