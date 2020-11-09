@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      validateError: null
+      validateErrorList: []
     };
   },
   computed: {
@@ -86,6 +86,12 @@ export default {
       set(val) {
         this.$emit("input", val);
       }
+    },
+    fieldsMap() {
+      return this.fields.reduce((map, item, index) => {
+        map[item.key] = index;
+        return map;
+      }, {});
     }
   },
   methods: {
@@ -141,33 +147,41 @@ export default {
         }
       });
     },
-    validate(fn) {
-      return new Promise(async (resolve, reject) => {
-        if (fn) {
-          resolve(this.$refs.autoForm.validate(fn));
-        } else {
-          this.$refs.autoForm.validate(valid => {
-            if (!valid) {
-              const prop = this.validateError;
-              const instance = this.$refs[prop][0];
-              this.validateError = null;
-              const { top } = instance.$el.getBoundingClientRect();
-              if (instance.$children[0].$children[0].focus) {
-                instance.$children[0].$children[0].focus();
-                return false;
-              }
-              if (top > window.innerHeight) {
-                window.scrollTo(0, (window.innerHeight - 30) / 2);
-              }
-            }
-            resolve(valid);
-          });
-        }
-      });
+    validateScroll() {
+      const prop = this.validateErrorList.filter(item => item).shift();
+      const instance = Array.isArray(this.$refs[prop])
+        ? this.$refs[prop][0]
+        : this.$refs[prop];
+      this.validateErrorList = [];
+      const { top } = instance.$el.getBoundingClientRect();
+      if (
+        instance.$children[0].$children[0].$options._componentTag === "Input" &&
+        instance.$children[0].$children[0].focus
+      ) {
+        instance.$children[0].$children[0].focus();
+      } else if (top > window.innerHeight) {
+        window.scrollTo(0, top - window.innerHeight / 2);
+      } else {
+        window.scrollTo(0, top / 2);
+      }
+    },
+    async validate(fn) {
+      const valid = await this.$refs.autoForm.validate(fn);
+      if (!valid) {
+        this.validateScroll();
+      }
+      return valid;
     },
     validated(prop, status, error) {
-      if (!status && !this.validateError) {
-        this.validateError = prop;
+      if (!status) {
+        if (!this.validateErrorList.includes(prop)) {
+          this.validateErrorList[this.fieldsMap[prop]] = prop;
+        }
+      } else {
+        const findIndex = this.validateErrorList.indexOf(prop);
+        if (findIndex > -1) {
+          this.validateErrorList.splice(findIndex, 1);
+        }
       }
       this.$emit("on-validate", prop, status, error);
     },
