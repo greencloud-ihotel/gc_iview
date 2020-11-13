@@ -13,11 +13,7 @@
       :btn-text="btnText"
       :disabled="moveToRightClass.allDisabled"
     >
-      <Tooltip
-        slot="leftAction"
-        :content="$t(HOTEL_FILTER.BATCH_ACTION)"
-        style="margin-right: 5px;"
-      >
+      <Tooltip slot="leftAction" content="批量操作" style="margin-right: 5px;">
         <!-- 批量操作 -->
         <Button
           icon="md-clipboard"
@@ -77,10 +73,10 @@
     <!-- 批量操作 -->
     <Modal
       v-model="batchModal.show"
-      :title="$t(HOTEL_FILTER.BATCH_ACTION)"
+      title="批量操作"
       @on-visible-change="changeBatchModal"
     >
-      <Alert>{{ $t(HOTEL_FILTER.BATCH_MOVE_ALERT) }}</Alert
+      <Alert>{{ "将需要移至右侧的代码按英文逗号分隔" }}</Alert
       ><!-- 将需要移至右侧的代码按英文逗号分隔 -->
       <Input v-model.trim="batchModal.text" type="textarea" :rows="6" />
 
@@ -89,18 +85,16 @@
           type="primary"
           :disabled="!batchModal.text"
           @click="moveHotelFromText"
-          >{{ $t(COMMON.CONFIRM) }}</Button
         >
-        <Button @click="batchModal.show = false">{{
-          $t(COMMON.CANCEL)
-        }}</Button>
+          确认
+        </Button>
+        <Button @click="batchModal.show = false">取消</Button>
       </template>
     </Modal>
   </div>
 </template>
 <script>
 import List from "./list.vue";
-import { COMMON, HOTEL_FILTER } from "@/lang/components-key";
 export default {
   name: "transfer",
   components: {
@@ -137,9 +131,6 @@ export default {
   },
   data() {
     return {
-      COMMON,
-      HOTEL_FILTER,
-
       batchModal: {
         show: false,
         text: ""
