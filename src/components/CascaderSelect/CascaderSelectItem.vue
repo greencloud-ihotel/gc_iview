@@ -142,7 +142,6 @@ export default {
     },
     changeHandler(value) {
       const pId = this.pId ? this.pId.split(",") : [];
-
       this.dispatch("CascaderSelect", "on-cascader-item-clear-value", {
         pId,
         value,
@@ -150,17 +149,20 @@ export default {
       });
     }
   },
-  created() {
-    console.log("item created", this.propKey);
-  },
+  created() {},
   mounted() {
-    console.log("item mounted");
     this.dispatch("CascaderSelect", "on-cascader-item-add", this);
+    this.$on("set-union", obj => {
+      this.cascaderSelect.formData[obj.key] = obj.value;
+    });
     this.$on("set-group", obj => {
       this.cascaderSelect.formData[obj.key] = obj.value;
     });
     this.$on("set-hotel", obj => {
       this.cascaderSelect.formData[obj.key] = obj.value;
+    });
+    this.$on("disabled-union", obj => {
+      this.userDisabled = obj.disabled;
     });
     this.$on("disabled-group", obj => {
       this.userDisabled = obj.disabled;
@@ -168,7 +170,11 @@ export default {
     this.$on("disabled-hotel", obj => {
       this.userDisabled = obj.disabled;
     });
-  }
+  },
+  beforeDestroy() {
+    this.dispatch("CascaderSelect", "on-cascader-item-remove", this);
+  },
+  destroyed() {}
 };
 </script>
 

@@ -62,14 +62,21 @@ export default {
       const list = this.cascaderSelectList.map(item => item.propKey);
       if (!list.includes(item.propKey)) {
         this.cascaderSelectList.push(item);
-      } else {
-        // 防止组件v-if重新渲染的时候重复请求接口数据 防止loadData在有options的时候请求
-        const findItem = this.cascaderSelectList.find(
-          l => item.propKey === l.propKey
-        );
-        if (findItem) {
-          item.options = findItem.options;
-        }
+      }
+      //  else {
+      //   // 防止组件v-if重新渲染的时候重复请求接口数据 防止loadData在有options的时候请求
+      //   const findItem = this.cascaderSelectList.find(
+      //     l => item.propKey === l.propKey
+      //   );
+      //   if (findItem) {
+      //     item.options = findItem.options;
+      //   }
+      // }
+    });
+    this.$on("on-cascader-item-remove", item => {
+      const list = this.cascaderSelectList.map(item => item.propKey);
+      if (list.includes(item.propKey)) {
+        this.cascaderSelectList.splice(list.indexOf(item.propKey, 1));
       }
     });
     this.$on("on-cascader-item-open-change", ({ id, pId }) => {
@@ -92,11 +99,8 @@ export default {
         this.$Message.warning(`${findParentItem.$props.message}`);
       }
     });
-    console.log("parent create");
   },
-  mounted() {
-    console.log("parent mounted");
-  }
+  mounted() {}
 };
 </script>
 
