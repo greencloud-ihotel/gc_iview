@@ -4,12 +4,29 @@
   >
     <List
       ref="left"
-      title="待选"
-      :whole-list="unselected.wholeList"
+      :title="listTitle[0]"
       :list="unselected.list"
       :selection.sync="unselected.selection"
       :loading="loading"
-    ></List>
+      :empty-text="emptyText"
+      :placeholder="placeholder"
+      :btn-text="btnText"
+      :disabled="moveToRightClass.allDisabled"
+    >
+      <Tooltip
+        slot="leftAction"
+        :content="$t(HOTEL_FILTER.BATCH_ACTION)"
+        style="margin-right: 5px;"
+      >
+        <!-- 批量操作 -->
+        <Button
+          icon="md-clipboard"
+          class="hotel-filter-transfer-btn"
+          :disabled="moveToRightClass.allDisabled"
+          @click="batchModal.show = true"
+        ></Button>
+      </Tooltip>
+    </List>
     <div class="super-search-transfer-indicator-list">
       <Button
         :type="moveToRightClass.allType"
@@ -48,15 +65,42 @@
     </div>
     <List
       ref="right"
-      title="已选"
-      :whole-list="selected.wholeList"
+      :title="listTitle[1]"
       :list="selected.list"
       :selection.sync="selected.selection"
+      :empty-text="emptyText"
+      :placeholder="placeholder"
+      :btn-text="btnText"
+      :disabled="moveToLeftClass.allDisabled"
     ></List>
+
+    <!-- 批量操作 -->
+    <Modal
+      v-model="batchModal.show"
+      :title="$t(HOTEL_FILTER.BATCH_ACTION)"
+      @on-visible-change="changeBatchModal"
+    >
+      <Alert>{{ $t(HOTEL_FILTER.BATCH_MOVE_ALERT) }}</Alert
+      ><!-- 将需要移至右侧的代码按英文逗号分隔 -->
+      <Input v-model.trim="batchModal.text" type="textarea" :rows="6" />
+
+      <template slot="footer">
+        <Button
+          type="primary"
+          :disabled="!batchModal.text"
+          @click="moveHotelFromText"
+          >{{ $t(COMMON.CONFIRM) }}</Button
+        >
+        <Button @click="batchModal.show = false">{{
+          $t(COMMON.CANCEL)
+        }}</Button>
+      </template>
+    </Modal>
   </div>
 </template>
 <script>
 import List from "./list.vue";
+import { COMMON, HOTEL_FILTER } from "@/lang/components-key";
 export default {
   name: "transfer",
   components: {
@@ -69,7 +113,7 @@ export default {
       default: () => {
         return {
           list: [],
-          wholeList: []
+          selection: []
         };
       }
     },
@@ -78,28 +122,79 @@ export default {
       default: () => {
         return {
           list: [],
-          wholeList: []
+          selection: []
         };
       }
-    }
+    },
+    listTitle: {
+      type: Array,
+      default: () => []
+    },
+    emptyText: String,
+    placeholder: String,
+    btnText: Array,
+    listMap: Object
   },
   data() {
     return {
-      //  未选列表
-      unselected: {
-        selection: [],
-        list: [],
-        wholeList: []
-      },
-      // 已选列表
-      selected: {
-        selection: [],
-        list: [],
-        wholeList: []
+      COMMON,
+      HOTEL_FILTER,
+
+      batchModal: {
+        show: false,
+        text: ""
       }
     };
   },
   computed: {
+    //  未选列表
+    unselected: {
+      get() {
+        return this.untransferred;
+      },
+      set(val) {
+        this.$emit("update:untransferred", val);
+      }
+    },
+    // 已选列表
+    selected: {
+      get() {
+        return this.transferred;
+      },
+      set(val) {
+        this.$emit("update:transferred", val);
+      }
+    },
+    unselectedCheckedListMap() {
+      const { code } = this.listMap;
+      return this.unselected.selection.reduce((map, item, index) => {
+        map[item[code]] = index;
+        return map;
+      }, {});
+    },
+    unselectedListMap() {
+      const { code } = this.listMap;
+      return this.unselected.list.reduce((map, item, index) => {
+        map[item[code]] = index;
+        return map;
+      }, {});
+    },
+    selectedCheckedListMap() {
+      const { code } = this.listMap;
+      return this.selected.selection.reduce((map, item, index) => {
+        map[item[code]] = index;
+
+        return map;
+      }, {});
+    },
+    selectedListMap() {
+      const { code } = this.listMap;
+      return this.selected.list.reduce((map, item, index) => {
+        map[item[code]] = index;
+
+        return map;
+      }, {});
+    },
     moveToRightClass() {
       let hasItem = !!this.unselected.list.length,
         hasSelection = !!this.unselected.selection.length,
@@ -108,7 +203,7 @@ export default {
 
       return {
         allType: hasItem ? primary : defaults,
-        allDisabled: !this.unselected.loading ? (hasItem ? false : true) : true,
+        allDisabled: !this.loading ? (hasItem ? false : true) : true,
         singleType: hasSelection ? primary : defaults,
         singleDisabled: hasSelection ? false : true
       };
@@ -121,165 +216,134 @@ export default {
 
       return {
         allType: hasItem ? primary : defaults,
-        allDisabled: !this.unselected.loading ? (hasItem ? false : true) : true,
+        allDisabled: !this.loading ? (hasItem ? false : true) : true,
         singleType: hasSelection ? primary : defaults,
         singleDisabled: hasSelection ? false : true
       };
     }
   },
   methods: {
-    // 从某数组移除同时存在于另一数组的数据
-    remove(outter, inner, callback) {
-      let i, which, index;
-      for (i = 0; i < inner.length; i++) {
-        which = inner[i];
-        index = outter.indexOf(which);
-        index !== -1 && outter.splice(index, 1) && i--;
-        typeof callback === "function" && callback(which);
-      }
-    },
-    updateList() {
-      this.$emit("update:transferred", this.selected);
-      this.$emit("update:untransferred", this.unselected);
-    },
     moveToRight() {
-      let i,
-        arr = [],
-        which,
-        index;
-      for (i = 0; i < this.unselected.selection.length; i++) {
-        which = this.unselected.selection.splice(i, 1)[0];
-        which.checked = false;
-        index = this.unselected.list.indexOf(which);
-        index !== -1 && this.unselected.list.splice(index, 1);
-        index = this.unselected.wholeList.indexOf(which);
-        index !== -1 && this.unselected.wholeList.splice(index, 1);
-        this.selected.wholeList.every(e => e.code !== which.code) &&
-          arr.push(which);
-        i--;
-      }
-      this.$nextTick(() => {
-        this.selected.list = arr.concat(this.selected.list);
-        this.selected.wholeList = arr.concat(this.selected.wholeList);
-
-        this.updateList();
+      const { code } = this.listMap;
+      this.unselected.list = this.unselected.list.filter(item => {
+        return !this.unselectedCheckedListMap.hasOwnProperty(item[code]);
       });
+      const data = this.unselected.selection.map(item => {
+        return {
+          ...item,
+          checked: false
+        };
+      });
+      this.unselected.selection = [];
+      this.selected.list.push(...data);
     },
     // 移动左侧所选及当前展示列表至右侧
     moveToRightAll() {
-      this.remove(this.unselected.list, this.unselected.selection, which => {
-        which.checked = false;
+      const data = this.unselected.list.map(item => {
+        return {
+          ...item,
+          checked: false
+        };
       });
-      this.remove(this.unselected.wholeList, this.unselected.selection);
-
-      this.$nextTick(() => {
-        let concats = this.unselected.list.concat(this.unselected.selection);
-        // concats.concat(this.selected.list).filter(e => this.selected.list.every(se => se.code !== e.code))
-        concats.concat(this.selected.list).forEach(e => {
-          this.selected.list.every(se => se.code !== e.code) &&
-            this.selected.list.unshift(e);
-        });
-        concats.concat(this.selected.wholeList).forEach(e => {
-          this.selected.wholeList.every(se => se.code !== e.code) &&
-            this.selected.wholeList.unshift(e);
-        });
-
-        this.unselected.selection = [];
-        if (this.unselected.list.length === this.unselected.wholeList.length) {
-          this.unselected.list = [];
-          this.unselected.wholeList = [];
-          this.updateList();
-          return;
-        }
-        this.remove(this.unselected.wholeList, this.unselected.list);
-        this.unselected.list = [];
-        this.updateList();
-      });
+      this.selected.list.push(...data);
+      this.unselected.list = [];
+      this.unselected.selection = [];
     },
     // 移至左侧
     moveToLeft() {
-      // console.log(this.selected.selection)
-      let i,
-        arr = [],
-        which,
-        index;
-      for (i = 0; i < this.selected.selection.length; i++) {
-        which = this.selected.selection.splice(i, 1)[0];
-        which.checked = false;
-        index = this.selected.list.indexOf(which);
-        index !== -1 && this.selected.list.splice(index, 1);
-        index = this.selected.wholeList.indexOf(which);
-        index !== -1 && this.selected.wholeList.splice(index, 1);
-        this.unselected.wholeList.every(e => e.code !== which.code) &&
-          arr.push(which);
-        i--;
-      }
-      this.$nextTick(() => {
-        this.unselected.list = arr.concat(this.unselected.list);
-        this.unselected.wholeList = arr.concat(this.unselected.wholeList);
-
-        this.updateList();
+      const { code } = this.listMap;
+      this.selected.list = this.selected.list.filter(item => {
+        return !this.selectedCheckedListMap.hasOwnProperty(item[code]);
       });
+      const data = this.selected.selection.map(item => {
+        return {
+          ...item,
+          checked: false
+        };
+      });
+      this.selected.selection = [];
+      this.unselected.list.unshift(...data);
     },
     // 移动右侧所选及当前展示列表至左侧
     moveToLeftAll(callback) {
-      this.remove(this.selected.list, this.selected.selection, which => {
-        which.checked = false;
+      const data = this.selected.list.map(item => {
+        return {
+          ...item,
+          checked: false
+        };
       });
-      this.remove(this.selected.wholeList, this.selected.selection);
-
-      this.$nextTick(() => {
-        let concats = this.selected.list.concat(this.selected.selection);
-
-        concats.concat(this.unselected.list).forEach(e => {
-          this.unselected.list.every(se => se.code !== e.code) &&
-            this.unselected.list.unshift(e);
-        });
-        concats.concat(this.unselected.wholeList).forEach(e => {
-          this.unselected.wholeList.every(se => se.code !== e.code) &&
-            this.unselected.wholeList.unshift(e);
-        });
-
-        this.selected.selection = [];
-        if (this.selected.list.length === this.selected.wholeList.length) {
-          this.selected.list = [];
-          this.selected.wholeList = [];
-          typeof callback === "function" && callback();
-
-          this.updateList();
-          return;
-        }
-        this.remove(this.selected.wholeList, this.selected.list);
-        this.updateList();
-        this.selected.list = [];
-      });
+      this.unselected.list.push(...data);
+      this.selected.list = [];
+      this.selected.selection = [];
     },
     clear() {
       this.$refs.left.keyword = "";
       this.$refs.right.keyword = "";
-      this.unselected.wholeList.forEach(e => {
-        e.checked = false;
-      });
-      this.selected.wholeList.forEach(e => {
-        e.checked = false;
-      });
+      // this.unselected.wholeList.forEach(e => {
+      //   e.checked = false;
+      // });
+      // this.selected.wholeList.forEach(e => {
+      //   e.checked = false;
+      // });
       this.unselected.selection = [];
       this.selected.selection = [];
+    },
+    // 根据英文逗号分隔的代码批量移动至已选
+    moveHotelFromText() {
+      if (!this.batchModal.text) return;
+      const datas = this.batchModal.text.split(",").map(e => e.toUpperCase());
+      const { code, descript } = this.listMap;
+      const codeMap = this.unselected.list.reduce((map, item, index) => {
+        map[item[code].toUpperCase()] = item;
+        return map;
+      }, {});
+      const descriptMap = this.unselected.list.reduce((map, item, index) => {
+        map[item[descript]] = item;
+        return map;
+      }, {});
+      datas.forEach(data => {
+        const item = codeMap[data.toUpperCase()] || descriptMap[data];
+        if (item) {
+          item.checked = true;
+        }
+      });
+      // let mapCode = this.listMap.code;
+      // this.unselected.list.forEach(e => {
+      //   if (data.some(each => each === e[mapCode].toUpperCase()))
+      //     e.checked = true;
+      // });
+      // this.unselected.selection = this.unselected.wholeList.filter(
+      //   e => e.checked
+      // );
+      this.moveToRight();
+      this.$nextTick(() => {
+        this.batchModal.show = false;
+      });
+    },
+    changeBatchModal(visible) {
+      !visible &&
+        setTimeout(() => {
+          this.batchModal.text = "";
+        }, 200);
     }
   },
   watch: {
     loading(val) {
       if (!val) return;
       this.$refs.left.keyword = this.$refs.right.keyword = "";
-    },
-    "untransferred.wholeList"(val) {
-      this.unselected.wholeList = val;
-      this.selected.list = val;
-      this.selected.wholeList = val;
-    },
-    "untransferred.list"(val) {
-      this.unselected.list = val;
     }
+    // "untransferred.wholeList"(val) {
+    //   this.unselected.wholeList = val;
+    // },
+    // "untransferred.list"(val) {
+    //   this.unselected.list = val;
+    // },
+    // "transferred.wholeList"(val) {
+    //   this.selected.wholeList = val;
+    // },
+    // "transferred.wholeList"(val) {
+    //   this.selected.list = val;
+    // }
   }
 };
 </script>

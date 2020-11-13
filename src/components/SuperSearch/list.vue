@@ -3,22 +3,23 @@
     <div class="flex-side super-search-transfer-header">
       <h1 class="super-search-transfer-title">
         {{ title }}
-        <span>({{ selections.length }}/{{ selfWholeList.length }})</span>
+        <span>({{ selections.length }}/{{ list.length }})</span>
       </h1>
       <div class>
+        <slot name="leftAction"></slot>
         <Button
           type="default"
           class="super-search-transfer-btn"
           :disabled="disabled"
           @click="onCheckAll(true)"
-          >全选</Button
+          >{{ btnText[0] }}</Button
         >
         <Button
           type="default"
           class="super-search-transfer-btn"
           :disabled="disabled"
           @click="onCheckAll(false)"
-          >反选</Button
+          >{{ btnText[1] }}</Button
         >
       </div>
     </div>
@@ -27,9 +28,8 @@
         v-model.trim="keyword"
         search
         clearable
-        placeholder="请输入搜索内容"
+        :placeholder="placeholder"
         size="small"
-        @on-change="changeKeyword"
       />
     </div>
     <p class="super-search-transfer-empty-text" v-show="!filterList.length">
@@ -46,8 +46,8 @@
         <span :title="item.content">{{ item.content }}</span>
         <span class="no-event">{{ item.extra }}</span>
       </li>
+      <Spin size="large" fix v-if="loading"></Spin>
     </ul>
-    <Spin size="large" fix v-if="loading"></Spin>
   </div>
 </template>
 <script>
@@ -57,64 +57,69 @@ export default {
   props: {
     title: String,
     disabled: Boolean,
-    emptyText: {
-      type: String,
-      default: () => "暂无数据"
-    },
+    emptyText: String,
+    placeholder: String,
     loading: Boolean,
     selection: Array,
-    wholeList: Array,
-    list: Array
+    list: Array,
+    btnText: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
-      keyword: "",
-      selections: [],
-      selfWholeList: [],
-      filterList: []
+      keyword: ""
     };
+  },
+  computed: {
+    selections: {
+      get() {
+        return this.selection;
+      },
+      set(val) {
+        this.$emit("update:selection", val);
+      }
+    },
+    selectionsToMap() {
+      return this.filterList.reduce((map, item) => {
+        map[item.key] = true;
+        return map;
+      }, {});
+    },
+    filterList() {
+      return this.list.filter(item => {
+        return item.content
+          ? item.content.toUpperCase().includes(this.keyword.toUpperCase())
+          : item;
+      });
+    },
+    filterListKeyToMap() {
+      return this.filterList.reduce((map, item) => {
+        map[item.key] = true;
+        return map;
+      }, {});
+    },
+    listDescriptToMap() {
+      return this.selected.list.reduce((map, item) => {
+        map[item.key] = true;
+        return map;
+      }, {});
+    }
   },
   methods: {
     check(item) {
-      console.log(item);
       item.checked = !item.checked;
       this.changeList();
     },
     onCheckAll(flag) {
-      flag
-        ? this.filterList.forEach(e => {
-            e.checked = true;
-          })
-        : this.filterList.forEach(e => {
-            e.checked = !e.checked;
-          });
+      this.filterList.forEach(e => {
+        e.checked = flag || !e.checked;
+      });
       this.changeList();
     },
     changeList() {
-      this.selections = this.selfWholeList.filter(e => e.checked);
-      this.$emit("update:selection", this.selections);
-    },
-    changeKeyword(e) {
-      // console.log(e);
-      let value = e.target.value.trim().toUpperCase();
-      if (!value) {
-        this.filterList = this.selfWholeList;
-        return;
-      }
-      this.filterList = this.selfWholeList.filter(
-        e => e.content.toUpperCase().indexOf(value) !== -1
-      );
-    }
-  },
-  watch: {
-    wholeList(val) {
-      this.selfWholeList = val;
-    },
-    selection(val) {
-      this.selections = val;
-    },
-    list(val) {
-      this.filterList = val;
+      this.selections = this.list.filter(e => e.checked);
     }
   }
 };

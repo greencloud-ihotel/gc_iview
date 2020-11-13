@@ -123,15 +123,12 @@ export default {
             };
           });
           this.setTableHeight(type);
-          setTimeout(() => {
-            term.loading = false;
-          }, 500);
         })
         .catch(err => {
           console.log(err);
-          setTimeout(() => {
-            term.loading = false;
-          }, 500);
+        })
+        .finally(() => {
+          term.loading = false;
         });
     },
     onSelectionChange(rows, item, index) {
