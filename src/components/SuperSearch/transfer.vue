@@ -13,7 +13,11 @@
       :btn-text="btnText"
       :disabled="moveToRightClass.allDisabled"
     >
-      <Tooltip slot="leftAction" content="批量操作" style="margin-right: 5px;">
+      <Tooltip
+        slot="leftAction"
+        :content="batchActionText"
+        style="margin-right: 5px;"
+      >
         <!-- 批量操作 -->
         <Button
           icon="md-clipboard"
@@ -73,10 +77,10 @@
     <!-- 批量操作 -->
     <Modal
       v-model="batchModal.show"
-      title="批量操作"
+      :title="batchActionText"
       @on-visible-change="changeBatchModal"
     >
-      <Alert>{{ "将需要移至右侧的代码按英文逗号分隔" }}</Alert
+      <Alert>{{ batchActionTipText }}</Alert
       ><!-- 将需要移至右侧的代码按英文逗号分隔 -->
       <Input v-model.trim="batchModal.text" type="textarea" :rows="6" />
 
@@ -86,9 +90,11 @@
           :disabled="!batchModal.text"
           @click="moveHotelFromText"
         >
-          确认
+          {{ batchActionConfrimText }}
         </Button>
-        <Button @click="batchModal.show = false">取消</Button>
+        <Button @click="batchModal.show = false">{{
+          batchActionCancelText
+        }}</Button>
       </template>
     </Modal>
   </div>
@@ -101,6 +107,22 @@ export default {
     List
   },
   props: {
+    batchActionConfrimText: {
+      type: String,
+      default: "确认"
+    },
+    batchActionCancelText: {
+      type: String,
+      default: "取消"
+    },
+    batchActionText: {
+      type: String,
+      default: "批量操作"
+    },
+    batchActionTipText: {
+      type: String,
+      default: "将需要移至右侧的代码按英文逗号分隔"
+    },
     loading: Boolean,
     untransferred: {
       type: Object,
