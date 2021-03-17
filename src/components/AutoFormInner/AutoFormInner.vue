@@ -62,15 +62,17 @@ export default {
       this.$set(this.item, "option", {});
     }
   },
-  render() {
+  render(h) {
     const val = this.item;
 
     const event = val.on;
-
     return (
       <div>
         {val.render
-          ? val.render(val)
+          ? val.render(h, {
+              form: this.value,
+              item: this.item
+            })
           : (() => {
               switch (val.type) {
                 case "input":
