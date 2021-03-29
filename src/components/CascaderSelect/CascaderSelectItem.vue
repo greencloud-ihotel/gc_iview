@@ -72,13 +72,24 @@ export default {
         if (this.isOpenChange) {
           return;
         }
-        if (val && val !== oldVal) {
-          const notRequest = this.options.some(item => item.value === val);
-          if (!notRequest) {
-            this.getData();
+        if (Array.isArray(val)) {
+          if (val.length && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            const notRequest = this.options.some(item => item.value === val);
+            if (!notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
           }
         } else {
-          this.isOpenChange = false;
+          if (val && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            const notRequest = this.options.some(item => item.value === val);
+            if (!notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
+          }
         }
       },
       immediate: true
