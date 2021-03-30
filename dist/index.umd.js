@@ -9082,7 +9082,7 @@ module.exports = overArg;
 /***/ "9224":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"a\":\"1.8.7\"}");
+module.exports = JSON.parse("{\"a\":\"1.8.8\"}");
 
 /***/ }),
 
@@ -14656,36 +14656,7 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
-var iterator = __webpack_require__("5d58");
-var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol.js
-var symbol = __webpack_require__("67bb");
-var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js
-
-
-function typeof_typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof symbol_default.a === "function" && typeof iterator_default.a === "symbol") {
-    typeof_typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    typeof_typeof = function _typeof(obj) {
-      return obj && typeof symbol_default.a === "function" && obj.constructor === symbol_default.a && obj !== symbol_default.a.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return typeof_typeof(obj);
-}
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoFormInner/AutoFormInner.vue?vue&type=script&lang=js&
-
-
-
 
 
 
@@ -14718,178 +14689,65 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
       }
     }
   },
-  methods: {
-    changeVal: function changeVal(inputVal, val) {
-      var value = "";
-
-      if (val.type === "input" && typeof_typeof(inputVal) === "object") {
-        value = inputVal.target.value;
-      } else if (val.type === "select") {
-        // 多选
-        if (Array.isArray(inputVal) && val.props.labelInValue) {
-          value = inputVal.map(function (item) {
-            return item.value;
-          });
-        } else if (typeof_typeof(inputVal) === "object") {
-          value = inputVal.value;
-        } else {
-          value = inputVal;
-        }
-      } else {
-        value = inputVal;
-      }
-
-      this.$set(this.submitForm, [val.key], value);
-    }
-  },
-  created: function created() {
+  methods: {},
+  render: function render(h) {
     var _this = this;
 
-    var event = this.item.on;
+    var _this$item = this.item,
+        type = _this$item.type,
+        _this$item$on = _this$item.on,
+        on = _this$item$on === void 0 ? {} : _this$item$on,
+        _this$item$options = _this$item.options,
+        options = _this$item$options === void 0 ? [] : _this$item$options,
+        _this$item$option = _this$item.option,
+        option = _this$item$option === void 0 ? {} : _this$item$option,
+        _this$item$props = _this$item.props,
+        props = _this$item$props === void 0 ? {} : _this$item$props,
+        render = _this$item.render,
+        _this$item$scopedSlot = _this$item.scopedSlots,
+        scopedSlots = _this$item$scopedSlot === void 0 ? {} : _this$item$scopedSlot,
+        _this$item$attrs = _this$item.attrs,
+        attrs = _this$item$attrs === void 0 ? {} : _this$item$attrs,
+        label = _this$item.label,
+        key = _this$item.key;
+    var _props$labelInValue = props.labelInValue,
+        labelInValue = _props$labelInValue === void 0 ? true : _props$labelInValue;
 
-    if (typeof event !== "undefined" && "on-change" in event) {
-      var bindOnChange = event["on-change"].bind(this);
+    var componentJSXProps = _objectSpread({}, this.item);
 
-      event["on-change"] = function (value) {
-        _this.changeVal(value, _this.item);
+    var value = this.submitForm[key];
+    delete componentJSXProps[scopedSlots];
+    var tagName = "i-".concat(type) || false;
 
-        bindOnChange.call(_this, value);
-      };
+    if (render) {
+      return render(h);
+    } else {
+      return h(tagName, helper_default()([{}, _objectSpread(_objectSpread({}, this.componentJSXProps), {}, {
+        props: _objectSpread({
+          placeholder: label,
+          clearable: true,
+          filterable: true,
+          labelInValue: labelInValue
+        }, props),
+        attrs: _objectSpread({
+          value: value
+        }, attrs),
+        on: _objectSpread({
+          input: function input(value) {
+            _this.submitForm[key] = value;
+          }
+        }, on)
+      })]), [tagName === "Select" ? options.map(function (value) {
+        return h("i-option", {
+          "key": value[option.code || "value"],
+          "attrs": {
+            "value": value[option.code || "value"]
+          }
+        }, [value[option.label || "label"], labelInValue ? "( ".concat(value[option.code || "value"], ")") : null]);
+      }) : null, Object.keys(scopedSlots).map(function (name) {
+        return scopedSlots[name](h, props);
+      })]);
     }
-
-    if (typeof this.item["props"] === "undefined") {
-      this.$set(this.item, "props", {});
-    }
-
-    if (typeof this.item["on"] === "undefined") {
-      this.$set(this.item, "on", {});
-    }
-
-    if (typeof this.item["options"] === "undefined") {
-      this.$set(this.item, "options", []);
-    }
-
-    if (typeof this.item["option"] === "undefined") {
-      this.$set(this.item, "option", {});
-    }
-  },
-  render: function render() {
-    var _this2 = this;
-
-    var h = arguments[0];
-    var val = this.item;
-    var event = val.on;
-    return h("div", [val.render ? val.render(val) : function () {
-      switch (val.type) {
-        case "input":
-          return h("Input", helper_default()([{
-            "attrs": {
-              "type": "text",
-              "value": _this2.submitForm[val.key]
-            },
-            "ref": val.ref,
-            "props": _objectSpread({}, _objectSpread(_objectSpread({}, val.props), {}, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
-            }))
-          }, {
-            "on": _objectSpread({
-              "on-change": function onChange(value) {
-                _this2.changeVal(value, val);
-              }
-            }, event)
-          }]), [val.icon ? h("Icon", {
-            "attrs": {
-              "type": val.icon
-            },
-            "slot": "prepend"
-          }) : null]);
-
-        case "inputnumber":
-          return h("InputNumber", helper_default()([{
-            "ref": val.ref,
-            "props": _objectSpread({}, _objectSpread(_objectSpread({}, val.props), {}, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
-            })),
-            "attrs": {
-              "value": _this2.submitForm[val.key]
-            }
-          }, {
-            "on": _objectSpread({
-              "on-change": function onChange(value) {
-                _this2.changeVal(value, val);
-              }
-            }, event)
-          }]), [val.icon ? h("Icon", {
-            "attrs": {
-              "type": val.icon
-            },
-            "slot": "prepend"
-          }) : null]);
-
-        case "select":
-          return h("i-select", helper_default()([{
-            "ref": val.ref,
-            "props": _objectSpread({}, _objectSpread(_objectSpread({}, val.props), {}, {
-              placeholder: val.props.placeholder || "\u8BF7\u9009\u62E9".concat(val.label)
-            })),
-            "attrs": {
-              "value": _this2.submitForm[val.key]
-            }
-          }, {
-            "on": _objectSpread({
-              "on-change": function onChange(value) {
-                _this2.changeVal(value, val);
-              }
-            }, event)
-          }]), [map_default()(val.options, function (value) {
-            return h("i-option", {
-              "key": value[val.option.code || "value"],
-              "attrs": {
-                "value": value[val.option.code || "value"]
-              }
-            }, [value[val.option.label || "label"], val.props.labelInValue ? "( ".concat(value[val.option.code || "value"], ")") : null]);
-          })]);
-
-        case "datepicker":
-          return h("DatePicker", {
-            "ref": val.ref,
-            "attrs": {
-              "type": "date",
-              "value": _this2.submitForm[val.key]
-            },
-            "props": _objectSpread({}, _objectSpread(_objectSpread({}, val.props), {}, {
-              placeholder: val.props.placeholder || "\u8BF7\u9009\u62E9".concat(val.label)
-            })),
-            "on": {
-              "on-change": function onChange(value) {
-                _this2.changeVal(value, val);
-              }
-            }
-          });
-
-        default:
-          return h("Input", {
-            "ref": val.ref,
-            "attrs": {
-              "type": "text",
-              "value": _this2.submitForm[val.key]
-            },
-            "props": _objectSpread({}, _objectSpread(_objectSpread({}, val.props), {}, {
-              placeholder: val.props.placeholder || "\u8BF7\u8F93\u5165".concat(val.label)
-            })),
-            "on": {
-              "input": function input(value) {
-                _this2.changeVal(value, val);
-              }
-            }
-          }, [val.icon ? h("Icon", {
-            "attrs": {
-              "type": val.icon
-            },
-            "slot": "prepend"
-          }) : null]);
-      }
-    }()]);
   }
 });
 // CONCATENATED MODULE: ./src/components/AutoFormInner/AutoFormInner.vue?vue&type=script&lang=js&
@@ -17041,6 +16899,10 @@ var from_default = /*#__PURE__*/__webpack_require__.n(from);
 var is_iterable = __webpack_require__("c8bb");
 var is_iterable_default = /*#__PURE__*/__webpack_require__.n(is_iterable);
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol.js
+var symbol = __webpack_require__("67bb");
+var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol);
+
 // CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js
 
 
@@ -17081,6 +16943,28 @@ var conditionvue_type_template_id_d4850214_staticRenderFns = []
 
 // CONCATENATED MODULE: ./src/components/SuperSearch/condition.vue?vue&type=template&id=d4850214&
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
+var iterator = __webpack_require__("5d58");
+var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js
+
+
+function typeof_typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof symbol_default.a === "function" && typeof iterator_default.a === "symbol") {
+    typeof_typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    typeof_typeof = function _typeof(obj) {
+      return obj && typeof symbol_default.a === "function" && obj.constructor === symbol_default.a && obj !== symbol_default.a.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return typeof_typeof(obj);
+}
 // CONCATENATED MODULE: ./src/components/SuperSearch/mixin.js
 
 
@@ -20137,12 +20021,12 @@ var CascaderSelect_component = normalizeComponent(
 )
 
 /* harmony default export */ var CascaderSelect = (CascaderSelect_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"44333616-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=cb9bffa6&scoped=true&
-var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('Select',_vm._g(_vm._b({attrs:{"clearable":"","filterable":"","disabled":_vm.userDisabled || _vm.disabled},on:{"on-change":_vm.changeHandler,"on-open-change":_vm.openChangeHandler},model:{value:(_vm.cascaderSelect.formData[_vm.propKey]),callback:function ($$v) {_vm.$set(_vm.cascaderSelect.formData, _vm.propKey, $$v)},expression:"cascaderSelect.formData[propKey]"}},'Select',_vm.$attrs,false),_vm.$listeners),[_vm._l((_vm.options),function(item){return [_c('Option',{key:item.value,attrs:{"value":item.value}},[_vm._v(_vm._s(item["label"])+"("+_vm._s(item["value"])+")")])]})],2)}
-var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"44333616-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=1102932a&scoped=true&
+var CascaderSelectItemvue_type_template_id_1102932a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('Select',_vm._g(_vm._b({attrs:{"clearable":"","filterable":"","disabled":_vm.userDisabled || _vm.disabled},on:{"on-change":_vm.changeHandler,"on-open-change":_vm.openChangeHandler},model:{value:(_vm.cascaderSelect.formData[_vm.propKey]),callback:function ($$v) {_vm.$set(_vm.cascaderSelect.formData, _vm.propKey, $$v)},expression:"cascaderSelect.formData[propKey]"}},'Select',_vm.$attrs,false),_vm.$listeners),[_vm._l((_vm.options),function(item){return [_c('Option',{key:item.value,attrs:{"value":item.value}},[_vm._v(_vm._s(item["label"])+"("+_vm._s(item["value"])+")")])]})],2)}
+var CascaderSelectItemvue_type_template_id_1102932a_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=cb9bffa6&scoped=true&
+// CONCATENATED MODULE: ./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=1102932a&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=script&lang=js&
 
@@ -20223,16 +20107,30 @@ var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns 
           return;
         }
 
-        if (val && val !== oldVal) {
-          var notRequest = this.options.some(function (item) {
-            return item.value === val;
-          });
+        if (Array.isArray(val)) {
+          if (val.length && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            var notRequest = this.options.some(function (item) {
+              return item.value === val;
+            });
 
-          if (!notRequest) {
-            this.getData();
+            if (!notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
           }
         } else {
-          this.isOpenChange = false;
+          if (val && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            var _notRequest = this.options.some(function (item) {
+              return item.value === val;
+            });
+
+            if (!_notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
+          }
         }
       },
       immediate: true
@@ -20370,11 +20268,11 @@ var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns 
 
 var CascaderSelectItem_component = normalizeComponent(
   CascaderSelect_CascaderSelectItemvue_type_script_lang_js_,
-  CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_render,
-  CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns,
+  CascaderSelectItemvue_type_template_id_1102932a_scoped_true_render,
+  CascaderSelectItemvue_type_template_id_1102932a_scoped_true_staticRenderFns,
   false,
   null,
-  "cb9bffa6",
+  "1102932a",
   null
   
 )
