@@ -22,7 +22,7 @@ export default {
   methods: {},
   render(h) {
     const {
-      type,
+      type = "Input",
       on = {},
       options = [],
       option = {},
@@ -37,7 +37,18 @@ export default {
     const componentJSXProps = { ...this.item };
     const value = this.submitForm[key];
     delete componentJSXProps[scopedSlots];
-    const tagName = `i-${type}` || "i-input";
+    let tagName = type;
+    Object.keys(iview).forEach(name => {
+      if (
+        Object.prototype.toString.call(iview[name]) === "[object Object]" &&
+        iview[name].name
+      ) {
+        if (name.toUpperCase() === type.toUpperCase()) {
+          tagName = iview[name].name;
+        }
+      }
+    });
+
     if (render) {
       return render(h);
     } else {
