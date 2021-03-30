@@ -9082,7 +9082,7 @@ module.exports = overArg;
 /***/ "9224":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"a\":\"1.8.10\"}");
+module.exports = JSON.parse("{\"a\":\"1.8.11\"}");
 
 /***/ }),
 
@@ -20139,12 +20139,12 @@ var CascaderSelect_component = normalizeComponent(
 )
 
 /* harmony default export */ var CascaderSelect = (CascaderSelect_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"44333616-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=cb9bffa6&scoped=true&
-var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('Select',_vm._g(_vm._b({attrs:{"clearable":"","filterable":"","disabled":_vm.userDisabled || _vm.disabled},on:{"on-change":_vm.changeHandler,"on-open-change":_vm.openChangeHandler},model:{value:(_vm.cascaderSelect.formData[_vm.propKey]),callback:function ($$v) {_vm.$set(_vm.cascaderSelect.formData, _vm.propKey, $$v)},expression:"cascaderSelect.formData[propKey]"}},'Select',_vm.$attrs,false),_vm.$listeners),[_vm._l((_vm.options),function(item){return [_c('Option',{key:item.value,attrs:{"value":item.value}},[_vm._v(_vm._s(item["label"])+"("+_vm._s(item["value"])+")")])]})],2)}
-var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"44333616-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=1102932a&scoped=true&
+var CascaderSelectItemvue_type_template_id_1102932a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('Select',_vm._g(_vm._b({attrs:{"clearable":"","filterable":"","disabled":_vm.userDisabled || _vm.disabled},on:{"on-change":_vm.changeHandler,"on-open-change":_vm.openChangeHandler},model:{value:(_vm.cascaderSelect.formData[_vm.propKey]),callback:function ($$v) {_vm.$set(_vm.cascaderSelect.formData, _vm.propKey, $$v)},expression:"cascaderSelect.formData[propKey]"}},'Select',_vm.$attrs,false),_vm.$listeners),[_vm._l((_vm.options),function(item){return [_c('Option',{key:item.value,attrs:{"value":item.value}},[_vm._v(_vm._s(item["label"])+"("+_vm._s(item["value"])+")")])]})],2)}
+var CascaderSelectItemvue_type_template_id_1102932a_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=cb9bffa6&scoped=true&
+// CONCATENATED MODULE: ./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=template&id=1102932a&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CascaderSelect/CascaderSelectItem.vue?vue&type=script&lang=js&
 
@@ -20225,16 +20225,30 @@ var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns 
           return;
         }
 
-        if (val && val !== oldVal) {
-          var notRequest = this.options.some(function (item) {
-            return item.value === val;
-          });
+        if (Array.isArray(val)) {
+          if (val.length && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            var notRequest = this.options.some(function (item) {
+              return item.value === val;
+            });
 
-          if (!notRequest) {
-            this.getData();
+            if (!notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
           }
         } else {
-          this.isOpenChange = false;
+          if (val && JSON.stringify(val) !== JSON.stringify(oldVal)) {
+            var _notRequest = this.options.some(function (item) {
+              return item.value === val;
+            });
+
+            if (!_notRequest) {
+              this.getData();
+            }
+          } else {
+            this.isOpenChange = false;
+          }
         }
       },
       immediate: true
@@ -20372,11 +20386,11 @@ var CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns 
 
 var CascaderSelectItem_component = normalizeComponent(
   CascaderSelect_CascaderSelectItemvue_type_script_lang_js_,
-  CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_render,
-  CascaderSelectItemvue_type_template_id_cb9bffa6_scoped_true_staticRenderFns,
+  CascaderSelectItemvue_type_template_id_1102932a_scoped_true_render,
+  CascaderSelectItemvue_type_template_id_1102932a_scoped_true_staticRenderFns,
   false,
   null,
-  "cb9bffa6",
+  "1102932a",
   null
   
 )
