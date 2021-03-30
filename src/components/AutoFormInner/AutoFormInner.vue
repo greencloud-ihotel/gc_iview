@@ -1,4 +1,5 @@
 <script>
+import _ from "lodash";
 export default {
   name: "AutoFormInner",
   props: {
@@ -19,73 +20,188 @@ export default {
       }
     }
   },
-  methods: {},
-  render(h) {
-    const {
-      type,
-      on = {},
-      options = [],
-      option = {},
-      props = {},
-      render,
-      scopedSlots = {},
-      attrs = {},
-      label,
-      key
-    } = this.item;
-    const { labelInValue = true } = props;
-    const componentJSXProps = { ...this.item };
-    const value = this.submitForm[key];
-    delete componentJSXProps[scopedSlots];
-    const tagName = `i-${type}` || "i-input";
-    if (render) {
-      return render(h);
-    } else {
-      return (
-        <tagName
-          {...{
-            ...this.componentJSXProps,
-            props: {
-              placeholder: label,
-              clearable: true,
-              filterable: true,
-              labelInValue,
-              ...props
-            },
-            attrs: {
-              value,
-              ...attrs
-            },
-            on: {
-              input: value => {
-                this.submitForm[key] = value;
-              },
-              ...on
-            }
-          }}
-        >
-          {tagName === "Select"
-            ? options.map(value => {
-                return (
-                  <i-option
-                    key={value[option.code || "value"]}
-                    value={value[option.code || "value"]}
-                  >
-                    {value[option.label || "label"]}
-
-                    {labelInValue
-                      ? `( ${value[option.code || "value"]})`
-                      : null}
-                  </i-option>
-                );
-              })
-            : null}
-          {Object.keys(scopedSlots).map(name => {
-            return scopedSlots[name](h, props);
-          })}
-        </tagName>
-      );
+  methods: {
+    changeVal(inputVal, val) {
+      let value = "";
+      if (val.type === "input" && typeof inputVal === "object") {
+        value = inputVal.target.value;
+      } else if (val.type === "select") {
+        // 多选
+        if (Array.isArray(inputVal) && val.props.labelInValue) {
+          value = inputVal.map(item => item.value);
+        } else if (typeof inputVal === "object") {
+          value = inputVal.value;
+        } else {
+          value = inputVal;
+        }
+      } else {
+        value = inputVal;
+      }
+      this.$set(this.submitForm, [val.key], value);
     }
+  },
+  created() {
+    const event = this.item.on;
+    if (typeof event !== "undefined" && "on-change" in event) {
+      const bindOnChange = event["on-change"].bind(this);
+      event["on-change"] = value => {
+        this.changeVal(value, this.item);
+        bindOnChange.call(this, value);
+      };
+    }
+    if (typeof this.item["props"] === "undefined") {
+      this.$set(this.item, "props", {});
+    }
+    if (typeof this.item["on"] === "undefined") {
+      this.$set(this.item, "on", {});
+    }
+    if (typeof this.item["options"] === "undefined") {
+      this.$set(this.item, "options", []);
+    }
+    if (typeof this.item["option"] === "undefined") {
+      this.$set(this.item, "option", {});
+    }
+  },
+  render(h) {
+    const val = this.item;
+
+    const event = val.on;
+    return (
+      <div>
+        {val.render
+          ? val.render(h, {
+              form: this.value,
+              item: this.item
+            })
+          : (() => {
+              switch (val.type) {
+                case "input":
+                  return (
+                    <Input
+                      type="text"
+                      ref={val.ref}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
+                      value={this.submitForm[val.key]}
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
+                      }}
+                    >
+                      {val.icon ? (
+                        <Icon type={val.icon} slot="prepend" />
+                      ) : null}
+                    </Input>
+                  );
+                case "inputnumber":
+                  return (
+                    <InputNumber
+                      ref={val.ref}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
+                      value={this.submitForm[val.key]}
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
+                      }}
+                    >
+                      {val.icon ? (
+                        <Icon type={val.icon} slot="prepend" />
+                      ) : null}
+                    </InputNumber>
+                  );
+                case "select":
+                  return (
+                    <i-select
+                      ref={val.ref}
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
+                        }
+                      }}
+                      value={this.submitForm[val.key]}
+                      on={{
+                        "on-change": value => {
+                          this.changeVal(value, val);
+                        },
+                        ...event
+                      }}
+                    >
+                      {_.map(val.options, value => {
+                        return (
+                          <i-option
+                            key={value[val.option.code || "value"]}
+                            value={value[val.option.code || "value"]}
+                          >
+                            {value[val.option.label || "label"]}
+                            {val.props.labelInValue
+                              ? `( ${value[val.option.code || "value"]})`
+                              : null}
+                          </i-option>
+                        );
+                      })}
+                    </i-select>
+                  );
+                case "datepicker":
+                  return (
+                    <DatePicker
+                      ref={val.ref}
+                      type="date"
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请选择${val.label}`
+                        }
+                      }}
+                      value={this.submitForm[val.key]}
+                      onOn-change={value => {
+                        this.changeVal(value, val);
+                      }}
+                    />
+                  );
+                default:
+                  return (
+                    <Input
+                      ref={val.ref}
+                      type="text"
+                      {...{
+                        props: {
+                          ...val.props,
+                          placeholder:
+                            val.props.placeholder || `请输入${val.label}`
+                        }
+                      }}
+                      value={this.submitForm[val.key]}
+                      onInput={value => {
+                        this.changeVal(value, val);
+                      }}
+                    >
+                      {val.icon ? (
+                        <Icon type={val.icon} slot="prepend" />
+                      ) : null}
+                    </Input>
+                  );
+              }
+            })()}
+      </div>
+    );
   }
 };
 </script>
